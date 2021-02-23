@@ -47,11 +47,15 @@ By design, the Acria Network is designed to allow the easy implementation of pub
 
 The Acria Network only allows the owner of the data to operate an oracle node. The other users are then allowed to stake their preferred currency on those oracle nodes. Should the operator of the oracle publish incorrect data, some of the stakers gains will be slashed. Therefore the stakers give validity to the data provided by the oracle node as they prefer to only stake on the most trustworthy nodes.
 
+## License
+
+![GitHub](https://img.shields.io/github/license/Acria-Network/acria-substrate)
+
+Distributed under the MIT license. See ``LICENSE`` for more information.
+
 
 ## Meta
 
 Acria Network – [@acrianetwork](https://twitter.com/acrianetwork) – help@acria.network
-
-Distributed under the MIT license. See ``LICENSE`` for more information.
 
 [https://github.com/Acria-Network/Acria-Oracle-Node-Qt](https://github.com/Acria-Network/Acria-Oracle-Node-Qt)
