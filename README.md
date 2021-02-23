@@ -1,3 +1,5 @@
+![Header](img/New%20Project.png)
+
 # Acria-Oracle-Node-Qt
 
 Acria Oracle Node implemented in C++/Qt
@@ -18,6 +20,10 @@ OS X & Linux:
 qmake Acria-Oracle-Node-Qt.pro
 make
 ```
+
+## Whitepaper / Technical Specification
+
+<a href="https://acria.network/whitepaper" target="_blank"><img src="img/documents-document.svg" width="100" height="100" /></a>
 
 ## Meta
 
