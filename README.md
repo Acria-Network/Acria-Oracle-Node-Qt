@@ -23,6 +23,12 @@ qmake Acria-Oracle-Node-Qt.pro
 make
 ```
 
+Using the example config:
+
+```sh
+cp configs/settings.conf.example settings.conf
+```
+
 ## Whitepaper / Technical Specification
 
 <a href="https://acria.network/whitepaper" target="_blank"><img src="img/documents-document.svg" width="100" height="100" /></a>
