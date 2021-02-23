@@ -23,10 +23,11 @@ qmake Acria-Oracle-Node-Qt.pro
 make
 ```
 
-Using the example config:
+Using the example config and settings file:
 
 ```sh
 cp configs/settings.conf.example settings.conf
+cp configs/config.conf.example config.conf
 ```
 
 ## Whitepaper / Technical Specification
