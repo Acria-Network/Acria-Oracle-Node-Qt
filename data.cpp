@@ -1,0 +1,70 @@
+#include "data.h"
+#include "json.hpp"
+
+#include <QFile>
+#include <QDebug>
+
+
+Data::Data()
+{
+
+}
+
+void Data::save_settings(){
+    nlohmann::json tmp;
+
+    tmp["geth_url"] = geth_url.toStdString();
+    tmp["eth_account"] = eth_account.toStdString();
+    tmp["eth_contract"] = eth_contract.toStdString();
+
+    tmp["polkadot_url"] = polkadot_url.toStdString();
+    tmp["polkadot_account"] = polkadot_account.toStdString();
+    tmp["polkadot_contract"] = polkadot_contract.toStdString();
+
+    QString filename="settings.conf";
+    QFile file(filename);
+
+    if(!file.exists()){
+        qDebug() << "Settings File exists: "<<filename;
+    }else{
+        qDebug() << filename<<" does not exist";
+    }
+
+   if (file.open(QIODevice::WriteOnly | QIODevice::Text)){
+        QTextStream out(&file);
+        out << QString::fromStdString(tmp.dump());
+        file.close();
+   }
+}
+
+void Data::load_settings(){
+    QString filename="settings.conf";
+    QFile file(filename);
+
+    if(!file.exists()){
+        qDebug() << "Settings File exists: "<<filename;
+    }else{
+        qDebug() << filename<<" does not exist";
+    }
+
+    QString line;
+
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text)){
+        QTextStream stream(&file);
+        while (!stream.atEnd()){
+            line += stream.readLine();
+            qDebug() << "line: "<<line;
+        }
+    }
+    file.close();
+
+    nlohmann::json tmp = nlohmann::json::parse(line.toStdString());
+
+    geth_url = QString::fromStdString(tmp["geth_url"]);
+    eth_account = QString::fromStdString(tmp["eth_account"]);
+    eth_contract = QString::fromStdString(tmp["eth_contract"]);
+
+    polkadot_url = QString::fromStdString(tmp["polkadot_url"]);
+    polkadot_account = QString::fromStdString(tmp["polkadot_account"]);
+    polkadot_contract = QString::fromStdString(tmp["polkadot_contract"]);
+}
