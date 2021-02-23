@@ -1,8 +1,8 @@
 ![Header](img/New%20Project.png)
 
-# Acria-Oracle-Node-Qt
+# Acria-Oracle-Node-Qt Client
 
-Acria Oracle Node implemented in C++/Qt
+Acria Oracle Node Client implemented in C++/Qt
 
 ![GitHub](https://img.shields.io/github/license/Acria-Network/acria-substrate)
 ![GitHub](https://img.shields.io/travis/Acria-Network/acria-substrate/master.svg)
