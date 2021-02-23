@@ -7,6 +7,8 @@ Acria Oracle Node implemented in C++/Qt
 ![GitHub](https://img.shields.io/github/license/Acria-Network/acria-substrate)
 ![GitHub](https://img.shields.io/travis/Acria-Network/acria-substrate/master.svg)
 ![GitHub last commit](https://img.shields.io/github/last-commit/Acria-Network/acria-substrate)
+![GitHub](https://img.shields.io/badge/Qt-v5.15-brightgreen)
+![GitHub](https://img.shields.io/badge/OS-Linux%2FMacOS%2FWindows-brightgreen)
 
 One of the most pressing issues when developing smart contracts is the lack of real-world data. But due to technical limitations, such as the consensus protocol, no blockchain has been able to solve this major limitation. The Acria Network solves exactly this problem with the help of so-called Oracle Nodes that don't require a middleman. In addition to this, it offers cross-chain support to supply various blockchains with real-world data.
 
