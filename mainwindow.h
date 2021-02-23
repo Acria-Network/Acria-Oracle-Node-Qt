@@ -66,7 +66,9 @@ private:
     Node* node;
     Tasks* tasks;
     compinfo* cinfo;
+
     std::map<QString, Resource*> resources;
+
     QProgressIndicator* pi;
     QProgressIndicator* pi2;
 

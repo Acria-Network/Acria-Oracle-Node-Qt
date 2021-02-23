@@ -13,6 +13,7 @@ CONFIG += console
 SOURCES += \
     acriaconfig.cpp \
     compinfo.cpp \
+    configitem.cpp \
     data.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -25,6 +26,7 @@ SOURCES += \
 HEADERS += \
     acriaconfig.h \
     compinfo.h \
+    configitem.h \
     data.h \
     mainwindow.h \
     node.h \
@@ -37,6 +39,7 @@ HEADERS += \
 
 FORMS += \
     acriaconfig.ui \
+    configitem.ui \
     mainwindow.ui
 
 TRANSLATIONS += \

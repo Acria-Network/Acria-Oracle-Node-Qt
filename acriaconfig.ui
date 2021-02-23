@@ -56,6 +56,19 @@
     <string>Json Config:</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="pushButton_add_item">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>10</y>
+     <width>80</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Add Item</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections>

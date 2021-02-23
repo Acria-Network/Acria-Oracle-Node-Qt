@@ -4,6 +4,8 @@
 #include <QDialog>
 
 #include "node.h"
+#include "configitem.h"
+#include "json.hpp"
 
 
 namespace Ui {
@@ -23,9 +25,14 @@ private slots:
 
     void on_buttonBox_rejected();
 
+    void on_pushButton_add_item_clicked();
+
 private:
     Ui::AcriaConfig *ui;
     Node* node;
+
+    ConfigItem* ci;
+    nlohmann::json cjson;
 };
 
 #endif // ACRIACONFIG_H
