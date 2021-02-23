@@ -10,7 +10,7 @@ One of the most pressing issues when developing smart contracts is the lack of r
 
 [https://acria.network/](https://https://acria.network/)
 
-## Compilation
+## Building
 
 OS X & Linux:
 
