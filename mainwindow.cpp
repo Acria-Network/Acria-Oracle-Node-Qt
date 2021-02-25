@@ -51,6 +51,10 @@ MainWindow::MainWindow(QWidget *parent)
           }
     }
 
+    if(!this->node->parseConfig()){
+        qDebug() << "Error config";
+    }
+
     ui->setupUi(this);
 
     QtConcurrent::run(this, &MainWindow::get_status_geth);
@@ -68,8 +72,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(timer_update_events, SIGNAL(timeout()), this, SLOT(update_events()));
     timer_update_events->start(INTERVAL_RUN);
 
-    Resource* rr = new Resource("https://api.exchangeratesapi.io/latest?symbols=USD,GBP", {"rates","USD"}, "0xD4cA7302185a7346557709eFf49d05536B766d4A", "BTC/USD", this->data);
-    resources["BTC/USD"] = rr;
+    this->load_resources();
 
     this->pi = new QProgressIndicator();
     this->ui->horizontalLayout->layout()->addWidget(pi);
@@ -84,6 +87,19 @@ MainWindow::MainWindow(QWidget *parent)
     pi2->setColor(QColor::fromRgb(255,255,255));
 
     this->update_settings();
+}
+
+void MainWindow::load_resources(){
+    for(uint i = 0; i<node->get_config().size();i++){
+        std::vector<QString> l_json;
+
+        for(uint d = 0; d<node->get_config()[i]["json"].size();d++){
+            l_json.push_back(QString::fromStdString(node->get_config()[i]["json"][d]));
+        }
+
+        Resource* rr = new Resource(QString::fromStdString(node->get_config()[i]["url"]), l_json, this->data->eth_contract, QString::fromStdString(node->get_config()[i]["rname"]), this->data);
+        resources[QString::fromStdString(node->get_config()[i]["rname"])] = rr;
+    }
 }
 
 void MainWindow::update_settings(){

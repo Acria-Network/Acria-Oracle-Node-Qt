@@ -2,6 +2,7 @@
 #define CONFIGITEM_H
 
 #include <QDialog>
+#include <QLineEdit>
 
 #include "json.hpp"
 
@@ -27,6 +28,9 @@ private slots:
 
 private:
     Ui::ConfigItem *ui;
+    std::vector<QLineEdit*> t1;
+
+    void clear();
 };
 
 #endif // CONFIGITEM_H

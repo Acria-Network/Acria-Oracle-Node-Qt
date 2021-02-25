@@ -23,11 +23,14 @@ public:
     bool get_status_acria();
     bool get_status_config();
 
+    bool parseConfig();
+
+    nlohmann::json get_config(){return config;}
+
 private:
     QString config_location;
     nlohmann::json config;
 
-    bool parseConfig();
     QString loadConfig();
 
     bool status_geth;

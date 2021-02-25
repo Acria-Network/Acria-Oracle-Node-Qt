@@ -39,12 +39,10 @@ void AcriaConfig::on_buttonBox_rejected()
 void AcriaConfig::on_pushButton_add_item_clicked()
 {
     if(ci->exec() == QDialog::Accepted){
-        // update form from settings
+        this->cjson.push_back(this->ci->ijson);
+
+        this->ui->plainTextEdit->setPlainText(QString::fromStdString(this->cjson.dump()));
     }
-
-    this->cjson.push_back(this->ci->ijson);
-
-    this->ui->plainTextEdit->setPlainText(QString::fromStdString(this->cjson.dump()));
 
     qDebug() << "added item";
 }

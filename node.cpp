@@ -53,7 +53,7 @@ QString Node::loadConfig(){
 }
 
 bool Node::parseConfig(){
-    config = nlohmann::json::parse(this->loadConfig().toStdString());
+    this->config = nlohmann::json::parse(this->loadConfig().toStdString());
 
     return true;
 }

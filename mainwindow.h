@@ -78,5 +78,6 @@ private:
     QTimer *timer_update_events;
 
     void update_settings();
+    void load_resources();
 };
 #endif // MAINWINDOW_H
