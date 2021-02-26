@@ -63,6 +63,7 @@ void Tasks::managerFinished(QNetworkReply *reply) {
 
         bool bStatus = false;
         uint nHex = inf[1].toUInt(&bStatus,16);
+        this->data->items.clear();
 
         for(uint i=2;i<2+nHex;i++){
             QString tmp = "";
@@ -70,7 +71,7 @@ void Tasks::managerFinished(QNetworkReply *reply) {
                 tmp += QString(static_cast<char>((QString(inf[i].at(f-1)) + QString(inf[i].at(f))).toUInt(NULL,16)));
             }
             qDebug() << tmp.trimmed();
-            this->items.push_back(tmp.trimmed());
+            this->data->items.push_back(tmp.trimmed());
         }
     }
 

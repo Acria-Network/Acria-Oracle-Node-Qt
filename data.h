@@ -2,6 +2,8 @@
 #define DATA_H
 
 #include <QString>
+#include <vector>
+
 
 class Data
 {
@@ -14,6 +16,8 @@ public:
     QString polkadot_url;
     QString polkadot_account;
     QString polkadot_contract;
+
+    std::vector<QString> items;
 
     void load_settings();
     void save_settings();

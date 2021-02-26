@@ -25,7 +25,6 @@ private:
     QNetworkAccessManager *r_manager;
     QNetworkRequest r_request;
 
-    std::vector<QString> items;
     std::vector<req> requests;
 
     Data *data;

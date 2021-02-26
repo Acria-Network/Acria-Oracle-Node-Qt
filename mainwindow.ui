@@ -52,7 +52,7 @@ background-color: #222222;
      <enum>QTabWidget::West</enum>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>0</number>
     </property>
     <property name="iconSize">
      <size>
@@ -121,7 +121,7 @@ background-color: #222222;
        <rect>
         <x>380</x>
         <y>34</y>
-        <width>41</width>
+        <width>21</width>
         <height>20</height>
        </rect>
       </property>
@@ -134,7 +134,7 @@ background-color: #222222;
        <rect>
         <x>380</x>
         <y>54</y>
-        <width>41</width>
+        <width>21</width>
         <height>20</height>
        </rect>
       </property>
@@ -225,7 +225,7 @@ background-color: #222222;
        <rect>
         <x>380</x>
         <y>74</y>
-        <width>41</width>
+        <width>21</width>
         <height>20</height>
        </rect>
       </property>
@@ -343,7 +343,7 @@ color:black;</string>
        <rect>
         <x>380</x>
         <y>95</y>
-        <width>41</width>
+        <width>21</width>
         <height>20</height>
        </rect>
       </property>
@@ -380,6 +380,110 @@ color:black;</string>
        <pixmap>resources/acria_logo4.svg</pixmap>
       </property>
       <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_eth_info">
+      <property name="geometry">
+       <rect>
+        <x>393</x>
+        <y>33</y>
+        <width>21</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>resources/info.svg</normaloff>resources/info.svg</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>11</width>
+        <height>11</height>
+       </size>
+      </property>
+      <property name="flat">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_eth_info_2">
+      <property name="geometry">
+       <rect>
+        <x>393</x>
+        <y>53</y>
+        <width>21</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>resources/info.svg</normaloff>resources/info.svg</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>11</width>
+        <height>11</height>
+       </size>
+      </property>
+      <property name="flat">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_eth_info_3">
+      <property name="geometry">
+       <rect>
+        <x>393</x>
+        <y>73</y>
+        <width>21</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>resources/info.svg</normaloff>resources/info.svg</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>11</width>
+        <height>11</height>
+       </size>
+      </property>
+      <property name="flat">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_eth_info_4">
+      <property name="geometry">
+       <rect>
+        <x>393</x>
+        <y>94</y>
+        <width>21</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>resources/info.svg</normaloff>resources/info.svg</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>11</width>
+        <height>11</height>
+       </size>
+      </property>
+      <property name="flat">
        <bool>true</bool>
       </property>
      </widget>

@@ -36,10 +36,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     data->load_settings();
 
-    node = new Node(this->data);
-    acria_config = new AcriaConfig(this, node);
-    tasks = new Tasks(this->data);
-    cinfo = new compinfo(this->data);
+    this->node = new Node(this->data);
+    this->acria_config = new AcriaConfig(this, this->node);
+    this->tasks = new Tasks(this->data);
+    this->cinfo = new compinfo(this->data);
+    this->igeth = new InfoGeth(this, this->node, this->data);
 
     if(!fileExists("config.conf")){
         QMessageBox::StandardButton reply;
@@ -232,6 +233,7 @@ MainWindow::~MainWindow()
     delete pi;
     delete pi2;
     delete data;
+    delete igeth;
 
     delete timer_update_requests;
     delete timer_update_events;
@@ -359,4 +361,11 @@ void MainWindow::on_pushButton_setting_discard_clicked()
 {
     this->data->load_settings();
     this->update_settings();
+}
+
+void MainWindow::on_pushButton_eth_info_clicked()
+{
+    this->igeth->update_info();
+
+    this->igeth->exec();
 }

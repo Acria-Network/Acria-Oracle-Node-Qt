@@ -15,6 +15,7 @@ SOURCES += \
     compinfo.cpp \
     configitem.cpp \
     data.cpp \
+    infogeth.cpp \
     main.cpp \
     mainwindow.cpp \
     node.cpp \
@@ -28,6 +29,7 @@ HEADERS += \
     compinfo.h \
     configitem.h \
     data.h \
+    infogeth.h \
     mainwindow.h \
     node.h \
     qprogressindicator.h \
@@ -40,6 +42,7 @@ HEADERS += \
 FORMS += \
     acriaconfig.ui \
     configitem.ui \
+    infogeth.ui \
     mainwindow.ui
 
 TRANSLATIONS += \

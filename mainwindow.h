@@ -10,6 +10,7 @@
 #include "compinfo.h"
 #include "qprogressindicator.h"
 #include "data.h"
+#include "infogeth.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -60,12 +61,15 @@ private slots:
 
     void on_pushButton_setting_discard_clicked();
 
+    void on_pushButton_eth_info_clicked();
+
 private:
     Ui::MainWindow *ui;
     AcriaConfig* acria_config;
     Node* node;
     Tasks* tasks;
     compinfo* cinfo;
+    InfoGeth* igeth;
 
     std::map<QString, Resource*> resources;
 

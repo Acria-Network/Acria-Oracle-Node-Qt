@@ -26,6 +26,7 @@ public:
     bool parseConfig();
 
     nlohmann::json get_config(){return config;}
+    QString get_geth_version(){return geth_version;}
 
 private:
     QString config_location;
