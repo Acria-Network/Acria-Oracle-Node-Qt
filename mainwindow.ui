@@ -461,32 +461,6 @@ color:black;</string>
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_eth_info_4">
-      <property name="geometry">
-       <rect>
-        <x>393</x>
-        <y>94</y>
-        <width>21</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="icon">
-       <iconset>
-        <normaloff>resources/info.svg</normaloff>resources/info.svg</iconset>
-      </property>
-      <property name="iconSize">
-       <size>
-        <width>11</width>
-        <height>11</height>
-       </size>
-      </property>
-      <property name="flat">
-       <bool>true</bool>
-      </property>
-     </widget>
     </widget>
     <widget class="QWidget" name="tab_2">
      <property name="styleSheet">

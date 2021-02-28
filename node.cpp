@@ -74,6 +74,10 @@ Node::Node(Data* _data)
     this->status_acria = true;
     this->status_config = true;
 
+    update_geth_status();
+};
+
+void Node::update_geth_status(){
     qDebug() << "answer";
     QJsonObject obj;
     obj["jsonrpc"] = "2.0";
@@ -86,7 +90,7 @@ Node::Node(Data* _data)
     status_request.setUrl(QUrl(this->data->geth_url));
     status_request.setRawHeader("Content-Type", "application/json");
     status_manager->post(status_request, data);
-};
+}
 
 Node::~Node()
 {

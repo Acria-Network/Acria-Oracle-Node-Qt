@@ -25,6 +25,8 @@ public:
 
     bool parseConfig();
 
+    void update_geth_status();
+
     nlohmann::json get_config(){return config;}
     QString get_geth_version(){return geth_version;}
 

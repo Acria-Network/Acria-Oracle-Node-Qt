@@ -37,10 +37,6 @@ MainWindow::MainWindow(QWidget *parent)
     data->load_settings();
 
     this->node = new Node(this->data);
-    this->acria_config = new AcriaConfig(this, this->node);
-    this->tasks = new Tasks(this->data);
-    this->cinfo = new compinfo(this->data);
-    this->igeth = new InfoGeth(this, this->node, this->data);
 
     if(!fileExists("config.conf")){
         QMessageBox::StandardButton reply;
@@ -51,10 +47,17 @@ MainWindow::MainWindow(QWidget *parent)
 
           }
     }
-
-    if(!this->node->parseConfig()){
-        qDebug() << "Error config";
+    else{
+        if(!this->node->parseConfig()){
+            qDebug() << "Error config";
+        }
     }
+
+    this->acria_config = new AcriaConfig(this, this->node);
+    this->tasks = new Tasks(this->data);
+    this->cinfo = new compinfo(this->data);
+    this->igeth = new InfoGeth(this, this->node, this->data);
+
 
     ui->setupUi(this);
 
@@ -91,6 +94,11 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 void MainWindow::load_resources(){
+    for (auto const& x : resources)
+    {
+        delete x.second;
+    }
+
     for(uint i = 0; i<node->get_config().size();i++){
         std::vector<QString> l_json;
 
@@ -253,38 +261,40 @@ void MainWindow::on_pushButton_export_json_clicked()
                                                  | QFileDialog::DontResolveSymlinks);
 
 
-    std::vector<comp> r = cinfo->get_completed();
+    if(dir != ""){
+        std::vector<comp> r = cinfo->get_completed();
 
-    nlohmann::json tmp;
+        nlohmann::json tmp;
 
-    for(uint i = 0; i<r.size(); i++){
-        tmp[i]["requestID"] = r[i].requestID.toStdString();
-        tmp[i]["callback"] = r[i].callback.toStdString();
-        tmp[i]["hash"] = r[i].hash.toStdString();
-        tmp[i]["block"] = r[i].block;
-        tmp[i]["address"] = r[i].address.toStdString();
+        for(uint i = 0; i<r.size(); i++){
+            tmp[i]["requestID"] = r[i].requestID.toStdString();
+            tmp[i]["callback"] = r[i].callback.toStdString();
+            tmp[i]["hash"] = r[i].hash.toStdString();
+            tmp[i]["block"] = r[i].block;
+            tmp[i]["address"] = r[i].address.toStdString();
+        }
+
+        QString filename=dir + "/transactions.json";
+        QFile file(filename);
+
+        qDebug() << filename;
+
+        if(!file.exists()){
+            qDebug() << "File exists: "<<filename;
+        }else{
+            qDebug() << filename<<" does not exist";
+        }
+
+       if (file.open(QIODevice::WriteOnly | QIODevice::Text)){
+            QTextStream out(&file);
+            out << QString::fromStdString(tmp.dump());
+            file.close();
+       }
+
+       QMessageBox msgBox;
+       msgBox.setText("Successfully exported as Json!");
+       msgBox.exec();
     }
-
-    QString filename=dir + "/transactions.json";
-    QFile file(filename);
-
-    qDebug() << filename;
-
-    if(!file.exists()){
-        qDebug() << "File exists: "<<filename;
-    }else{
-        qDebug() << filename<<" does not exist";
-    }
-
-   if (file.open(QIODevice::WriteOnly | QIODevice::Text)){
-        QTextStream out(&file);
-        out << QString::fromStdString(tmp.dump());
-        file.close();
-   }
-
-   QMessageBox msgBox;
-   msgBox.setText("Successfully exported Json!");
-   msgBox.exec();
 }
 
 void MainWindow::on_pushButton_export_csv_clicked()
@@ -294,25 +304,52 @@ void MainWindow::on_pushButton_export_csv_clicked()
                                                  QFileDialog::ShowDirsOnly
                                                  | QFileDialog::DontResolveSymlinks);
 
-    QString filename=dir + "/transactions.csv";
-    QFile file(filename);
+    if(dir != ""){
+        std::vector<comp> r = cinfo->get_completed();
 
-    if(!file.exists()){
-        qDebug() << "File exists: "<<filename;
-    }else{
-        qDebug() << filename<<" does not exist";
+        QString tmp = "";
+        QString delim = ";";
+        tmp += "requestID"+delim+"callback"+delim+"hash"+delim+"block"+delim+"address\n";
+
+        for(uint i = 0; i<r.size(); i++){
+            tmp += QString::fromStdString(r[i].requestID.toStdString());
+            tmp += delim;
+            tmp += QString::fromStdString(r[i].callback.toStdString());
+            tmp += delim;
+            tmp += QString::fromStdString(r[i].hash.toStdString());
+            tmp += delim;
+            tmp += QString::number(r[i].block);
+            tmp += delim;
+            tmp += QString::fromStdString(r[i].address.toStdString());
+            tmp += "\n";
+        }
+
+        QString filename=dir + "/transactions.csv";
+        QFile file(filename);
+
+        if(!file.exists()){
+            qDebug() << "File exists: "<<filename;
+        }else{
+            qDebug() << filename<<" does not exist";
+        }
+
+       if (file.open(QIODevice::WriteOnly | QIODevice::Text)){
+            QTextStream out(&file);
+            out << tmp;
+            file.close();
+       }
+
+       QMessageBox msgBox;
+       msgBox.setText("Successfully exported as CSV!");
+       msgBox.exec();
     }
-
-   if (file.open(QIODevice::WriteOnly | QIODevice::Text)){
-        QTextStream out(&file);
-        out << "";
-        file.close();
-   }
 }
 
 void MainWindow::on_pushButton_export_json_3_clicked()
 {
-    this->acria_config->show();
+    if(this->acria_config->exec() == QDialog::Accepted){
+        this->load_resources();
+    }
 }
 
 void MainWindow::on_pushButton_refresh_clicked()
@@ -321,6 +358,8 @@ void MainWindow::on_pushButton_refresh_clicked()
     ui->status_polkadot->setText("...");
     ui->status_acria->setText("...");
     ui->status_config->setText("...");
+
+    this->node->update_geth_status();
 
     QtConcurrent::run(this, &MainWindow::get_status_geth);
     QtConcurrent::run(this, &MainWindow::get_status_polkadot);

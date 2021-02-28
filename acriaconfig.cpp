@@ -13,7 +13,11 @@ AcriaConfig::AcriaConfig(QWidget *parent, Node* _node) :
 
     ci = new ConfigItem(this);
 
+    this->cjson = node->get_config();
+
     ui->setupUi(this);
+
+    this->ui->plainTextEdit->setPlainText(QString::fromStdString(this->cjson.dump()));
 }
 
 AcriaConfig::~AcriaConfig()
