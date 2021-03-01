@@ -21,6 +21,10 @@ void Data::save_settings(){
     tmp["polkadot_account"] = polkadot_account.toStdString();
     tmp["polkadot_contract"] = polkadot_contract.toStdString();
 
+    tmp["binance_url"] = binance_url.toStdString();
+    tmp["binance_account"] = binance_account.toStdString();
+    tmp["binance_contract"] = binance_contract.toStdString();
+
     QString filename="settings.conf";
     QFile file(filename);
 
@@ -60,11 +64,30 @@ void Data::load_settings(){
 
     nlohmann::json tmp = nlohmann::json::parse(line.toStdString());
 
-    geth_url = QString::fromStdString(tmp["geth_url"]);
-    eth_account = QString::fromStdString(tmp["eth_account"]);
-    eth_contract = QString::fromStdString(tmp["eth_contract"]);
+    try{
+        geth_url = QString::fromStdString(tmp["geth_url"]);
+        eth_account = QString::fromStdString(tmp["eth_account"]);
+        eth_contract = QString::fromStdString(tmp["eth_contract"]);
+    }
+    catch(...){
+        qDebug() << "Error settings ethereum";
+    }
 
-    polkadot_url = QString::fromStdString(tmp["polkadot_url"]);
-    polkadot_account = QString::fromStdString(tmp["polkadot_account"]);
-    polkadot_contract = QString::fromStdString(tmp["polkadot_contract"]);
+    try{
+        polkadot_url = QString::fromStdString(tmp["polkadot_url"]);
+        polkadot_account = QString::fromStdString(tmp["polkadot_account"]);
+        polkadot_contract = QString::fromStdString(tmp["polkadot_contract"]);
+    }
+    catch(...){
+        qDebug() << "Error settings polkadot";
+    }
+
+    try{
+        binance_url = QString::fromStdString(tmp["binance_url"]);
+        binance_account = QString::fromStdString(tmp["binance_account"]);
+        binance_contract = QString::fromStdString(tmp["binance_contract"]);
+    }
+    catch(...){
+        qDebug() << "Error settings binance";
+    }
 }

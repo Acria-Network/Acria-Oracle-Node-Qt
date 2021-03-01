@@ -3,7 +3,7 @@
 
 #include <QDialog>
 
-#include "node.h"
+#include "config.h"
 #include "configitem.h"
 #include "json.hpp"
 
@@ -17,7 +17,7 @@ class AcriaConfig : public QDialog
     Q_OBJECT
 
 public:
-    explicit AcriaConfig(QWidget *parent = nullptr, Node* _node = nullptr);
+    explicit AcriaConfig(QWidget *parent = nullptr, Config* _config = nullptr);
     ~AcriaConfig();
 
 private slots:
@@ -29,7 +29,7 @@ private slots:
 
 private:
     Ui::AcriaConfig *ui;
-    Node* node;
+    Config* config;
 
     ConfigItem* ci;
     nlohmann::json cjson;

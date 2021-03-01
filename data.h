@@ -17,6 +17,10 @@ public:
     QString polkadot_account;
     QString polkadot_contract;
 
+    QString binance_url;
+    QString binance_account;
+    QString binance_contract;
+
     std::vector<QString> items;
 
     void load_settings();

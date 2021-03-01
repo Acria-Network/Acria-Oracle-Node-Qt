@@ -5,15 +5,15 @@
 #include <QDebug>
 
 
-AcriaConfig::AcriaConfig(QWidget *parent, Node* _node) :
+AcriaConfig::AcriaConfig(QWidget *parent, Config* _config) :
     QDialog(parent),
     ui(new Ui::AcriaConfig)
 {
-    node = _node;
+    config = _config;
 
     ci = new ConfigItem(this);
 
-    this->cjson = node->get_config();
+    this->cjson = config->get_config();
 
     ui->setupUi(this);
 
@@ -28,7 +28,7 @@ AcriaConfig::~AcriaConfig()
 void AcriaConfig::on_buttonBox_accepted()
 {
     qDebug() << "saving config";
-    if(!node->createConfig(this->ui->plainTextEdit->toPlainText())){
+    if(!config->createConfig(this->ui->plainTextEdit->toPlainText())){
         qDebug() << "Error config";
     }
 

@@ -36,7 +36,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     data->load_settings();
 
-    this->node = new Node(this->data);
+    this->node = new Node(this->data, "ethereum");
+    this->binance_node = new Node(this->data, "binance");
+
+    this->config = new Config();
 
     if(!fileExists("config.conf")){
         QMessageBox::StandardButton reply;
@@ -48,12 +51,12 @@ MainWindow::MainWindow(QWidget *parent)
           }
     }
     else{
-        if(!this->node->parseConfig()){
+        if(!this->config->parseConfig()){
             qDebug() << "Error config";
         }
     }
 
-    this->acria_config = new AcriaConfig(this, this->node);
+    this->acria_config = new AcriaConfig(this, this->config);
     this->tasks = new Tasks(this->data);
     this->cinfo = new compinfo(this->data);
     this->igeth = new InfoGeth(this, this->node, this->data);
@@ -65,6 +68,7 @@ MainWindow::MainWindow(QWidget *parent)
     QtConcurrent::run(this, &MainWindow::get_status_polkadot);
     QtConcurrent::run(this, &MainWindow::get_status_acria);
     QtConcurrent::run(this, &MainWindow::get_status_config);
+    QtConcurrent::run(this, &MainWindow::get_status_binance);
 
     tasks->update_tasks();
 
@@ -99,15 +103,15 @@ void MainWindow::load_resources(){
         delete x.second;
     }
 
-    for(uint i = 0; i<node->get_config().size();i++){
+    for(uint i = 0; i<config->get_config().size();i++){
         std::vector<QString> l_json;
 
-        for(uint d = 0; d<node->get_config()[i]["json"].size();d++){
-            l_json.push_back(QString::fromStdString(node->get_config()[i]["json"][d]));
+        for(uint d = 0; d<config->get_config()[i]["json"].size();d++){
+            l_json.push_back(QString::fromStdString(config->get_config()[i]["json"][d]));
         }
 
-        Resource* rr = new Resource(QString::fromStdString(node->get_config()[i]["url"]), l_json, this->data->eth_contract, QString::fromStdString(node->get_config()[i]["rname"]), this->data);
-        resources[QString::fromStdString(node->get_config()[i]["rname"])] = rr;
+        Resource* rr = new Resource(QString::fromStdString(config->get_config()[i]["url"]), l_json, this->data->eth_contract, QString::fromStdString(config->get_config()[i]["rname"]), this->data);
+        resources[QString::fromStdString(config->get_config()[i]["rname"])] = rr;
     }
 }
 
@@ -119,6 +123,10 @@ void MainWindow::update_settings(){
     this->ui->lineEdit_polkadot_url->setText(this->data->polkadot_url);
     this->ui->lineEdit_polkadot_account->setText(this->data->polkadot_account);
     this->ui->lineEdit_polkadot_contract->setText(this->data->polkadot_contract);
+
+    this->ui->lineEdit_binance_url->setText(this->data->binance_url);
+    this->ui->lineEdit_binance_account->setText(this->data->binance_account);
+    this->ui->lineEdit_binance_contract->setText(this->data->binance_contract);
 }
 
 void MainWindow::get_status_geth(){
@@ -134,6 +142,14 @@ void MainWindow::get_status_polkadot(){
 
     if(node->get_status_polkadot()){
         ui->status_polkadot->setText("Ok");
+    }
+}
+
+void MainWindow::get_status_binance(){
+    QThread::msleep(INTERVAL_RUN_CONNECTION);
+
+    if(binance_node->get_status_geth()){
+        ui->status_binance->setText("Ok");
     }
 }
 
@@ -360,6 +376,7 @@ void MainWindow::on_pushButton_refresh_clicked()
     ui->status_config->setText("...");
 
     this->node->update_geth_status();
+    this->binance_node->update_geth_status();
 
     QtConcurrent::run(this, &MainWindow::get_status_geth);
     QtConcurrent::run(this, &MainWindow::get_status_polkadot);
@@ -389,6 +406,18 @@ void MainWindow::on_pushButton_config_settings_clicked()
 
 void MainWindow::on_pushButton_setting_save_clicked()
 {
+    this->data->binance_url = this->ui->lineEdit_binance_url->text();
+    this->data->binance_account = this->ui->lineEdit_binance_account->text();
+    this->data->binance_contract = this->ui->lineEdit_binance_contract->text();
+
+    this->data->geth_url = this->ui->lineEdit_geth_url->text();
+    this->data->eth_account = this->ui->lineEdit_eth_account->text();
+    this->data->eth_contract = this->ui->lineEdit_eth_contract->text();
+
+    this->data->polkadot_url = this->ui->lineEdit_polkadot_url->text();
+    this->data->polkadot_account = this->ui->lineEdit_polkadot_account->text();
+    this->data->polkadot_contract = this->ui->lineEdit_polkadot_contract->text();
+
     this->data->save_settings();
 
     QMessageBox msgBox;
@@ -407,4 +436,9 @@ void MainWindow::on_pushButton_eth_info_clicked()
     this->igeth->update_info();
 
     this->igeth->exec();
+}
+
+void MainWindow::on_pushButton_binance_settings_clicked()
+{
+    this->ui->tabWidget->setCurrentIndex(3);
 }

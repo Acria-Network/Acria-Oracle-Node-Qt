@@ -15,27 +15,18 @@ class Node : public QObject
 Q_OBJECT
 
 public:
-    Node(Data* _data);
+    Node(Data* _data, QString _type);
     ~Node();
-    bool createConfig(QString conf);
     bool get_status_geth();
     bool get_status_polkadot();
     bool get_status_acria();
     bool get_status_config();
 
-    bool parseConfig();
-
     void update_geth_status();
 
-    nlohmann::json get_config(){return config;}
     QString get_geth_version(){return geth_version;}
 
 private:
-    QString config_location;
-    nlohmann::json config;
-
-    QString loadConfig();
-
     bool status_geth;
     bool status_polkadot;
     bool status_acria;
@@ -47,6 +38,8 @@ private:
     QNetworkRequest status_request;
 
     Data* data;
+
+    QString type;
 
 private slots:
     void statusManagerFinished(QNetworkReply *reply);

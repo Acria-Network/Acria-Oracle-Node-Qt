@@ -13,6 +13,7 @@ CONFIG += console
 SOURCES += \
     acriaconfig.cpp \
     compinfo.cpp \
+    config.cpp \
     configitem.cpp \
     data.cpp \
     infogeth.cpp \
@@ -27,6 +28,7 @@ SOURCES += \
 HEADERS += \
     acriaconfig.h \
     compinfo.h \
+    config.h \
     configitem.h \
     data.h \
     infogeth.h \

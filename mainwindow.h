@@ -11,6 +11,7 @@
 #include "qprogressindicator.h"
 #include "data.h"
 #include "infogeth.h"
+#include "config.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -55,6 +56,8 @@ private slots:
 
     void get_status_acria();
 
+    void get_status_binance();
+
     void get_status_config();
 
     void on_pushButton_setting_save_clicked();
@@ -63,13 +66,17 @@ private slots:
 
     void on_pushButton_eth_info_clicked();
 
+    void on_pushButton_binance_settings_clicked();
+
 private:
     Ui::MainWindow *ui;
     AcriaConfig* acria_config;
     Node* node;
+    Node* binance_node;
     Tasks* tasks;
     compinfo* cinfo;
     InfoGeth* igeth;
+    Config* config;
 
     std::map<QString, Resource*> resources;
 

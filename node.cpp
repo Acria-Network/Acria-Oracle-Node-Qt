@@ -9,60 +9,10 @@
 #include <QJsonDocument>
 
 
-bool Node::createConfig(QString conf){
-    QString filename=this->config_location;
-    QFile file(filename);
-
-    if(!file.exists()){
-        qDebug() << "Config File exists: "<<filename;
-    }else{
-        qDebug() << filename<<" does not exist";
-    }
-
-   if (file.open(QIODevice::WriteOnly | QIODevice::Text)){
-        QTextStream out(&file);
-        out << conf;
-        file.close();
-   }
-
-   return this->parseConfig();
-}
-
-QString Node::loadConfig(){
-    QString filename=this->config_location;
-    QFile file(filename);
-
-    if(!file.exists()){
-        qDebug() << "Config File exists: "<<filename;
-    }else{
-        qDebug() << filename<<" does not exist";
-    }
-
-    QString line;
-
-    if (file.open(QIODevice::ReadOnly | QIODevice::Text)){
-        QTextStream stream(&file);
-        while (!stream.atEnd()){
-            line += stream.readLine();
-            qDebug() << "line: "<<line;
-        }
-    }
-    file.close();
-
-    return line;
-}
-
-bool Node::parseConfig(){
-    this->config = nlohmann::json::parse(this->loadConfig().toStdString());
-
-    return true;
-}
-
-Node::Node(Data* _data)
+Node::Node(Data* _data, QString _type)
 {
     this->data = _data;
-
-    config_location = "config.conf";
+    this->type = _type;
 
     status_manager = new QNetworkAccessManager();
 
@@ -78,6 +28,14 @@ Node::Node(Data* _data)
 };
 
 void Node::update_geth_status(){
+    QUrl url1;
+
+    if(this->type == "ethereum")
+        url1 = QUrl(this->data->geth_url);
+
+    if(this->type == "binance")
+        url1 = QUrl(this->data->binance_url);
+
     qDebug() << "answer";
     QJsonObject obj;
     obj["jsonrpc"] = "2.0";
@@ -87,7 +45,7 @@ void Node::update_geth_status(){
     QJsonDocument doc(obj);
     QByteArray data = doc.toJson();
 
-    status_request.setUrl(QUrl(this->data->geth_url));
+    status_request.setUrl(url1);
     status_request.setRawHeader("Content-Type", "application/json");
     status_manager->post(status_request, data);
 }
