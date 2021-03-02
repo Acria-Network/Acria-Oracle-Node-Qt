@@ -31,13 +31,14 @@ Resource::Resource()
         this, SLOT(send_managerFinished(QNetworkReply*)));
 }
 
-Resource::Resource(QString _url, std::vector<QString> _l_json, QString _contract, QString n, Data* _data) : Resource()
+Resource::Resource(QString _url, std::vector<QString> _l_json, QString _contract, QString n, Data* _data, QString _type) : Resource()
 {
     this->url = _url;
     this->l_json = _l_json;
     this->contract = _contract;
     this->item = n;
     this->data = _data;
+    this->type = _type;
 }
 
 Resource::~Resource()
@@ -87,7 +88,24 @@ std::string tohex(std::string number) {                        // Decimal to Hex
 }
 
 void Resource::send_resource(){
+    QUrl url1;
+    QString contract1;
+    QString account1;
+
+    if(this->type == "ethereum"){
+        url1 = QUrl(this->data->geth_url);
+        contract1 = this->data->eth_contract;
+        account1 = this->data->eth_account;
+    }
+
+    else if(this->type == "binance"){
+        url1 = QUrl(this->data->binance_url);
+        contract1 = this->data->binance_contract;
+        account1 = this->data->binance_account;
+    }
+
     QString d1 = "0x01ff927b";
+    //d1 = "0xb4883e04";
     QString d2 = this->item;
 
     qDebug() << d1;
@@ -108,8 +126,8 @@ void Resource::send_resource(){
     qDebug() << d3;
 
     QJsonObject obj1;
-    obj1["from"] = "0x56B832aB0E5615CD72256204406177Ed5887145c";
-    obj1["to"] = this->contract;
+    obj1["from"] = account1;
+    obj1["to"] = contract1;
     obj1["gasPrice"] = "0x9184e72a000";
     obj1["gas"] = "0x76c00";
     obj1["value"] = "0x0000000000000000000000000000000000000000000000000000000000000000";
@@ -126,7 +144,7 @@ void Resource::send_resource(){
     QJsonDocument doc(obj);
     QByteArray data = doc.toJson();
 
-    send_request.setUrl(QUrl(this->data->geth_url));
+    send_request.setUrl(url1);
     send_request.setRawHeader("Content-Type", "application/json");
     send_manager->post(send_request, data);
 }

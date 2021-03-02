@@ -22,6 +22,8 @@ public:
     QString binance_contract;
 
     std::vector<QString> items;
+    std::vector<QString> binance_items;
+    std::vector<QString> polkadot_items;
 
     void load_settings();
     void save_settings();

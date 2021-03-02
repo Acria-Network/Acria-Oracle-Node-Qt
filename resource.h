@@ -35,9 +35,11 @@ private:
     std::vector<QString> l_json;
     Data *data;
 
+    QString type;
+
 public:
     Resource();
-    Resource(QString url, std::vector<QString> _l_json, QString _contract, QString n, Data* _data);
+    Resource(QString url, std::vector<QString> _l_json, QString _contract, QString n, Data* _data, QString _type);
     ~Resource();
     void update_resource();
     void send_resource();

@@ -14,6 +14,7 @@ struct comp{
     QString hash;
     uint block;
     QString address;
+    QString chain;
 };
 
 class compinfo : public QObject
@@ -33,10 +34,12 @@ private:
 
     Data *data;
 
+    QString type;
+
     void create_filter_events();
 
 public:
-    compinfo(Data *_data);
+    compinfo(Data *_data, QString _type);
     ~compinfo();
 
     void update_events();

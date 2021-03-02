@@ -57,8 +57,13 @@ MainWindow::MainWindow(QWidget *parent)
     }
 
     this->acria_config = new AcriaConfig(this, this->config);
-    this->tasks = new Tasks(this->data);
-    this->cinfo = new compinfo(this->data);
+
+    this->tasks = new Tasks(this->data, "ethereum");
+    this->binance_tasks = new Tasks(this->data, "binance");
+
+    this->cinfo = new compinfo(this->data, "ethereum");
+    this->binance_cinfo = new compinfo(this->data, "binance");
+
     this->igeth = new InfoGeth(this, this->node, this->data);
 
 
@@ -98,9 +103,12 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 void MainWindow::load_resources(){
-    for (auto const& x : resources)
+    for (auto const& y : resources)
     {
-        delete x.second;
+        for (auto const& x : y.second)
+        {
+            delete x.second;
+        }
     }
 
     for(uint i = 0; i<config->get_config().size();i++){
@@ -110,8 +118,11 @@ void MainWindow::load_resources(){
             l_json.push_back(QString::fromStdString(config->get_config()[i]["json"][d]));
         }
 
-        Resource* rr = new Resource(QString::fromStdString(config->get_config()[i]["url"]), l_json, this->data->eth_contract, QString::fromStdString(config->get_config()[i]["rname"]), this->data);
-        resources[QString::fromStdString(config->get_config()[i]["rname"])] = rr;
+        Resource* rr = new Resource(QString::fromStdString(config->get_config()[i]["url"]), l_json, this->data->eth_contract, QString::fromStdString(config->get_config()[i]["rname"]), this->data, "ethereum");
+        resources["ethereum"][QString::fromStdString(config->get_config()[i]["rname"])] = rr;
+
+        Resource* rr2 = new Resource(QString::fromStdString(config->get_config()[i]["url"]), l_json, this->data->binance_contract, QString::fromStdString(config->get_config()[i]["rname"]), this->data, "binance");
+        resources["binance"][QString::fromStdString(config->get_config()[i]["rname"])] = rr2;
     }
 }
 
@@ -169,8 +180,12 @@ void MainWindow::get_status_config(){
 
 void MainWindow::update_requests(){
     tasks->update_requests();
+    binance_tasks->update_requests();
 
     std::vector<req> r = tasks->get_requests();
+
+    std::vector<req> r2 = binance_tasks->get_requests();
+    r.insert(r.end(), r2.begin(), r2.end());
 
     this->ui->tableWidget_req->clear();
     while (ui->tableWidget_req->rowCount() > 0)
@@ -187,19 +202,20 @@ void MainWindow::update_requests(){
         this->ui->tableWidget_req->setItem( d, 1, new QTableWidgetItem(r[d].requestID));
         this->ui->tableWidget_req->setItem( d, 2, new QTableWidgetItem(r[d].cancelled==true?"Cancelled":"Active"));
         this->ui->tableWidget_req->setItem( d, 3, new QTableWidgetItem(QString::number(r[d].expiration)));
-        this->ui->tableWidget_req->setItem( d, 4, new QTableWidgetItem(r[d].callback));
+        //this->ui->tableWidget_req->setItem( d, 4, new QTableWidgetItem(r[d].callback));
+        this->ui->tableWidget_req->setItem( d, 4, new QTableWidgetItem(r[d].chain));
     }
 
     std::vector<QString> nt;
 
     for (uint d=0; d<r.size(); d++){
-        if ( resources.find(r[d].requestID) == resources.end() ) {
+        if ( resources[r[d].chain].find(r[d].requestID) == resources[r[d].chain].end() ) {
           qDebug() << "key not available";
         } else {
-            if (!std::count(nt.begin(), nt.end(), r[d].requestID)){
+            if (!std::count(nt.begin(), nt.end(), r[d].chain + r[d].requestID)){
                 qDebug() <<"dddd";
-                resources[r[d].requestID]->update_resource();
-                nt.push_back(r[d].requestID);
+                resources[r[d].chain][r[d].requestID]->update_resource();
+                nt.push_back(r[d].chain + r[d].requestID);
             }
         }
     }
@@ -216,8 +232,11 @@ void MainWindow::update_requests(){
 
 void MainWindow::update_events(){
     cinfo->update_events();
+    binance_cinfo->update_events();
 
     std::vector<comp> r = cinfo->get_completed();
+    std::vector<comp> r2 = binance_cinfo->get_completed();
+    r.insert(r.end(), r2.begin(), r2.end());
 
     this->ui->tableWidget_comp->clear();
     while (ui->tableWidget_comp->rowCount() > 0)
@@ -229,17 +248,21 @@ void MainWindow::update_events(){
     this->ui->tableWidget_comp->setColumnCount(5);
     this->ui->tableWidget_comp->setColumnWidth(4, 240);
     this->ui->tableWidget_comp->setColumnWidth(0, 20);
-    for (uint d=0; d<r.size(); d++){
-        this->ui->tableWidget_comp->setItem( d, 0, new QTableWidgetItem(QString::number(d)));
-        this->ui->tableWidget_comp->setItem( d, 1, new QTableWidgetItem(r[d].requestID));
-        this->ui->tableWidget_comp->setItem( d, 2, new QTableWidgetItem(r[d].callback));
-        this->ui->tableWidget_comp->setItem( d, 3, new QTableWidgetItem(QString::number(r[d].block)));
-        this->ui->tableWidget_comp->setItem( d, 4, new QTableWidgetItem(r[d].hash));
-    }
 
     if(r.size() != 0){
         this->ui->horizontalLayoutWidget_2->hide();
         this->ui->label_progress_2->hide();
+
+        for (uint d=r.size()-1; d>0; d--){
+            uint dd = r.size()-1-d;
+            qDebug() << dd << d;
+            this->ui->tableWidget_comp->setItem( dd, 0, new QTableWidgetItem(QString::number(d)));
+            this->ui->tableWidget_comp->setItem( dd, 1, new QTableWidgetItem(r[d].requestID));
+            //this->ui->tableWidget_comp->setItem( d, 2, new QTableWidgetItem(r[d].callback));
+            this->ui->tableWidget_comp->setItem( dd, 2, new QTableWidgetItem(r[d].chain));
+            this->ui->tableWidget_comp->setItem( dd, 3, new QTableWidgetItem(QString::number(r[d].block)));
+            this->ui->tableWidget_comp->setItem( dd, 4, new QTableWidgetItem(r[d].hash));
+        }
     }
     else{
         this->ui->horizontalLayoutWidget_2->show();
@@ -259,12 +282,20 @@ MainWindow::~MainWindow()
     delete data;
     delete igeth;
 
+    delete binance_cinfo;
+    delete binance_tasks;
+
     delete timer_update_requests;
     delete timer_update_events;
 
-    for (auto const& x : resources)
+    delete binance_node;
+
+    for (auto const& y : resources)
     {
-        delete x.second;
+        for (auto const& x : y.second)
+        {
+            delete x.second;
+        }
     }
 }
 
@@ -279,6 +310,8 @@ void MainWindow::on_pushButton_export_json_clicked()
 
     if(dir != ""){
         std::vector<comp> r = cinfo->get_completed();
+        std::vector<comp> r2 = binance_cinfo->get_completed();
+        r.insert(r.end(), r2.begin(), r2.end());
 
         nlohmann::json tmp;
 
@@ -322,6 +355,8 @@ void MainWindow::on_pushButton_export_csv_clicked()
 
     if(dir != ""){
         std::vector<comp> r = cinfo->get_completed();
+        std::vector<comp> r2 = binance_cinfo->get_completed();
+        r.insert(r.end(), r2.begin(), r2.end());
 
         QString tmp = "";
         QString delim = ";";

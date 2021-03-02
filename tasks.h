@@ -12,6 +12,7 @@ struct req{
     bool cancelled;
     uint expiration;
     QString callback;
+    QString chain;
 };
 
 class Tasks : public QObject
@@ -29,8 +30,10 @@ private:
 
     Data *data;
 
+    QString type;
+
 public:
-    Tasks(Data *_data);
+    Tasks(Data *_data, QString _type);
     ~Tasks();
 
     void update_tasks();

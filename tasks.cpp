@@ -6,7 +6,7 @@
 #include <QDebug>
 #include <QJsonArray>
 
-Tasks::Tasks(Data *_data)
+Tasks::Tasks(Data *_data, QString _type)
 {
     manager = new QNetworkAccessManager();
 
@@ -19,6 +19,7 @@ Tasks::Tasks(Data *_data)
         this, SLOT(r_managerFinished(QNetworkReply*)));
 
     this->data = _data;
+    this->type = _type;
 }
 
 Tasks::~Tasks()
@@ -63,7 +64,11 @@ void Tasks::managerFinished(QNetworkReply *reply) {
 
         bool bStatus = false;
         uint nHex = inf[1].toUInt(&bStatus,16);
-        this->data->items.clear();
+
+        if(this->type == "ethereum")
+            this->data->items.clear();
+        else if(this->type == "binance")
+            this->data->binance_items.clear();
 
         for(uint i=2;i<2+nHex;i++){
             QString tmp = "";
@@ -71,7 +76,11 @@ void Tasks::managerFinished(QNetworkReply *reply) {
                 tmp += QString(static_cast<char>((QString(inf[i].at(f-1)) + QString(inf[i].at(f))).toUInt(NULL,16)));
             }
             qDebug() << tmp.trimmed();
-            this->data->items.push_back(tmp.trimmed());
+
+            if(this->type == "ethereum")
+                this->data->items.push_back(tmp.trimmed());
+            else if(this->type == "binance")
+                this->data->binance_items.push_back(tmp.trimmed());
         }
     }
 
@@ -138,6 +147,8 @@ void Tasks::r_managerFinished(QNetworkReply *reply) {
                 r.callback = inf[i+3].remove(0, 24);
                 qDebug() << r.callback;
 
+                r.chain = this->type;
+
                 this->requests.push_back(r);
             }
         }
@@ -148,9 +159,25 @@ void Tasks::r_managerFinished(QNetworkReply *reply) {
 }
 
 void Tasks::update_tasks(){
+    QUrl url1;
+    QString contract;
+    QString account;
+
+    if(this->type == "ethereum"){
+        url1 = QUrl(this->data->geth_url);
+        contract = this->data->eth_contract;
+        account = this->data->eth_account;
+    }
+
+    else if(this->type == "binance"){
+        url1 = QUrl(this->data->binance_url);
+        contract = this->data->binance_contract;
+        account = this->data->binance_account;
+    }
+
     QJsonObject obj1;
-    obj1["from"] = "eth.accounts[0]";
-    obj1["to"] = this->data->eth_contract;
+    obj1["from"] = account;
+    obj1["to"] = contract;
     obj1["data"] = "0xb715c7060000000000000000000000000000000000000000000000000000000000000000";
 
     QJsonArray obj3;
@@ -164,15 +191,31 @@ void Tasks::update_tasks(){
     QJsonDocument doc(obj);
     QByteArray data = doc.toJson();
 
-    request.setUrl(QUrl(this->data->geth_url));
+    request.setUrl(url1);
     request.setRawHeader("Content-Type", "application/json");
     manager->post(request, data);
 }
 
 void Tasks::update_requests(){
+    QUrl url1;
+    QString contract;
+    QString account;
+
+    if(this->type == "ethereum"){
+        url1 = QUrl(this->data->geth_url);
+        contract = this->data->eth_contract;
+        account = this->data->eth_account;
+    }
+
+    else if(this->type == "binance"){
+        url1 = QUrl(this->data->binance_url);
+        contract = this->data->binance_contract;
+        account = this->data->binance_account;
+    }
+
     QJsonObject obj1;
-    obj1["from"] = "eth.accounts[0]";
-    obj1["to"] = this->data->eth_contract;
+    obj1["from"] = account;
+    obj1["to"] = contract;
     obj1["data"] = "0x455bfbf20000000000000000000000000000000000000000000000000000000000000000";
 
     QJsonArray obj3;
@@ -186,7 +229,7 @@ void Tasks::update_requests(){
     QJsonDocument doc(obj);
     QByteArray data = doc.toJson();
 
-    r_request.setUrl(QUrl("http://127.0.0.1:9545/"));
+    r_request.setUrl(url1);
     r_request.setRawHeader("Content-Type", "application/json");
     r_manager->post(r_request, data);
 }

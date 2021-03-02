@@ -71,14 +71,20 @@ private slots:
 private:
     Ui::MainWindow *ui;
     AcriaConfig* acria_config;
+
     Node* node;
     Node* binance_node;
+
     Tasks* tasks;
+    Tasks* binance_tasks;
+
     compinfo* cinfo;
+    compinfo* binance_cinfo;
+
     InfoGeth* igeth;
     Config* config;
 
-    std::map<QString, Resource*> resources;
+    std::map<QString, std::map<QString, Resource*> > resources;
 
     QProgressIndicator* pi;
     QProgressIndicator* pi2;

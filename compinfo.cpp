@@ -9,7 +9,7 @@
 #include "json.hpp"
 
 
-compinfo::compinfo(Data *_data)
+compinfo::compinfo(Data *_data, QString _type)
 {
     manager = new QNetworkAccessManager();
 
@@ -23,6 +23,7 @@ compinfo::compinfo(Data *_data)
 
     this->data = _data;
     this->filter = "";
+    this->type = _type;
 
     create_filter_events();
 }
@@ -33,9 +34,24 @@ compinfo::~compinfo(){
 }
 
 void compinfo::create_filter_events(){
+    QUrl url1;
+    QString contract;
+    QString account;
+
+    if(this->type == "ethereum"){
+        url1 = QUrl(this->data->geth_url);
+        contract = this->data->eth_contract;
+        account = this->data->eth_account;
+    }
+
+    else if(this->type == "binance"){
+        url1 = QUrl(this->data->binance_url);
+        contract = this->data->binance_contract;
+        account = this->data->binance_account;
+    }
 
     QJsonArray addr;
-    addr.push_back(this->data->eth_contract);
+    addr.push_back(contract);
 
     QJsonArray top;
     top.push_back("0x80159d42b8a6ee3e969f3e2c24f97a6835bebbb529a24ca1fbb217e4f7701240");
@@ -57,13 +73,29 @@ void compinfo::create_filter_events(){
     QJsonDocument doc(obj);
     QByteArray data = doc.toJson();
 
-    filter_request.setUrl(QUrl(this->data->geth_url));
+    filter_request.setUrl(url1);
     filter_request.setRawHeader("Content-Type", "application/json");
     filter_manager->post(filter_request, data);
 }
 
 void compinfo::update_events(){
     if(this->filter != ""){
+        QUrl url1;
+        QString contract;
+        QString account;
+
+        if(this->type == "ethereum"){
+            url1 = QUrl(this->data->geth_url);
+            contract = this->data->eth_contract;
+            account = this->data->eth_account;
+        }
+
+        else if(this->type == "binance"){
+            url1 = QUrl(this->data->binance_url);
+            contract = this->data->binance_contract;
+            account = this->data->binance_account;
+        }
+
         QJsonArray obj3;
         obj3.push_back(this->filter);
 
@@ -75,7 +107,7 @@ void compinfo::update_events(){
         QJsonDocument doc(obj);
         QByteArray data = doc.toJson();
 
-        request.setUrl(QUrl(this->data->geth_url));
+        request.setUrl(url1);
         request.setRawHeader("Content-Type", "application/json");
         manager->post(request, data);
     }
@@ -119,6 +151,8 @@ void compinfo::managerFinished(QNetworkReply *reply) {
 
         c.address = QString::fromStdString(tmp1["result"][i]["address"]);
         c.block = QString::fromStdString(tmp1["result"][i]["blockNumber"]).remove(0,2).toUInt(NULL, 16);
+
+        c.chain = this->type;
 
         QString res = QString::fromStdString(tmp1["result"][i]["data"]).remove(0,2);
         std::vector<QString> inf;
