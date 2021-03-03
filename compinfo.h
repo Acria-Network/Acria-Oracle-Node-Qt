@@ -15,6 +15,7 @@ struct comp{
     uint block;
     QString address;
     QString chain;
+    uint id;
 };
 
 class compinfo : public QObject

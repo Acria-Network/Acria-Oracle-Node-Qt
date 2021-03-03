@@ -54,7 +54,8 @@ void compinfo::create_filter_events(){
     addr.push_back(contract);
 
     QJsonArray top;
-    top.push_back("0x80159d42b8a6ee3e969f3e2c24f97a6835bebbb529a24ca1fbb217e4f7701240");
+    //top.push_back("0x80159d42b8a6ee3e969f3e2c24f97a6835bebbb529a24ca1fbb217e4f7701240");
+    top.push_back("0x910c973544a08bc7a636ea9436726896a35fb16763f6a536991139fa41a7f0e5");
 
     QJsonObject obj1;
     obj1["fromBlock"] = "0x1";
@@ -174,6 +175,8 @@ void compinfo::managerFinished(QNetworkReply *reply) {
 
         c.requestID = hex2str(inf[0]).trimmed();
         c.callback = inf[1].remove(0,24);
+
+        c.id = QString(inf[3]).toUInt(NULL,16);
 
         qDebug() << c.requestID;
         qDebug() << c.callback;

@@ -129,27 +129,33 @@ void Tasks::r_managerFinished(QNetworkReply *reply) {
             this->requests.clear();
 
             for(uint i=2;i<inf.size();i+=arr_size){
-                req r;
+                if(!(inf[i].toUInt(NULL,16) == 0 && inf[i+1].toUInt(NULL,16) == 0 && inf[i+2].toUInt(NULL,16) == 0 && inf[i+3].toUInt(NULL,16) == 0 && inf[i+4].toUInt(NULL,16) == 0)){
+                    req r;
 
-                QString tmp = "";
-                for(int f = 1; f< inf[i].length(); f+=2){
-                    tmp += QString(static_cast<char>((QString(inf[i].at(f-1)) + QString(inf[i].at(f))).toUInt(NULL,16)));
+                    QString tmp = "";
+                    for(int f = 1; f< inf[i].length(); f+=2){
+                        tmp += QString(static_cast<char>((QString(inf[i].at(f-1)) + QString(inf[i].at(f))).toUInt(NULL,16)));
+                    }
+                    qDebug() << "r.requestID " << tmp.trimmed();
+
+                    r.requestID = tmp.trimmed();
+
+
+                    r.cancelled = static_cast<bool>(QString(inf[i+1].at(inf[i+1].length()-1)).toUInt(NULL,16));
+                    qDebug() << r.cancelled;
+
+                    r.expiration = QString(inf[i+2]).toUInt(NULL,16);
+                    qDebug() << r.expiration;
+
+                    r.callback = inf[i+3].remove(0, 24);
+                    qDebug() << r.callback;
+
+                    r.chain = this->type;
+
+                    r.id = QString(inf[i+4]).toUInt(NULL,16);
+
+                    this->requests.push_back(r);
                 }
-                qDebug() << tmp.trimmed();
-
-                r.requestID = tmp.trimmed();
-                r.cancelled = static_cast<bool>(QString(inf[i+1].at(inf[i+1].length()-1)).toUInt(NULL,16));
-                qDebug() << r.cancelled;
-
-                r.expiration = QString(inf[i+2]).toUInt(NULL,16);
-                qDebug() << r.expiration;
-
-                r.callback = inf[i+3].remove(0, 24);
-                qDebug() << r.callback;
-
-                r.chain = this->type;
-
-                this->requests.push_back(r);
             }
         }
         else{

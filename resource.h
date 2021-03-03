@@ -37,6 +37,8 @@ private:
 
     QString type;
 
+    std::vector<uint> sent_id;
+
 public:
     Resource();
     Resource(QString url, std::vector<QString> _l_json, QString _contract, QString n, Data* _data, QString _type);

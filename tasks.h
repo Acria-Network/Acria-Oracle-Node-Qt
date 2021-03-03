@@ -13,6 +13,7 @@ struct req{
     uint expiration;
     QString callback;
     QString chain;
+    uint id;
 };
 
 class Tasks : public QObject

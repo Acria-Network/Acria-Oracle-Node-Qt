@@ -194,8 +194,8 @@ void MainWindow::update_requests(){
     }
     this->ui->tableWidget_req->setRowCount(r.size());
     qDebug() << "r " <<r.size();
-    this->ui->tableWidget_req->setColumnCount(5);
-    this->ui->tableWidget_req->setColumnWidth(4, 240);
+    this->ui->tableWidget_req->setColumnCount(6);
+    this->ui->tableWidget_req->setColumnWidth(4, 140);
     this->ui->tableWidget_req->setColumnWidth(0, 20);
     for (uint d=0; d<r.size(); d++){
         this->ui->tableWidget_req->setItem( d, 0, new QTableWidgetItem(QString::number(d)));
@@ -204,6 +204,7 @@ void MainWindow::update_requests(){
         this->ui->tableWidget_req->setItem( d, 3, new QTableWidgetItem(QString::number(r[d].expiration)));
         //this->ui->tableWidget_req->setItem( d, 4, new QTableWidgetItem(r[d].callback));
         this->ui->tableWidget_req->setItem( d, 4, new QTableWidgetItem(r[d].chain));
+        this->ui->tableWidget_req->setItem( d, 5, new QTableWidgetItem(QString::number(r[d].id)));
     }
 
     std::vector<QString> nt;
@@ -245,23 +246,25 @@ void MainWindow::update_events(){
     }
 
     this->ui->tableWidget_comp->setRowCount(r.size());
-    this->ui->tableWidget_comp->setColumnCount(5);
-    this->ui->tableWidget_comp->setColumnWidth(4, 240);
+    this->ui->tableWidget_comp->setColumnCount(6);
+    this->ui->tableWidget_comp->setColumnWidth(4, 200);
     this->ui->tableWidget_comp->setColumnWidth(0, 20);
+    this->ui->tableWidget_comp->setColumnWidth(5, 30);
 
     if(r.size() != 0){
         this->ui->horizontalLayoutWidget_2->hide();
         this->ui->label_progress_2->hide();
 
-        for (uint d=r.size()-1; d>0; d--){
+        for (int d=r.size()-1; d>=0; d--){
             uint dd = r.size()-1-d;
-            qDebug() << dd << d;
+            qDebug() << r.size() << dd << d;
             this->ui->tableWidget_comp->setItem( dd, 0, new QTableWidgetItem(QString::number(d)));
             this->ui->tableWidget_comp->setItem( dd, 1, new QTableWidgetItem(r[d].requestID));
             //this->ui->tableWidget_comp->setItem( d, 2, new QTableWidgetItem(r[d].callback));
             this->ui->tableWidget_comp->setItem( dd, 2, new QTableWidgetItem(r[d].chain));
             this->ui->tableWidget_comp->setItem( dd, 3, new QTableWidgetItem(QString::number(r[d].block)));
             this->ui->tableWidget_comp->setItem( dd, 4, new QTableWidgetItem(r[d].hash));
+            this->ui->tableWidget_comp->setItem( dd, 5, new QTableWidgetItem(QString::number(r[d].id)));
         }
     }
     else{
