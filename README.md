@@ -5,7 +5,7 @@
 Acria Oracle Node Client implemented in C++/Qt
 
 ![GitHub](https://img.shields.io/github/license/Acria-Network/acria-substrate)
-![GitHub last commit](https://img.shields.io/github/last-commit/Acria-Network/acria-substrate)
+![GitHub last commit](https://img.shields.io/github/last-commit/Acria-Network/Acria-Oracle-Node-Qt)
 ![GitHub](https://img.shields.io/badge/Qt-v5.15-brightgreen)
 ![GitHub](https://img.shields.io/badge/OS-Linux%2FMacOS%2FWindows-brightgreen)
 ![GitHub](https://badgen.net/twitter/follow/acrianetwork)
