@@ -85,6 +85,8 @@ private:
     Config* config;
 
     std::map<QString, std::map<QString, Resource*> > resources;
+    std::vector<Resource*> tm_resources;
+    std::vector<QString> nt;
 
     QProgressIndicator* pi;
     QProgressIndicator* pi2;
@@ -95,6 +97,5 @@ private:
     QTimer *timer_update_events;
 
     void update_settings();
-    void load_resources();
 };
 #endif // MAINWINDOW_H

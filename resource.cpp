@@ -19,6 +19,8 @@ Resource::Resource()
     this->url = "";
     this->contract = "";
 
+    this->state = 0;
+
     manager = new QNetworkAccessManager();
 
     QObject::connect(manager, SIGNAL(finished(QNetworkReply*)),
@@ -31,7 +33,7 @@ Resource::Resource()
         this, SLOT(send_managerFinished(QNetworkReply*)));
 }
 
-Resource::Resource(QString _url, std::vector<QString> _l_json, QString _contract, QString n, Data* _data, QString _type) : Resource()
+Resource::Resource(QString _url, std::vector<QString> _l_json, QString _contract, QString n, Data* _data, QString _type, uint _id) : Resource()
 {
     this->url = _url;
     this->l_json = _l_json;
@@ -39,6 +41,7 @@ Resource::Resource(QString _url, std::vector<QString> _l_json, QString _contract
     this->item = n;
     this->data = _data;
     this->type = _type;
+    this->id = _id;
 }
 
 Resource::~Resource()
@@ -104,8 +107,9 @@ void Resource::send_resource(){
         account1 = this->data->binance_account;
     }
 
-    QString d1 = "0x01ff927b";
+    //QString d1 = "0x01ff927b";
     //d1 = "0xb4883e04";
+    QString d1 = "0x6974868e";
     QString d2 = this->item;
 
     qDebug() << d1;
@@ -123,6 +127,14 @@ void Resource::send_resource(){
 
     QString d3 = QString::fromStdString(value256.GetHex());
 
+
+    QString d4 = QString::fromStdString(n2hexstr(this->id));
+    for(uint i = d4.size(); i<64;i++){
+        d4 = "0" + d4;
+    }
+
+    qDebug() << "d4 " << d4 << " " << QString::fromStdString(n2hexstr(3444));
+
     qDebug() << d3;
 
     QJsonObject obj1;
@@ -131,7 +143,7 @@ void Resource::send_resource(){
     obj1["gasPrice"] = "0x9184e72a000";
     obj1["gas"] = "0x76c00";
     obj1["value"] = "0x0000000000000000000000000000000000000000000000000000000000000000";
-    obj1["data"] = d1+s+d3;
+    obj1["data"] = d1+s+d3+d4;
 
     QJsonArray obj3;
     obj3.push_back(obj1);
@@ -188,4 +200,6 @@ void Resource::send_managerFinished(QNetworkReply *reply) {
     QString answer = reply->readAll();
 
     qDebug() << answer;
+
+    this->state=2;
 }

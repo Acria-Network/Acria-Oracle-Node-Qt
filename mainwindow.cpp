@@ -85,8 +85,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(timer_update_events, SIGNAL(timeout()), this, SLOT(update_events()));
     timer_update_events->start(INTERVAL_RUN);
 
-    this->load_resources();
-
     this->pi = new QProgressIndicator();
     this->ui->horizontalLayout->layout()->addWidget(pi);
 
@@ -100,30 +98,6 @@ MainWindow::MainWindow(QWidget *parent)
     pi2->setColor(QColor::fromRgb(255,255,255));
 
     this->update_settings();
-}
-
-void MainWindow::load_resources(){
-    for (auto const& y : resources)
-    {
-        for (auto const& x : y.second)
-        {
-            delete x.second;
-        }
-    }
-
-    for(uint i = 0; i<config->get_config().size();i++){
-        std::vector<QString> l_json;
-
-        for(uint d = 0; d<config->get_config()[i]["json"].size();d++){
-            l_json.push_back(QString::fromStdString(config->get_config()[i]["json"][d]));
-        }
-
-        Resource* rr = new Resource(QString::fromStdString(config->get_config()[i]["url"]), l_json, this->data->eth_contract, QString::fromStdString(config->get_config()[i]["rname"]), this->data, "ethereum");
-        resources["ethereum"][QString::fromStdString(config->get_config()[i]["rname"])] = rr;
-
-        Resource* rr2 = new Resource(QString::fromStdString(config->get_config()[i]["url"]), l_json, this->data->binance_contract, QString::fromStdString(config->get_config()[i]["rname"]), this->data, "binance");
-        resources["binance"][QString::fromStdString(config->get_config()[i]["rname"])] = rr2;
-    }
 }
 
 void MainWindow::update_settings(){
@@ -207,16 +181,25 @@ void MainWindow::update_requests(){
         this->ui->tableWidget_req->setItem( d, 5, new QTableWidgetItem(QString::number(r[d].id)));
     }
 
-    std::vector<QString> nt;
-
     for (uint d=0; d<r.size(); d++){
-        if ( resources[r[d].chain].find(r[d].requestID) == resources[r[d].chain].end() ) {
-          qDebug() << "key not available";
-        } else {
-            if (!std::count(nt.begin(), nt.end(), r[d].chain + r[d].requestID)){
+            if (!std::count(nt.begin(), nt.end(), r[d].chain + QString::number(r[d].id))){
                 qDebug() <<"dddd";
-                resources[r[d].chain][r[d].requestID]->update_resource();
-                nt.push_back(r[d].chain + r[d].requestID);
+                nlohmann::json conf1 = config->get_config();
+                for(uint i = 0; i<conf1.size();i++){
+                    if(QString::fromStdString(conf1[i]["rname"]) == r[d].requestID){
+                        std::vector<QString> l_json;
+
+                        for(uint f = 0; f<conf1[i]["json"].size();f++){
+                            l_json.push_back(QString::fromStdString(conf1[i]["json"][f]));
+                        }
+
+                        Resource* rr = new Resource(QString::fromStdString(conf1[i]["url"]), l_json, this->data->eth_contract, QString::fromStdString(conf1[i]["rname"]), this->data, r[d].chain, r[d].id);
+                        rr->update_resource();
+
+                        this->tm_resources.push_back(rr);
+                        nt.push_back(r[d].chain + QString::number(r[d].id));
+                    }
+
             }
         }
     }
@@ -228,6 +211,13 @@ void MainWindow::update_requests(){
     else{
         this->ui->horizontalLayoutWidget->show();
         this->ui->label_progress->show();
+    }
+
+    for(uint i=0; i<this->tm_resources.size();i++){
+        if(this->tm_resources[i]->get_state() == 2){
+            delete this->tm_resources[i];
+            this->tm_resources.erase(this->tm_resources.begin() + i);
+        }
     }
 }
 
@@ -299,6 +289,10 @@ MainWindow::~MainWindow()
         {
             delete x.second;
         }
+    }
+
+    for(uint i=0; i<this->tm_resources.size();i++){
+        delete this->tm_resources[i];
     }
 }
 
@@ -402,7 +396,7 @@ void MainWindow::on_pushButton_export_csv_clicked()
 void MainWindow::on_pushButton_export_json_3_clicked()
 {
     if(this->acria_config->exec() == QDialog::Accepted){
-        this->load_resources();
+
     }
 }
 
