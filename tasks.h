@@ -9,7 +9,7 @@
 
 struct req{
     QString requestID;
-    bool cancelled;
+    unsigned long long fee;
     uint expiration;
     QString callback;
     QString chain;

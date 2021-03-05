@@ -16,6 +16,7 @@ struct comp{
     QString address;
     QString chain;
     uint id;
+    unsigned long long fee;
 };
 
 class compinfo : public QObject

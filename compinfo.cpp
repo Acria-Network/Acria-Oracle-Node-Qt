@@ -178,6 +178,9 @@ void compinfo::managerFinished(QNetworkReply *reply) {
 
         c.id = QString(inf[3]).toUInt(NULL,16);
 
+        c.fee = QString(inf[2]).toULongLong(NULL,16);
+        qDebug() << c.fee << " " << QString(inf[2]);
+
         qDebug() << c.requestID;
         qDebug() << c.callback;
 

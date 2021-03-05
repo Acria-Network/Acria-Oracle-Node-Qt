@@ -174,7 +174,7 @@ void MainWindow::update_requests(){
     for (uint d=0; d<r.size(); d++){
         this->ui->tableWidget_req->setItem( d, 0, new QTableWidgetItem(QString::number(d)));
         this->ui->tableWidget_req->setItem( d, 1, new QTableWidgetItem(r[d].requestID));
-        this->ui->tableWidget_req->setItem( d, 2, new QTableWidgetItem(r[d].cancelled==true?"Cancelled":"Active"));
+        this->ui->tableWidget_req->setItem( d, 2, new QTableWidgetItem(QString::number(double(r[d].fee / pow(10,18)))));
         this->ui->tableWidget_req->setItem( d, 3, new QTableWidgetItem(QString::number(r[d].expiration)));
         //this->ui->tableWidget_req->setItem( d, 4, new QTableWidgetItem(r[d].callback));
         this->ui->tableWidget_req->setItem( d, 4, new QTableWidgetItem(r[d].chain));
@@ -254,7 +254,7 @@ void MainWindow::update_events(){
             this->ui->tableWidget_comp->setItem( dd, 2, new QTableWidgetItem(r[d].chain));
             this->ui->tableWidget_comp->setItem( dd, 3, new QTableWidgetItem(QString::number(r[d].block)));
             this->ui->tableWidget_comp->setItem( dd, 4, new QTableWidgetItem(r[d].hash));
-            this->ui->tableWidget_comp->setItem( dd, 5, new QTableWidgetItem(QString::number(r[d].id)));
+            this->ui->tableWidget_comp->setItem( dd, 5, new QTableWidgetItem(QString::number(double(r[d].fee / pow(10,18)))));
         }
     }
     else{

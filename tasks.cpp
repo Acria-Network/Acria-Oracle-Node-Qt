@@ -141,8 +141,8 @@ void Tasks::r_managerFinished(QNetworkReply *reply) {
                     r.requestID = tmp.trimmed();
 
 
-                    r.cancelled = static_cast<bool>(QString(inf[i+1].at(inf[i+1].length()-1)).toUInt(NULL,16));
-                    qDebug() << r.cancelled;
+                    r.fee = QString(inf[i+1]).toULongLong(NULL,16);
+                    qDebug() << r.fee;
 
                     r.expiration = QString(inf[i+2]).toUInt(NULL,16);
                     qDebug() << r.expiration;
