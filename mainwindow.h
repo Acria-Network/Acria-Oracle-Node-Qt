@@ -42,6 +42,8 @@ private slots:
 
     void update_events();
 
+    void update_balances();
+
     void on_pushButton_eth_settings_clicked();
 
     void on_pushButton_polkadot_settings_clicked();
@@ -95,6 +97,7 @@ private:
 
     QTimer *timer_update_requests;
     QTimer *timer_update_events;
+    QTimer *timer_update_balances;
 
     void update_settings();
 };

@@ -4,6 +4,7 @@
 #include <QtNetwork/QNetworkReply>
 #include <QtNetwork/QNetworkAccessManager>
 #include <vector>
+#include <math.h>
 
 #include "data.h"
 
@@ -46,6 +47,15 @@ public:
 
     void update_events();
     std::vector<comp> get_completed(){return completed;};
+
+    double get_total_fees(){
+        double c = 0;
+        for(uint i = 0; i<completed.size();i++){
+            c += double(completed[i].fee / pow(10,18));
+        }
+
+        return c;
+    }
 
 private slots:
     void managerFinished(QNetworkReply *reply);

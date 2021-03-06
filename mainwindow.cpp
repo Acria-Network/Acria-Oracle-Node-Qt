@@ -85,6 +85,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(timer_update_events, SIGNAL(timeout()), this, SLOT(update_events()));
     timer_update_events->start(INTERVAL_RUN);
 
+    timer_update_balances = new QTimer(this);
+    connect(timer_update_balances, SIGNAL(timeout()), this, SLOT(update_balances()));
+    timer_update_balances->start(INTERVAL_RUN);
+
     this->pi = new QProgressIndicator();
     this->ui->horizontalLayout->layout()->addWidget(pi);
 
@@ -263,6 +267,48 @@ void MainWindow::update_events(){
     }
 }
 
+void MainWindow::update_balances(){
+    this->ui->tableWidget_balances->clear();
+    while (ui->tableWidget_balances->rowCount() > 0)
+    {
+        ui->tableWidget_balances->removeRow(0);
+    }
+
+    this->ui->tableWidget_balances->setRowCount(5);
+    this->ui->tableWidget_balances->setColumnCount(4);
+
+    this->ui->tableWidget_balances->setColumnWidth(1, 100);
+    this->ui->tableWidget_balances->setColumnWidth(2, 100);
+    this->ui->tableWidget_balances->setColumnWidth(3, 120);
+
+    this->ui->tableWidget_balances->setItem( 0, 0, new QTableWidgetItem(""));
+    this->ui->tableWidget_balances->setItem( 1, 0, new QTableWidgetItem("Ethereum"));
+    this->ui->tableWidget_balances->setItem( 2, 0, new QTableWidgetItem("Polkadot"));
+    this->ui->tableWidget_balances->setItem( 3, 0, new QTableWidgetItem("Binance"));
+    this->ui->tableWidget_balances->setItem( 4, 0, new QTableWidgetItem("Total"));
+    this->ui->tableWidget_balances->setItem( 0, 1, new QTableWidgetItem("Fees Earned Total"));
+    this->ui->tableWidget_balances->setItem( 0, 2, new QTableWidgetItem("Withdrawable Fees"));
+    this->ui->tableWidget_balances->setItem( 0, 3, new QTableWidgetItem("Completed Requests"));
+
+    uint eth_completed = this->cinfo->get_completed().size();
+    uint binance_completed = this->binance_cinfo->get_completed().size();
+    uint polkadot_completed = 0;
+
+    double binance_total_fees = this->binance_cinfo->get_total_fees();
+    double eth_total_fees = this->cinfo->get_total_fees();
+    double polkadot_total_fees = 0;
+
+    this->ui->tableWidget_balances->setItem( 1, 3, new QTableWidgetItem(QString::number(eth_completed)));
+    this->ui->tableWidget_balances->setItem( 2, 3, new QTableWidgetItem(QString::number(polkadot_completed)));
+    this->ui->tableWidget_balances->setItem( 3, 3, new QTableWidgetItem(QString::number(binance_completed)));
+    this->ui->tableWidget_balances->setItem( 4, 3, new QTableWidgetItem(QString::number(binance_completed + polkadot_completed + eth_completed)));
+
+    this->ui->tableWidget_balances->setItem( 3, 1, new QTableWidgetItem(QString::number(binance_total_fees)));
+    this->ui->tableWidget_balances->setItem( 2, 1, new QTableWidgetItem(QString::number(polkadot_total_fees)));
+    this->ui->tableWidget_balances->setItem( 1, 1, new QTableWidgetItem(QString::number(eth_total_fees)));
+    this->ui->tableWidget_balances->setItem( 4, 1, new QTableWidgetItem(QString::number(eth_total_fees + polkadot_total_fees + binance_total_fees)));
+}
+
 MainWindow::~MainWindow()
 {
     delete ui;
@@ -280,6 +326,7 @@ MainWindow::~MainWindow()
 
     delete timer_update_requests;
     delete timer_update_events;
+    delete timer_update_balances;
 
     delete binance_node;
 
@@ -418,17 +465,17 @@ void MainWindow::on_pushButton_refresh_clicked()
 
 void MainWindow::on_pushButton_eth_settings_clicked()
 {
-    this->ui->tabWidget->setCurrentIndex(3);
+    this->ui->tabWidget->setCurrentIndex(4);
 }
 
 void MainWindow::on_pushButton_polkadot_settings_clicked()
 {
-    this->ui->tabWidget->setCurrentIndex(3);
+    this->ui->tabWidget->setCurrentIndex(4);
 }
 
 void MainWindow::on_pushButton_acria_settings_clicked()
 {
-    this->ui->tabWidget->setCurrentIndex(3);
+    this->ui->tabWidget->setCurrentIndex(4);
 }
 
 void MainWindow::on_pushButton_config_settings_clicked()
@@ -472,5 +519,5 @@ void MainWindow::on_pushButton_eth_info_clicked()
 
 void MainWindow::on_pushButton_binance_settings_clicked()
 {
-    this->ui->tabWidget->setCurrentIndex(3);
+    this->ui->tabWidget->setCurrentIndex(4);
 }
