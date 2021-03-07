@@ -12,6 +12,7 @@
 #include "data.h"
 #include "infogeth.h"
 #include "config.h"
+#include "balances.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -85,6 +86,9 @@ private:
 
     InfoGeth* igeth;
     Config* config;
+
+    Balances* balances;
+    Balances* binance_balances;
 
     std::map<QString, std::map<QString, Resource*> > resources;
     std::vector<Resource*> tm_resources;

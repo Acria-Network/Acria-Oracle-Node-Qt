@@ -39,8 +39,6 @@ private:
 
     QString type;
 
-    void create_filter_events();
-
 public:
     compinfo(Data *_data, QString _type);
     ~compinfo();
@@ -56,6 +54,8 @@ public:
 
         return c;
     }
+
+    void create_filter_events();
 
 private slots:
     void managerFinished(QNetworkReply *reply);

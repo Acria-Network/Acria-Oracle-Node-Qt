@@ -12,6 +12,7 @@ CONFIG += console
 
 SOURCES += \
     acriaconfig.cpp \
+    balances.cpp \
     compinfo.cpp \
     config.cpp \
     configitem.cpp \
@@ -27,6 +28,7 @@ SOURCES += \
 
 HEADERS += \
     acriaconfig.h \
+    balances.h \
     compinfo.h \
     config.h \
     configitem.h \

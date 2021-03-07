@@ -66,6 +66,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     this->igeth = new InfoGeth(this, this->node, this->data);
 
+    this->balances = new Balances(this->data, "ethereum");
+    this->binance_balances = new Balances(this->data, "binance");
+
 
     ui->setupUi(this);
 
@@ -268,6 +271,9 @@ void MainWindow::update_events(){
 }
 
 void MainWindow::update_balances(){
+    this->balances->update_withdrawable();
+    this->binance_balances->update_withdrawable();
+
     this->ui->tableWidget_balances->clear();
     while (ui->tableWidget_balances->rowCount() > 0)
     {
@@ -298,6 +304,10 @@ void MainWindow::update_balances(){
     double eth_total_fees = this->cinfo->get_total_fees();
     double polkadot_total_fees = 0;
 
+    double binance_withdrawable = this->binance_balances->get_withdrawable();
+    double eth_withdrawable = this->balances->get_withdrawable();
+    double polkadot_withdrawable = 0;
+
     this->ui->tableWidget_balances->setItem( 1, 3, new QTableWidgetItem(QString::number(eth_completed)));
     this->ui->tableWidget_balances->setItem( 2, 3, new QTableWidgetItem(QString::number(polkadot_completed)));
     this->ui->tableWidget_balances->setItem( 3, 3, new QTableWidgetItem(QString::number(binance_completed)));
@@ -307,6 +317,11 @@ void MainWindow::update_balances(){
     this->ui->tableWidget_balances->setItem( 2, 1, new QTableWidgetItem(QString::number(polkadot_total_fees)));
     this->ui->tableWidget_balances->setItem( 1, 1, new QTableWidgetItem(QString::number(eth_total_fees)));
     this->ui->tableWidget_balances->setItem( 4, 1, new QTableWidgetItem(QString::number(eth_total_fees + polkadot_total_fees + binance_total_fees)));
+
+    this->ui->tableWidget_balances->setItem( 3, 2, new QTableWidgetItem(QString::number(binance_withdrawable)));
+    this->ui->tableWidget_balances->setItem( 2, 2, new QTableWidgetItem(QString::number(polkadot_withdrawable)));
+    this->ui->tableWidget_balances->setItem( 1, 2, new QTableWidgetItem(QString::number(eth_withdrawable)));
+    this->ui->tableWidget_balances->setItem( 4, 2, new QTableWidgetItem(QString::number(eth_withdrawable + polkadot_withdrawable + binance_withdrawable)));
 }
 
 MainWindow::~MainWindow()
@@ -327,6 +342,9 @@ MainWindow::~MainWindow()
     delete timer_update_requests;
     delete timer_update_events;
     delete timer_update_balances;
+
+    delete balances;
+    delete binance_balances;
 
     delete binance_node;
 
@@ -498,6 +516,9 @@ void MainWindow::on_pushButton_setting_save_clicked()
     this->data->polkadot_contract = this->ui->lineEdit_polkadot_contract->text();
 
     this->data->save_settings();
+
+    this->cinfo->create_filter_events();
+    this->binance_cinfo->create_filter_events();
 
     QMessageBox msgBox;
     msgBox.setText("Successfully saved the settings!");
