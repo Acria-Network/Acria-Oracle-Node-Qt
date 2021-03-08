@@ -21,10 +21,12 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     node.cpp \
+    processingwindow.cpp \
     qprogressindicator.cpp \
     resource.cpp \
     tasks.cpp \
-    uint256.cpp
+    uint256.cpp \
+    withdraw.cpp
 
 HEADERS += \
     acriaconfig.h \
@@ -36,18 +38,21 @@ HEADERS += \
     infogeth.h \
     mainwindow.h \
     node.h \
+    processingwindow.h \
     qprogressindicator.h \
     resource.h \
     span.h \
     tasks.h \
     uint256.h \
-    util.h
+    util.h \
+    withdraw.h
 
 FORMS += \
     acriaconfig.ui \
     configitem.ui \
     infogeth.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    processingwindow.ui
 
 TRANSLATIONS += \
     Acria-Oracle-Node-Qt_de_DE.ts

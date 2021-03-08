@@ -25,6 +25,8 @@ public:
     std::vector<QString> binance_items;
     std::vector<QString> polkadot_items;
 
+    unsigned long long transaction_fee;
+
     void load_settings();
     void save_settings();
 };

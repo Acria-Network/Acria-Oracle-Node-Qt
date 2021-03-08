@@ -7,7 +7,7 @@
 
 Data::Data()
 {
-
+    this->transaction_fee = 20000000000;
 }
 
 void Data::save_settings(){

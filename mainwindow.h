@@ -13,6 +13,8 @@
 #include "infogeth.h"
 #include "config.h"
 #include "balances.h"
+#include "withdraw.h"
+#include "processingwindow.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -71,9 +73,16 @@ private slots:
 
     void on_pushButton_binance_settings_clicked();
 
+    void on_pushButton_withdraw_eth_clicked();
+
+    void on_pushButton_withdraw_polkadot_clicked();
+
+    void on_pushButton_withdraw_binance_clicked();
+
 private:
     Ui::MainWindow *ui;
     AcriaConfig* acria_config;
+    ProcessingWindow* processing_window;
 
     Node* node;
     Node* binance_node;
@@ -90,7 +99,9 @@ private:
     Balances* balances;
     Balances* binance_balances;
 
-    std::map<QString, std::map<QString, Resource*> > resources;
+    Withdraw* withdraw;
+    Withdraw* binance_withdraw;
+
     std::vector<Resource*> tm_resources;
     std::vector<QString> nt;
 

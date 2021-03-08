@@ -57,6 +57,7 @@ MainWindow::MainWindow(QWidget *parent)
     }
 
     this->acria_config = new AcriaConfig(this, this->config);
+    this->processing_window = new ProcessingWindow();
 
     this->tasks = new Tasks(this->data, "ethereum");
     this->binance_tasks = new Tasks(this->data, "binance");
@@ -68,6 +69,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     this->balances = new Balances(this->data, "ethereum");
     this->binance_balances = new Balances(this->data, "binance");
+
+    this->withdraw = new Withdraw(this->data, "ethereum");
+    this->binance_withdraw = new Withdraw(this->data, "binance");
 
 
     ui->setupUi(this);
@@ -316,18 +320,20 @@ void MainWindow::update_balances(){
     this->ui->tableWidget_balances->setItem( 3, 1, new QTableWidgetItem(QString::number(binance_total_fees)));
     this->ui->tableWidget_balances->setItem( 2, 1, new QTableWidgetItem(QString::number(polkadot_total_fees)));
     this->ui->tableWidget_balances->setItem( 1, 1, new QTableWidgetItem(QString::number(eth_total_fees)));
-    this->ui->tableWidget_balances->setItem( 4, 1, new QTableWidgetItem(QString::number(eth_total_fees + polkadot_total_fees + binance_total_fees)));
+    //this->ui->tableWidget_balances->setItem( 4, 1, new QTableWidgetItem(QString::number(eth_total_fees + polkadot_total_fees + binance_total_fees)));
 
     this->ui->tableWidget_balances->setItem( 3, 2, new QTableWidgetItem(QString::number(binance_withdrawable)));
     this->ui->tableWidget_balances->setItem( 2, 2, new QTableWidgetItem(QString::number(polkadot_withdrawable)));
     this->ui->tableWidget_balances->setItem( 1, 2, new QTableWidgetItem(QString::number(eth_withdrawable)));
-    this->ui->tableWidget_balances->setItem( 4, 2, new QTableWidgetItem(QString::number(eth_withdrawable + polkadot_withdrawable + binance_withdrawable)));
+    //this->ui->tableWidget_balances->setItem( 4, 2, new QTableWidgetItem(QString::number(eth_withdrawable + polkadot_withdrawable + binance_withdrawable)));
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
     delete acria_config;
+    delete processing_window;
+
     delete node;
     delete tasks;
     delete cinfo;
@@ -346,15 +352,10 @@ MainWindow::~MainWindow()
     delete balances;
     delete binance_balances;
 
-    delete binance_node;
+    delete withdraw;
+    delete binance_withdraw;
 
-    for (auto const& y : resources)
-    {
-        for (auto const& x : y.second)
-        {
-            delete x.second;
-        }
-    }
+    delete binance_node;
 
     for(uint i=0; i<this->tm_resources.size();i++){
         delete this->tm_resources[i];
@@ -541,4 +542,33 @@ void MainWindow::on_pushButton_eth_info_clicked()
 void MainWindow::on_pushButton_binance_settings_clicked()
 {
     this->ui->tabWidget->setCurrentIndex(4);
+}
+
+void MainWindow::on_pushButton_withdraw_eth_clicked()
+{
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "Withdraw", "Withdraw everything from the Binance contract?", QMessageBox::Yes|QMessageBox::No);
+      if (reply == QMessageBox::Yes) {
+          this->processing_window->show();
+        this->withdraw->withdraw(processing_window);
+      } else {
+
+      }
+}
+
+void MainWindow::on_pushButton_withdraw_polkadot_clicked()
+{
+
+}
+
+void MainWindow::on_pushButton_withdraw_binance_clicked()
+{
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "Withdraw", "Withdraw everything from the Binance contract?", QMessageBox::Yes|QMessageBox::No);
+      if (reply == QMessageBox::Yes) {
+          this->processing_window->show();
+        this->binance_withdraw->withdraw(processing_window);
+      } else {
+
+      }
 }
