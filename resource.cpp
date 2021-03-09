@@ -55,14 +55,6 @@ void Resource::update_resource(){
     manager->get(request);
 }
 
-template <typename I> std::string n2hexstr(I w, size_t hex_len = sizeof(I)<<1) {
-    static const char* digits = "0123456789ABCDEF";
-    std::string rc(hex_len,'0');
-    for (size_t i=0, j=(hex_len-1)*4 ; i<hex_len; ++i,j-=4)
-        rc[i] = digits[(w>>j) & 0x0f];
-    return rc;
-}
-
 std::string digits = "0123456789abcdef";
 std::string tohex(std::string number) {                        // Decimal to Hexadecimal function
     long length = number.length();
@@ -94,17 +86,20 @@ void Resource::send_resource(){
     QUrl url1;
     QString contract1;
     QString account1;
+    unsigned long long transaction_fee = 0;
 
     if(this->type == "ethereum"){
         url1 = QUrl(this->data->geth_url);
         contract1 = this->data->eth_contract;
         account1 = this->data->eth_account;
+        transaction_fee = this->data->transaction_fee_geth;
     }
 
     else if(this->type == "binance"){
         url1 = QUrl(this->data->binance_url);
         contract1 = this->data->binance_contract;
         account1 = this->data->binance_account;
+        transaction_fee = this->data->transaction_fee_binance;
     }
 
     //QString d1 = "0x01ff927b";
@@ -140,7 +135,10 @@ void Resource::send_resource(){
     QJsonObject obj1;
     obj1["from"] = account1;
     obj1["to"] = contract1;
-    obj1["gasPrice"] = "0x9184e72a000";
+
+    //obj1["gasPrice"] = "0x9184e72a000";
+    obj1["gasPrice"] = QString::fromStdString("0x" + n2hexstr(transaction_fee));
+
     obj1["gas"] = "0x76c00";
     obj1["value"] = "0x0000000000000000000000000000000000000000000000000000000000000000";
     obj1["data"] = d1+s+d3+d4;

@@ -7,7 +7,8 @@
 
 Data::Data()
 {
-    this->transaction_fee = 20000000000;
+    this->transaction_fee_geth = 20000000000;
+    this->transaction_fee_binance = 20000000000;
 }
 
 void Data::save_settings(){

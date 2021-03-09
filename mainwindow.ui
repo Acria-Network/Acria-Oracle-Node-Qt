@@ -52,7 +52,7 @@ background-color: #222222;
      <enum>QTabWidget::West</enum>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>0</number>
     </property>
     <property name="iconSize">
      <size>
@@ -87,7 +87,7 @@ background-color: #222222;
        </rect>
       </property>
       <property name="text">
-       <string>Ethereum Node (geth)</string>
+       <string>Ethereum Node</string>
       </property>
      </widget>
      <widget class="QPushButton" name="pushButton_eth_settings">
