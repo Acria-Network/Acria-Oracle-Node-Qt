@@ -157,6 +157,8 @@ void Resource::send_resource(){
     send_request.setUrl(url1);
     send_request.setRawHeader("Content-Type", "application/json");
     send_manager->post(send_request, data);
+
+    this->state=1;
 }
 
 void Resource::managerFinished(QNetworkReply *reply) {

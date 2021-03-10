@@ -471,7 +471,7 @@ color:black;</string>
        </rect>
       </property>
       <property name="text">
-       <string>Binance Node</string>
+       <string>Binance Smart Chain Node</string>
       </property>
      </widget>
      <widget class="QPushButton" name="pushButton_binance_settings">
@@ -1309,7 +1309,7 @@ background-color: #222222;
 }</string>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <property name="iconSize">
        <size>

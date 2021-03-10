@@ -65,7 +65,8 @@ MainWindow::MainWindow(QWidget *parent)
     this->cinfo = new compinfo(this->data, "ethereum");
     this->binance_cinfo = new compinfo(this->data, "binance");
 
-    this->igeth = new InfoGeth(this, this->node, this->data);
+    this->igeth = new InfoGeth(this, this->node, this->data, "ethereum");
+    this->binance_igeth = new InfoGeth(this, this->binance_node, this->data, "binance");
 
     this->balances = new Balances(this->data, "ethereum");
     this->binance_balances = new Balances(this->data, "binance");
@@ -571,4 +572,11 @@ void MainWindow::on_pushButton_withdraw_binance_clicked()
       } else {
 
       }
+}
+
+void MainWindow::on_pushButton_binance_info_clicked()
+{
+    this->binance_igeth->update_info();
+
+    this->binance_igeth->exec();
 }

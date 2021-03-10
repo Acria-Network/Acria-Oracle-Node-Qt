@@ -79,6 +79,8 @@ private slots:
 
     void on_pushButton_withdraw_binance_clicked();
 
+    void on_pushButton_binance_info_clicked();
+
 private:
     Ui::MainWindow *ui;
     AcriaConfig* acria_config;
@@ -94,6 +96,8 @@ private:
     compinfo* binance_cinfo;
 
     InfoGeth* igeth;
+    InfoGeth* binance_igeth;
+
     Config* config;
 
     Balances* balances;
