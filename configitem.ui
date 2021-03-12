@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>resources/acria_logo5.svg</normaloff>resources/acria_logo5.svg</iconset>
+    <normaloff>resources/acria_logo5_colored.svg</normaloff>resources/acria_logo5_colored.svg</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color:#232323;
@@ -37,7 +37,8 @@ border: none;
 /*padding:30px;*/
 width:80px;
 padding-top:3px;
-padding-bottom:3px;</string>
+padding-bottom:3px;
+background-color:orange;</string>
    </property>
    <property name="orientation">
     <enum>Qt::Horizontal</enum>

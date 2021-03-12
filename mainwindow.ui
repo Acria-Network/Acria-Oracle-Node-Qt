@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>resources/acria_logo5.svg</normaloff>resources/acria_logo5.svg</iconset>
+    <normaloff>resources/acria_logo5_colored.svg</normaloff>resources/acria_logo5_colored.svg</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="styleSheet">
@@ -35,16 +35,23 @@ color:white;</string>
      <string notr="true">#tabWidget QTabBar::tab{
 border-radius:1px;
 padding: 5px;
-border:1px solid white;
+/*border:1px solid white;
 border-left: none;
 border-right:none;
-border-top: none;
-background-color: #333333
+border-top: none;*/
+
+background-color: #333333;
+/*border-right:1px solid orange;*/
 }
 
 #tabWidget QTabBar::tab:!selected {
-border-right:1px solid white;
+/*border-right:1px solid white;*/
 background-color: #222222;
+}
+
+#tab, #tab_2, #tab_3, #tab_4, #tab_8{
+border:none;
+border-left:1px solid orange;
 }
 </string>
     </property>
@@ -52,7 +59,7 @@ background-color: #222222;
      <enum>QTabWidget::West</enum>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>3</number>
     </property>
     <property name="iconSize">
      <size>
@@ -68,7 +75,7 @@ background-color: #222222;
     </property>
     <widget class="QWidget" name="tab">
      <property name="styleSheet">
-      <string notr="true">border:none;</string>
+      <string notr="true"/>
      </property>
      <attribute name="icon">
       <iconset>
@@ -81,7 +88,7 @@ background-color: #222222;
       <property name="geometry">
        <rect>
         <x>60</x>
-        <y>34</y>
+        <y>49</y>
         <width>291</width>
         <height>20</height>
        </rect>
@@ -94,7 +101,7 @@ background-color: #222222;
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>34</y>
+        <y>49</y>
         <width>21</width>
         <height>20</height>
        </rect>
@@ -120,7 +127,7 @@ background-color: #222222;
       <property name="geometry">
        <rect>
         <x>380</x>
-        <y>34</y>
+        <y>49</y>
         <width>21</width>
         <height>20</height>
        </rect>
@@ -133,7 +140,7 @@ background-color: #222222;
       <property name="geometry">
        <rect>
         <x>380</x>
-        <y>74</y>
+        <y>89</y>
         <width>21</width>
         <height>20</height>
        </rect>
@@ -146,7 +153,7 @@ background-color: #222222;
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>74</y>
+        <y>89</y>
         <width>21</width>
         <height>20</height>
        </rect>
@@ -172,7 +179,7 @@ background-color: #222222;
       <property name="geometry">
        <rect>
         <x>60</x>
-        <y>74</y>
+        <y>89</y>
         <width>291</width>
         <height>20</height>
        </rect>
@@ -185,7 +192,7 @@ background-color: #222222;
       <property name="geometry">
        <rect>
         <x>60</x>
-        <y>94</y>
+        <y>109</y>
         <width>291</width>
         <height>20</height>
        </rect>
@@ -198,7 +205,7 @@ background-color: #222222;
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>94</y>
+        <y>109</y>
         <width>21</width>
         <height>20</height>
        </rect>
@@ -224,7 +231,7 @@ background-color: #222222;
       <property name="geometry">
        <rect>
         <x>380</x>
-        <y>94</y>
+        <y>109</y>
         <width>21</width>
         <height>20</height>
        </rect>
@@ -237,7 +244,7 @@ background-color: #222222;
       <property name="geometry">
        <rect>
         <x>23</x>
-        <y>15</y>
+        <y>30</y>
         <width>21</width>
         <height>16</height>
        </rect>
@@ -250,7 +257,7 @@ background-color: #222222;
       <property name="geometry">
        <rect>
         <x>60</x>
-        <y>15</y>
+        <y>30</y>
         <width>41</width>
         <height>16</height>
        </rect>
@@ -263,7 +270,7 @@ background-color: #222222;
       <property name="geometry">
        <rect>
         <x>380</x>
-        <y>15</y>
+        <y>30</y>
         <width>41</width>
         <height>16</height>
        </rect>
@@ -283,7 +290,13 @@ background-color: #222222;
       </property>
       <property name="styleSheet">
        <string notr="true">background-color:white;
-color:black;</string>
+color:black;
+border: none;
+/*padding:30px;*/
+width:80px;
+padding-top:3px;
+padding-bottom:3px;
+background-color:orange;</string>
       </property>
       <property name="text">
        <string>Refresh</string>
@@ -303,7 +316,13 @@ color:black;</string>
       </property>
       <property name="styleSheet">
        <string notr="true">background-color:white;
-color:black;</string>
+color:black;
+border: none;
+/*padding:30px;*/
+width:80px;
+padding-top:3px;
+padding-bottom:3px;
+background-color:orange;</string>
       </property>
       <property name="text">
        <string>Config</string>
@@ -316,7 +335,7 @@ color:black;</string>
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>115</y>
+        <y>130</y>
         <width>21</width>
         <height>20</height>
        </rect>
@@ -342,7 +361,7 @@ color:black;</string>
       <property name="geometry">
        <rect>
         <x>380</x>
-        <y>115</y>
+        <y>130</y>
         <width>21</width>
         <height>20</height>
        </rect>
@@ -355,7 +374,7 @@ color:black;</string>
       <property name="geometry">
        <rect>
         <x>60</x>
-        <y>115</y>
+        <y>130</y>
         <width>291</width>
         <height>20</height>
        </rect>
@@ -387,7 +406,7 @@ color:black;</string>
       <property name="geometry">
        <rect>
         <x>393</x>
-        <y>33</y>
+        <y>48</y>
         <width>21</width>
         <height>20</height>
        </rect>
@@ -413,7 +432,7 @@ color:black;</string>
       <property name="geometry">
        <rect>
         <x>393</x>
-        <y>73</y>
+        <y>88</y>
         <width>21</width>
         <height>20</height>
        </rect>
@@ -439,7 +458,7 @@ color:black;</string>
       <property name="geometry">
        <rect>
         <x>393</x>
-        <y>93</y>
+        <y>108</y>
         <width>21</width>
         <height>20</height>
        </rect>
@@ -465,7 +484,7 @@ color:black;</string>
       <property name="geometry">
        <rect>
         <x>60</x>
-        <y>54</y>
+        <y>69</y>
         <width>291</width>
         <height>20</height>
        </rect>
@@ -478,7 +497,7 @@ color:black;</string>
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>54</y>
+        <y>69</y>
         <width>21</width>
         <height>20</height>
        </rect>
@@ -504,7 +523,7 @@ color:black;</string>
       <property name="geometry">
        <rect>
         <x>393</x>
-        <y>53</y>
+        <y>68</y>
         <width>21</width>
         <height>20</height>
        </rect>
@@ -530,13 +549,34 @@ color:black;</string>
       <property name="geometry">
        <rect>
         <x>380</x>
-        <y>54</y>
+        <y>69</y>
         <width>21</width>
         <height>20</height>
        </rect>
       </property>
       <property name="text">
        <string>...</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_42">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>2</y>
+        <width>111</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color:orange;
+background-color:#333333;
+border-radius:5px;</string>
+      </property>
+      <property name="text">
+       <string>Status</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
      <zorder>label</zorder>
@@ -564,10 +604,11 @@ color:black;</string>
      <zorder>pushButton_binance_settings</zorder>
      <zorder>status_binance</zorder>
      <zorder>pushButton_binance_info</zorder>
+     <zorder>label_42</zorder>
     </widget>
     <widget class="QWidget" name="tab_2">
      <property name="styleSheet">
-      <string notr="true">border:none;</string>
+      <string notr="true"/>
      </property>
      <attribute name="icon">
       <iconset>
@@ -795,7 +836,13 @@ color:black;</string>
       </property>
       <property name="styleSheet">
        <string notr="true">background-color:white;
-color:black;</string>
+color:black;
+border: none;
+/*padding:30px;*/
+width:80px;
+padding-top:3px;
+padding-bottom:3px;
+background-color:orange;</string>
       </property>
       <property name="text">
        <string>Export CSV</string>
@@ -815,7 +862,13 @@ color:black;</string>
       </property>
       <property name="styleSheet">
        <string notr="true">background-color:white;
-color:black;</string>
+color:black;
+border: none;
+/*padding:30px;*/
+width:80px;
+padding-top:3px;
+padding-bottom:3px;
+background-color:orange;</string>
       </property>
       <property name="text">
        <string>Export Json</string>
@@ -847,10 +900,13 @@ color:black;</string>
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>21</y>
+        <y>24</y>
         <width>431</width>
         <height>151</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:none;</string>
       </property>
       <property name="editTriggers">
        <set>QAbstractItemView::NoEditTriggers</set>
@@ -914,18 +970,26 @@ color:black;</string>
        <rect>
         <x>170</x>
         <y>2</y>
-        <width>101</width>
+        <width>111</width>
         <height>16</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true">color:orange;
+background-color:#333333;
+border-radius:5px;</string>
+      </property>
       <property name="text">
        <string>Completed Requests</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
     </widget>
     <widget class="QWidget" name="tab_4">
      <property name="styleSheet">
-      <string notr="true">border:none;</string>
+      <string notr="true"/>
      </property>
      <attribute name="icon">
       <iconset>
@@ -938,10 +1002,13 @@ color:black;</string>
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>21</y>
+        <y>24</y>
         <width>431</width>
-        <height>161</height>
+        <height>151</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:none;</string>
       </property>
       <property name="editTriggers">
        <set>QAbstractItemView::NoEditTriggers</set>
@@ -1022,14 +1089,22 @@ color:black;</string>
      <widget class="QLabel" name="label_32">
       <property name="geometry">
        <rect>
-        <x>172</x>
+        <x>170</x>
         <y>2</y>
-        <width>101</width>
+        <width>111</width>
         <height>16</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true">color:orange;
+background-color:#333333;
+border-radius:5px;</string>
+      </property>
       <property name="text">
        <string>Incoming Requests</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
     </widget>
@@ -1063,21 +1138,29 @@ color:black;</string>
      <widget class="QLabel" name="label_41">
       <property name="geometry">
        <rect>
-        <x>192</x>
+        <x>170</x>
         <y>2</y>
-        <width>51</width>
+        <width>111</width>
         <height>16</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true">color:orange;
+background-color:#333333;
+border-radius:5px;</string>
+      </property>
       <property name="text">
        <string>Balances</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
      <widget class="QTableWidget" name="tableWidget_balances">
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>21</y>
+        <y>24</y>
         <width>431</width>
         <height>151</height>
        </rect>
@@ -1137,7 +1220,8 @@ border: none;
 /*padding:30px;*/
 width:80px;
 padding-top:3px;
-padding-bottom:3px;</string>
+padding-bottom:3px;
+background-color:orange;</string>
       </property>
       <property name="text">
        <string>Withdraw Ether</string>
@@ -1168,7 +1252,8 @@ border: none;
 /*padding:30px;*/
 width:80px;
 padding-top:3px;
-padding-bottom:3px;</string>
+padding-bottom:3px;
+background-color:orange;</string>
       </property>
       <property name="text">
        <string>Withdraw Polkadot</string>
@@ -1199,7 +1284,8 @@ border: none;
 /*padding:30px;*/
 width:80px;
 padding-top:3px;
-padding-bottom:3px;</string>
+padding-bottom:3px;
+background-color:orange;</string>
       </property>
       <property name="text">
        <string>Withdraw Binance</string>
@@ -1214,7 +1300,9 @@ padding-bottom:3px;</string>
     </widget>
     <widget class="QWidget" name="tab_3">
      <property name="styleSheet">
-      <string notr="true">border:none;</string>
+      <string notr="true">#tab_3{
+background-color:#333333;
+}</string>
      </property>
      <attribute name="icon">
       <iconset>
@@ -1253,7 +1341,13 @@ padding-bottom:3px;</string>
       </property>
       <property name="styleSheet">
        <string notr="true">background-color:white;
-color:black;</string>
+color:black;
+border: none;
+/*padding:30px;*/
+width:80px;
+padding-top:3px;
+padding-bottom:3px;
+background-color:orange;</string>
       </property>
       <property name="text">
        <string>Discard</string>
@@ -1273,7 +1367,13 @@ color:black;</string>
       </property>
       <property name="styleSheet">
        <string notr="true">background-color:white;
-color:black;</string>
+color:black;
+border: none;
+/*padding:30px;*/
+width:80px;
+padding-top:3px;
+padding-bottom:3px;
+background-color:orange;</string>
       </property>
       <property name="text">
        <string>Save</string>
@@ -1285,31 +1385,41 @@ color:black;</string>
      <widget class="QTabWidget" name="tabWidget_2">
       <property name="geometry">
        <rect>
-        <x>0</x>
+        <x>1</x>
         <y>0</y>
         <width>451</width>
         <height>171</height>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">#tabWidget_2 QTabBar::tab{
+       <string notr="true">#tabWidget_2, #tabWidget_2 QTabBar{
+border:none;
+}
+
+#tabWidget_2{
+background-color: #333333;
+border-radius:0;
+}
+
+#tabWidget_2 QTabBar::tab{
 border-radius:1px;
 padding: 5px;
-border:1px solid white;
+/*border:1px solid white;
 border-left: none;
-border-right:1px solid white;
-border-top: none;
-background-color: #333333;
-width:60px;
+border-right:none;
+border-top: none;*/
+border:none;
+background-color: #444444;
 }
 
 #tabWidget_2 QTabBar::tab:!selected {
-border-right:1px solid white;
-background-color: #222222;
+/*border-right:1px solid white;*/
+background-color: #333333;
+border:none;
 }</string>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <property name="iconSize">
        <size>
@@ -1322,11 +1432,11 @@ background-color: #222222;
       </property>
       <widget class="QWidget" name="tab_5">
        <property name="styleSheet">
-        <string notr="true"/>
+        <string notr="true">border:none;</string>
        </property>
        <attribute name="icon">
         <iconset>
-         <normaloff>resources/ethereum.svg</normaloff>resources/ethereum.svg</iconset>
+         <normaloff>resources/ethereum_colored.svg</normaloff>resources/ethereum_colored.svg</iconset>
        </attribute>
        <attribute name="title">
         <string>Ethereum</string>
@@ -1429,9 +1539,12 @@ background-color: #222222;
        </widget>
       </widget>
       <widget class="QWidget" name="tab_6">
+       <property name="styleSheet">
+        <string notr="true">border:none;</string>
+       </property>
        <attribute name="icon">
         <iconset>
-         <normaloff>resources/polkadot.svg</normaloff>resources/polkadot.svg</iconset>
+         <normaloff>resources/polkadot_colored.svg</normaloff>resources/polkadot_colored.svg</iconset>
        </attribute>
        <attribute name="title">
         <string>Polkadot</string>
@@ -1534,9 +1647,12 @@ background-color: #222222;
        </widget>
       </widget>
       <widget class="QWidget" name="tab_7">
+       <property name="styleSheet">
+        <string notr="true">border:none;</string>
+       </property>
        <attribute name="icon">
         <iconset>
-         <normaloff>resources/binance.png</normaloff>resources/binance.png</iconset>
+         <normaloff>resources/binance_colored.svg</normaloff>resources/binance_colored.svg</iconset>
        </attribute>
        <attribute name="title">
         <string>Binance</string>
@@ -1639,6 +1755,21 @@ background-color: #222222;
        </widget>
       </widget>
      </widget>
+     <widget class="QWidget" name="widget" native="true">
+      <property name="geometry">
+       <rect>
+        <x>1</x>
+        <y>159</y>
+        <width>461</width>
+        <height>111</height>
+       </rect>
+      </property>
+     </widget>
+     <zorder>widget</zorder>
+     <zorder>label_6</zorder>
+     <zorder>pushButton_setting_discard</zorder>
+     <zorder>pushButton_setting_save</zorder>
+     <zorder>tabWidget_2</zorder>
     </widget>
    </widget>
   </widget>

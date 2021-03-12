@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>resources/acria_logo5_colored.svg</normaloff>resources/acria_logo5_colored.svg</iconset>
+  </property>
   <property name="styleSheet">
    <string notr="true">background-color:#232323;
 color:white;</string>
@@ -63,7 +67,8 @@ border: none;
 /*padding:30px;*/
 width:80px;
 padding-top:3px;
-padding-bottom:3px;</string>
+padding-bottom:3px;
+background-color:orange;</string>
    </property>
    <property name="text">
     <string>Ok</string>
