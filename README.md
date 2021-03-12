@@ -1,4 +1,4 @@
-![Header](img/github_header.svg)
+![Header](img/github_header_color.svg)
 
 # Acria-Oracle-Node-Qt Client
 
