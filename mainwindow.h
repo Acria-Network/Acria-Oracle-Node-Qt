@@ -15,6 +15,7 @@
 #include "balances.h"
 #include "withdraw.h"
 #include "processingwindow.h"
+#include "deploywindow.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -81,6 +82,8 @@ private slots:
 
     void on_pushButton_binance_info_clicked();
 
+    void on_pushButton_deploy_contract_binance_clicked();
+
 private:
     Ui::MainWindow *ui;
     AcriaConfig* acria_config;
@@ -111,6 +114,9 @@ private:
 
     QProgressIndicator* pi;
     QProgressIndicator* pi2;
+
+    DeployWindow* deploy_window;
+    DeployWindow* binance_deploy_window;
 
     Data* data;
 

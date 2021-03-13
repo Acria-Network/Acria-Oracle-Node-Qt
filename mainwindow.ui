@@ -59,7 +59,7 @@ border-left:1px solid orange;
      <enum>QTabWidget::West</enum>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>4</number>
     </property>
     <property name="iconSize">
      <size>
@@ -1419,7 +1419,7 @@ border:none;
 }</string>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>2</number>
       </property>
       <property name="iconSize">
        <size>
@@ -1751,6 +1751,32 @@ border:none;
         </property>
         <property name="text">
          <string>Binance Node:</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_deploy_contract_binance">
+        <property name="geometry">
+         <rect>
+          <x>290</x>
+          <y>108</y>
+          <width>91</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color:white;
+color:black;
+border: none;
+/*padding:30px;*/
+width:80px;
+padding-top:3px;
+padding-bottom:3px;
+background-color:orange;</string>
+        </property>
+        <property name="text">
+         <string>Deploy Contract</string>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
         </property>
        </widget>
       </widget>

@@ -51,4 +51,17 @@ template <typename I> std::string n2hexstr(I w, size_t hex_len = sizeof(I)<<1) {
     return rc;
 }
 
+static QString str2bytes32(QString d2){
+    for(uint i = d2.size(); i<32;i++){
+        d2 += " ";
+    }
+
+    QString s = "";
+    for(int i = 0; i<d2.size(); i++){
+        s += QString::fromStdString(n2hexstr(static_cast<uint>(QString(d2.at(i)).toStdString()[0]), 2));
+    }
+
+    return s;
+}
+
 #endif // UTIL_H

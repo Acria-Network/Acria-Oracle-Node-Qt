@@ -54,7 +54,7 @@ color:white;</string>
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>158</x>
+     <x>161</x>
      <y>170</y>
      <width>80</width>
      <height>17</height>

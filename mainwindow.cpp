@@ -74,6 +74,8 @@ MainWindow::MainWindow(QWidget *parent)
     this->withdraw = new Withdraw(this->data, "ethereum");
     this->binance_withdraw = new Withdraw(this->data, "binance");
 
+    this->deploy_window = new DeployWindow(this, this->data, "ethereum", this->processing_window, "");
+    this->binance_deploy_window = new DeployWindow(this, this->data, "binance", this->processing_window, "");
 
     ui->setupUi(this);
 
@@ -358,6 +360,9 @@ MainWindow::~MainWindow()
 
     delete binance_node;
 
+    delete binance_deploy_window;
+    delete deploy_window;
+
     for(uint i=0; i<this->tm_resources.size();i++){
         delete this->tm_resources[i];
     }
@@ -486,11 +491,13 @@ void MainWindow::on_pushButton_refresh_clicked()
 void MainWindow::on_pushButton_eth_settings_clicked()
 {
     this->ui->tabWidget->setCurrentIndex(4);
+    this->ui->tabWidget_2->setCurrentIndex(0);
 }
 
 void MainWindow::on_pushButton_polkadot_settings_clicked()
 {
     this->ui->tabWidget->setCurrentIndex(4);
+    this->ui->tabWidget_2->setCurrentIndex(1);
 }
 
 void MainWindow::on_pushButton_acria_settings_clicked()
@@ -543,6 +550,7 @@ void MainWindow::on_pushButton_eth_info_clicked()
 void MainWindow::on_pushButton_binance_settings_clicked()
 {
     this->ui->tabWidget->setCurrentIndex(4);
+    this->ui->tabWidget_2->setCurrentIndex(2);
 }
 
 void MainWindow::on_pushButton_withdraw_eth_clicked()
@@ -579,4 +587,9 @@ void MainWindow::on_pushButton_binance_info_clicked()
     this->binance_igeth->update_info();
 
     this->binance_igeth->exec();
+}
+
+void MainWindow::on_pushButton_deploy_contract_binance_clicked()
+{
+     binance_deploy_window->exec();
 }

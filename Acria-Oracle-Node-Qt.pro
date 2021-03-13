@@ -17,6 +17,7 @@ SOURCES += \
     config.cpp \
     configitem.cpp \
     data.cpp \
+    deploywindow.cpp \
     infogeth.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -35,6 +36,7 @@ HEADERS += \
     config.h \
     configitem.h \
     data.h \
+    deploywindow.h \
     infogeth.h \
     mainwindow.h \
     node.h \
@@ -50,6 +52,7 @@ HEADERS += \
 FORMS += \
     acriaconfig.ui \
     configitem.ui \
+    deploywindow.ui \
     infogeth.ui \
     mainwindow.ui \
     processingwindow.ui
