@@ -62,25 +62,20 @@ void Tasks::managerFinished(QNetworkReply *reply) {
             qDebug() << inf[i];
         }
 
-        bool bStatus = false;
-        uint nHex = inf[1].toUInt(&bStatus,16);
+        uint nHex = inf[1].toUInt(NULL,16);
 
-        if(this->type == "ethereum")
-            this->data->items.clear();
-        else if(this->type == "binance")
-            this->data->binance_items.clear();
+        this->data->items_clear(this->type);
 
         for(uint i=2;i<2+nHex;i++){
             QString tmp = "";
+
             for(int f = 1; f< inf[i].length(); f+=2){
                 tmp += QString(static_cast<char>((QString(inf[i].at(f-1)) + QString(inf[i].at(f))).toUInt(NULL,16)));
             }
+
             qDebug() << tmp.trimmed();
 
-            if(this->type == "ethereum")
-                this->data->items.push_back(tmp.trimmed());
-            else if(this->type == "binance")
-                this->data->binance_items.push_back(tmp.trimmed());
+            this->data->item_push_back(this->type, tmp.trimmed());
         }
     }
 
@@ -116,12 +111,7 @@ void Tasks::r_managerFinished(QNetworkReply *reply) {
         }
         inf.push_back(res1);
 
-        for(uint i = 0; i<inf.size(); i++){
-            qDebug() << inf[i];
-        }
-
-        bool bStatus = false;
-        uint nHex = inf[1].toUInt(&bStatus,16);
+        uint nHex = inf[1].toUInt(NULL,16);
 
         if(nHex != 0){
             uint arr_size = (inf.size()-2)/nHex;
@@ -139,19 +129,10 @@ void Tasks::r_managerFinished(QNetworkReply *reply) {
                     qDebug() << "r.requestID " << tmp.trimmed();
 
                     r.requestID = tmp.trimmed();
-
-
                     r.fee = QString(inf[i+1]).toULongLong(NULL,16);
-                    qDebug() << r.fee;
-
                     r.expiration = QString(inf[i+2]).toUInt(NULL,16);
-                    qDebug() << r.expiration;
-
                     r.callback = inf[i+3].remove(0, 24);
-                    qDebug() << r.callback;
-
                     r.chain = this->type;
-
                     r.id = QString(inf[i+4]).toUInt(NULL,16);
 
                     this->requests.push_back(r);
@@ -166,20 +147,10 @@ void Tasks::r_managerFinished(QNetworkReply *reply) {
 
 void Tasks::update_tasks(){
     QUrl url1;
-    QString contract;
-    QString account;
+    QString contract, account;
+    unsigned long long transaction_fee = 0;
 
-    if(this->type == "ethereum"){
-        url1 = QUrl(this->data->geth_url);
-        contract = this->data->eth_contract;
-        account = this->data->eth_account;
-    }
-
-    else if(this->type == "binance"){
-        url1 = QUrl(this->data->binance_url);
-        contract = this->data->binance_contract;
-        account = this->data->binance_account;
-    }
+    this->data->get_chain_info(this->type, &url1, &account, &contract, &transaction_fee);
 
     QJsonObject obj1;
     obj1["from"] = account;
@@ -204,20 +175,10 @@ void Tasks::update_tasks(){
 
 void Tasks::update_requests(){
     QUrl url1;
-    QString contract;
-    QString account;
+    QString contract, account;
+    unsigned long long transaction_fee = 0;
 
-    if(this->type == "ethereum"){
-        url1 = QUrl(this->data->geth_url);
-        contract = this->data->eth_contract;
-        account = this->data->eth_account;
-    }
-
-    else if(this->type == "binance"){
-        url1 = QUrl(this->data->binance_url);
-        contract = this->data->binance_contract;
-        account = this->data->binance_account;
-    }
+    this->data->get_chain_info(this->type, &url1, &account, &contract, &transaction_fee);
 
     QJsonObject obj1;
     obj1["from"] = account;

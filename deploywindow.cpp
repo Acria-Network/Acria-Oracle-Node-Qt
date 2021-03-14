@@ -45,23 +45,10 @@ void DeployWindow::deploy(){
         this->state = 0;
 
         QUrl url1;
-        QString contract1;
-        QString account1;
+        QString contract1, account1;
         unsigned long long transaction_fee = 0;
 
-        if(this->type == "ethereum"){
-            url1 = QUrl(this->data->geth_url);
-            contract1 = this->data->eth_contract;
-            account1 = this->data->eth_account;
-            transaction_fee = this->data->transaction_fee_geth;
-        }
-
-        else if(this->type == "binance"){
-            url1 = QUrl(this->data->binance_url);
-            contract1 = this->data->binance_contract;
-            account1 = this->data->binance_account;
-            transaction_fee = this->data->transaction_fee_binance;
-        }
+        this->data->get_chain_info(this->type, &url1, &account1, &contract1, &transaction_fee);
 
         QString d1 = "0x1cd23fd9";
         QString d2 = str2bytes32(this->ui->lineEdit_contract_name->text());
@@ -93,25 +80,12 @@ void DeployWindow::deploy(){
     }
 }
 
-void DeployWindow::is_deployed(QString hash){
+void DeployWindow::is_deployed(){
     QUrl url1;
-    QString contract1;
-    QString account1;
+    QString contract1, account1;
     unsigned long long transaction_fee = 0;
 
-    if(this->type == "ethereum"){
-        url1 = QUrl(this->data->geth_url);
-        contract1 = this->data->eth_contract;
-        account1 = this->data->eth_account;
-        transaction_fee = this->data->transaction_fee_geth;
-    }
-
-    else if(this->type == "binance"){
-        url1 = QUrl(this->data->binance_url);
-        contract1 = this->data->binance_contract;
-        account1 = this->data->binance_account;
-        transaction_fee = this->data->transaction_fee_binance;
-    }
+    this->data->get_chain_info(this->type, &url1, &account1, &contract1, &transaction_fee);
 
     QString d1 = "0x3f83acff";
     QString d2 = str2bytes32(this->ui->lineEdit_contract_name->text());
@@ -154,7 +128,7 @@ void DeployWindow::managerFinished(QNetworkReply *reply) {
     this->state=2;
 
     this->hash1 = res;
-    this->is_deployed(res);
+    this->is_deployed();
 }
 
 void DeployWindow::deployed_managerFinished(QNetworkReply *reply) {
@@ -174,7 +148,7 @@ void DeployWindow::deployed_managerFinished(QNetworkReply *reply) {
         this->state=3;
     }
     else{
-        this->is_deployed(this->hash1);
+        this->is_deployed();
     }
 }
 

@@ -84,52 +84,25 @@ std::string tohex(std::string number) {                        // Decimal to Hex
 
 void Resource::send_resource(){
     QUrl url1;
-    QString contract1;
-    QString account1;
+    QString contract1, account1;
     unsigned long long transaction_fee = 0;
 
-    if(this->type == "ethereum"){
-        url1 = QUrl(this->data->geth_url);
-        contract1 = this->data->eth_contract;
-        account1 = this->data->eth_account;
-        transaction_fee = this->data->transaction_fee_geth;
-    }
+    this->data->get_chain_info(this->type, &url1, &account1, &contract1, &transaction_fee);
 
-    else if(this->type == "binance"){
-        url1 = QUrl(this->data->binance_url);
-        contract1 = this->data->binance_contract;
-        account1 = this->data->binance_account;
-        transaction_fee = this->data->transaction_fee_binance;
-    }
-
-    //QString d1 = "0x01ff927b";
-    //d1 = "0xb4883e04";
     QString d1 = "0x6974868e";
-    QString d2 = this->item;
+    QString d2 = str2bytes32(this->item);
 
     qDebug() << d1;
-
-    for(uint i = d2.size(); i<32;i++){
-        d2 += " ";
-    }
-
-    QString s = "";
-    for(int i = 0; i<d2.size(); i++){
-        s += QString::fromStdString(n2hexstr(static_cast<uint>(QString(d2.at(i)).toStdString()[0]), 2));
-    }
-
-    qDebug() << s;
+    qDebug() << d2;
 
     QString d3 = QString::fromStdString(value256.GetHex());
-
 
     QString d4 = QString::fromStdString(n2hexstr(this->id));
     for(uint i = d4.size(); i<64;i++){
         d4 = "0" + d4;
     }
 
-    qDebug() << "d4 " << d4 << " " << QString::fromStdString(n2hexstr(3444));
-
+    qDebug() << d4;
     qDebug() << d3;
 
     QJsonObject obj1;
@@ -141,7 +114,7 @@ void Resource::send_resource(){
 
     obj1["gas"] = "0x76c00";
     obj1["value"] = "0x0000000000000000000000000000000000000000000000000000000000000000";
-    obj1["data"] = d1+s+d3+d4;
+    obj1["data"] = d1+d2+d3+d4;
 
     QJsonArray obj3;
     obj3.push_back(obj1);

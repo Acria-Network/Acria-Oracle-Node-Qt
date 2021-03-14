@@ -35,20 +35,10 @@ compinfo::~compinfo(){
 
 void compinfo::create_filter_events(){
     QUrl url1;
-    QString contract;
-    QString account;
+    QString contract, account;
+    unsigned long long transaction_fee = 0;
 
-    if(this->type == "ethereum"){
-        url1 = QUrl(this->data->geth_url);
-        contract = this->data->eth_contract;
-        account = this->data->eth_account;
-    }
-
-    else if(this->type == "binance"){
-        url1 = QUrl(this->data->binance_url);
-        contract = this->data->binance_contract;
-        account = this->data->binance_account;
-    }
+    this->data->get_chain_info(this->type, &url1, &account, &contract, &transaction_fee);
 
     QJsonArray addr;
     addr.push_back(contract);
@@ -82,20 +72,10 @@ void compinfo::create_filter_events(){
 void compinfo::update_events(){
     if(this->filter != ""){
         QUrl url1;
-        QString contract;
-        QString account;
+        QString contract, account;
+        unsigned long long transaction_fee = 0;
 
-        if(this->type == "ethereum"){
-            url1 = QUrl(this->data->geth_url);
-            contract = this->data->eth_contract;
-            account = this->data->eth_account;
-        }
-
-        else if(this->type == "binance"){
-            url1 = QUrl(this->data->binance_url);
-            contract = this->data->binance_contract;
-            account = this->data->binance_account;
-        }
+        this->data->get_chain_info(this->type, &url1, &account, &contract, &transaction_fee);
 
         QJsonArray obj3;
         obj3.push_back(this->filter);
@@ -125,7 +105,6 @@ void compinfo::filter_managerFinished(QNetworkReply *reply) {
     QString res = obj["result"].toString();
 
     qDebug() << answer;
-    qDebug() << res;
 
     this->filter = res;
 }
@@ -175,14 +154,8 @@ void compinfo::managerFinished(QNetworkReply *reply) {
 
         c.requestID = hex2str(inf[0]).trimmed();
         c.callback = inf[1].remove(0,24);
-
         c.id = QString(inf[3]).toUInt(NULL,16);
-
         c.fee = QString(inf[2]).toULongLong(NULL,16);
-        qDebug() << c.fee << " " << QString(inf[2]);
-
-        qDebug() << c.requestID;
-        qDebug() << c.callback;
 
         this->completed.push_back(c);
     }

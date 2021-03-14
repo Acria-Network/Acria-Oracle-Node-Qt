@@ -28,7 +28,7 @@ private slots:
     void deployed_managerFinished(QNetworkReply *reply);
 
     void on_buttonBox_accepted();
-    void is_deployed(QString hash);
+    void is_deployed();
 
 private:
     Ui::DeployWindow *ui;

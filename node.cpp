@@ -29,12 +29,10 @@ Node::Node(Data* _data, QString _type)
 
 void Node::update_geth_status(){
     QUrl url1;
+    QString contract1, account1;
+    unsigned long long transaction_fee = 0;
 
-    if(this->type == "ethereum")
-        url1 = QUrl(this->data->geth_url);
-
-    if(this->type == "binance")
-        url1 = QUrl(this->data->binance_url);
+    this->data->get_chain_info(this->type, &url1, &account1, &contract1, &transaction_fee);
 
     qDebug() << "answer";
     QJsonObject obj;

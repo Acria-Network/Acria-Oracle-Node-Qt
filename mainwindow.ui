@@ -1419,7 +1419,7 @@ border:none;
 }</string>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <property name="iconSize">
        <size>
@@ -1535,6 +1535,32 @@ border:none;
         <property name="styleSheet">
          <string notr="true">background-color:#333333;
 /*font-size: 7px;*/</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_deploy_contract_eth">
+        <property name="geometry">
+         <rect>
+          <x>288</x>
+          <y>108</y>
+          <width>91</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color:white;
+color:black;
+border: none;
+/*padding:30px;*/
+width:80px;
+padding-top:3px;
+padding-bottom:3px;
+background-color:orange;</string>
+        </property>
+        <property name="text">
+         <string>Deploy Contract</string>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
         </property>
        </widget>
       </widget>
@@ -1756,7 +1782,7 @@ border:none;
        <widget class="QPushButton" name="pushButton_deploy_contract_binance">
         <property name="geometry">
          <rect>
-          <x>290</x>
+          <x>288</x>
           <y>108</y>
           <width>91</width>
           <height>17</height>

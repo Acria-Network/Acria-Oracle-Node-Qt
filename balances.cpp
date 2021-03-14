@@ -27,20 +27,10 @@ Balances::~Balances(){
 
 void Balances::update_withdrawable(){
     QUrl url1;
-    QString contract;
-    QString account;
+    QString contract, account;
+    unsigned long long transaction_fee = 0;
 
-    if(this->type == "ethereum"){
-        url1 = QUrl(this->data->geth_url);
-        contract = this->data->eth_contract;
-        account = this->data->eth_account;
-    }
-
-    else if(this->type == "binance"){
-        url1 = QUrl(this->data->binance_url);
-        contract = this->data->binance_contract;
-        account = this->data->binance_account;
-    }
+    this->data->get_chain_info(this->type, &url1, &account, &contract, &transaction_fee);
 
     QJsonObject obj1;
     obj1["from"] = account;

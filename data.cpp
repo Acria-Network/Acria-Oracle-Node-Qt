@@ -3,6 +3,7 @@
 
 #include <QFile>
 #include <QDebug>
+#include <QUrl>
 
 
 Data::Data()
@@ -90,5 +91,21 @@ void Data::load_settings(){
     }
     catch(...){
         qDebug() << "Error settings binance";
+    }
+}
+
+void Data::get_chain_info(QString chain, QUrl* url, QString* account, QString* contract, unsigned long long* transaction_fee){
+    if(chain == "ethereum"){
+        *url = QUrl(this->geth_url);
+        *contract = this->eth_contract;
+        *account = this->eth_account;
+        *transaction_fee = this->transaction_fee_geth;
+    }
+
+    else if(chain == "binance"){
+        *url = QUrl(this->binance_url);
+        *contract = this->binance_contract;
+        *account = this->binance_account;
+        *transaction_fee = this->transaction_fee_binance;
     }
 }

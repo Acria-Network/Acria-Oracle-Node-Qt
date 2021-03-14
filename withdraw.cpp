@@ -28,23 +28,10 @@ void Withdraw::withdraw(ProcessingWindow* _processing_window){
     this->processing_window = _processing_window;
 
     QUrl url1;
-    QString contract1;
-    QString account1;
+    QString contract1, account1;
     unsigned long long transaction_fee = 0;
 
-    if(this->type == "ethereum"){
-        url1 = QUrl(this->data->geth_url);
-        contract1 = this->data->eth_contract;
-        account1 = this->data->eth_account;
-        transaction_fee = this->data->transaction_fee_geth;
-    }
-
-    else if(this->type == "binance"){
-        url1 = QUrl(this->data->binance_url);
-        contract1 = this->data->binance_contract;
-        account1 = this->data->binance_account;
-        transaction_fee = this->data->transaction_fee_binance;
-    }
+    this->data->get_chain_info(this->type, &url1, &account1, &contract1, &transaction_fee);
 
     QString d1 = "0x3ccfd60b";
 
@@ -53,8 +40,6 @@ void Withdraw::withdraw(ProcessingWindow* _processing_window){
     QJsonObject obj1;
     obj1["from"] = account1;
     obj1["to"] = contract1;
-
-    //obj1["gasPrice"] = "0x9184e72a000";
     obj1["gasPrice"] = QString::fromStdString("0x" + n2hexstr(transaction_fee));
 
     obj1["gas"] = "0x76c00";

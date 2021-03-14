@@ -30,9 +30,6 @@ MainWindow::MainWindow(QWidget *parent)
     qDebug() << "started";
 
     this->data = new Data();
-    //this->data->geth_url = "http://127.0.0.1:9545/";
-    //this->data->eth_contract = "0xD4cA7302185a7346557709eFf49d05536B766d4A";
-    //this->data->eth_account = "0x56B832aB0E5615CD72256204406177Ed5887145c";
 
     data->load_settings();
 
@@ -197,7 +194,6 @@ void MainWindow::update_requests(){
 
     for (uint d=0; d<r.size(); d++){
             if (!std::count(nt.begin(), nt.end(), r[d].chain + QString::number(r[d].id))){
-                qDebug() <<"dddd";
                 nlohmann::json conf1 = config->get_config();
                 for(uint i = 0; i<conf1.size();i++){
                     if(QString::fromStdString(conf1[i]["rname"]) == r[d].requestID){
@@ -323,12 +319,10 @@ void MainWindow::update_balances(){
     this->ui->tableWidget_balances->setItem( 3, 1, new QTableWidgetItem(QString::number(binance_total_fees)));
     this->ui->tableWidget_balances->setItem( 2, 1, new QTableWidgetItem(QString::number(polkadot_total_fees)));
     this->ui->tableWidget_balances->setItem( 1, 1, new QTableWidgetItem(QString::number(eth_total_fees)));
-    //this->ui->tableWidget_balances->setItem( 4, 1, new QTableWidgetItem(QString::number(eth_total_fees + polkadot_total_fees + binance_total_fees)));
 
     this->ui->tableWidget_balances->setItem( 3, 2, new QTableWidgetItem(QString::number(binance_withdrawable)));
     this->ui->tableWidget_balances->setItem( 2, 2, new QTableWidgetItem(QString::number(polkadot_withdrawable)));
     this->ui->tableWidget_balances->setItem( 1, 2, new QTableWidgetItem(QString::number(eth_withdrawable)));
-    //this->ui->tableWidget_balances->setItem( 4, 2, new QTableWidgetItem(QString::number(eth_withdrawable + polkadot_withdrawable + binance_withdrawable)));
 }
 
 MainWindow::~MainWindow()
@@ -592,4 +586,9 @@ void MainWindow::on_pushButton_binance_info_clicked()
 void MainWindow::on_pushButton_deploy_contract_binance_clicked()
 {
      binance_deploy_window->exec();
+}
+
+void MainWindow::on_pushButton_deploy_contract_eth_clicked()
+{
+    deploy_window->exec();
 }
