@@ -5,6 +5,8 @@
 #include <QDebug>
 #include <QJsonObject>
 #include <QJsonDocument>
+#include <QJsonArray>
+#include <QByteArray>
 
 
 static QJsonObject ObjectFromString(const QString& in)
@@ -62,6 +64,30 @@ static QString str2bytes32(QString d2){
     }
 
     return s;
+}
+
+static QByteArray generate_rpc_call(QString _method, QString _from, QString _to, QString _data, unsigned long long _transaction_fee, unsigned long long _gas, QJsonValue _id){
+    QJsonObject obj1;
+    obj1["from"] = _from;
+    obj1["to"] = _to;
+    obj1["data"] = _data;
+    obj1["gasPrice"] = QString::fromStdString("0x" + n2hexstr(_transaction_fee));
+
+    if(_gas != 0)
+        obj1["gas"] = QString::fromStdString("0x" + n2hexstr(_gas));
+
+    QJsonArray obj3;
+    obj3.push_back(obj1);
+
+    QJsonObject obj;
+    obj["jsonrpc"] = "2.0";
+    obj["method"] = _method;
+    obj["params"] = obj3;
+    obj["id"] = _id;
+    QJsonDocument doc(obj);
+    QByteArray data = doc.toJson();
+
+    return data;
 }
 
 #endif // UTIL_H

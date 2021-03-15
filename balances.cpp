@@ -32,25 +32,11 @@ void Balances::update_withdrawable(){
 
     this->data->get_chain_info(this->type, &url1, &account, &contract, &transaction_fee);
 
-    QJsonObject obj1;
-    obj1["from"] = account;
-    obj1["to"] = contract;
-    obj1["data"] = "0x64245d010000000000000000000000000000000000000000000000000000000000000000";
-
-    QJsonArray obj3;
-    obj3.push_back(obj1);
-
-    QJsonObject obj;
-    obj["jsonrpc"] = "2.0";
-    obj["method"] = "eth_call";
-    obj["params"] = obj3;
-    obj["id"] = 77;
-    QJsonDocument doc(obj);
-    QByteArray data = doc.toJson();
+    QString data1 = "0x64245d010000000000000000000000000000000000000000000000000000000000000000";
 
     request.setUrl(url1);
     request.setRawHeader("Content-Type", "application/json");
-    manager->post(request, data);
+    manager->post(request, generate_rpc_call("eth_call", account, contract, data1, transaction_fee, 0, 77));
 }
 
 void Balances::managerFinished(QNetworkReply *reply) {

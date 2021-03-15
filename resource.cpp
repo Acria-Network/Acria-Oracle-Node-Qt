@@ -105,31 +105,11 @@ void Resource::send_resource(){
     qDebug() << d4;
     qDebug() << d3;
 
-    QJsonObject obj1;
-    obj1["from"] = account1;
-    obj1["to"] = contract1;
-
-    //obj1["gasPrice"] = "0x9184e72a000";
-    obj1["gasPrice"] = QString::fromStdString("0x" + n2hexstr(transaction_fee));
-
-    obj1["gas"] = "0x76c00";
-    obj1["value"] = "0x0000000000000000000000000000000000000000000000000000000000000000";
-    obj1["data"] = d1+d2+d3+d4;
-
-    QJsonArray obj3;
-    obj3.push_back(obj1);
-
-    QJsonObject obj;
-    obj["jsonrpc"] = "2.0";
-    obj["method"] = "eth_sendTransaction";
-    obj["params"] = obj3;
-    obj["id"] = 22;
-    QJsonDocument doc(obj);
-    QByteArray data = doc.toJson();
+    QString data1 = d1+d2+d3+d4;
 
     send_request.setUrl(url1);
     send_request.setRawHeader("Content-Type", "application/json");
-    send_manager->post(send_request, data);
+    send_manager->post(send_request, generate_rpc_call("eth_sendTransaction", account1, contract1, data1, transaction_fee, 486400, 78));
 
     this->state=1;
 }

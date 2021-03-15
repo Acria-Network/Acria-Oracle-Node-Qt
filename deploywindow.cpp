@@ -52,29 +52,11 @@ void DeployWindow::deploy(){
 
         QString d1 = "0x1cd23fd9";
         QString d2 = str2bytes32(this->ui->lineEdit_contract_name->text());
-
-        QJsonObject obj1;
-        obj1["from"] = account1;
-        obj1["to"] = this->ui->lineEdit_main_contract->text();
-        obj1["gasPrice"] = QString::fromStdString("0x" + n2hexstr(transaction_fee));
-        obj1["gas"] = "0xF4730";
-        obj1["value"] = "0x0000000000000000000000000000000000000000000000000000000000000000";
-        obj1["data"] = d1+d2;
-
-        QJsonArray obj3;
-        obj3.push_back(obj1);
-
-        QJsonObject obj;
-        obj["jsonrpc"] = "2.0";
-        obj["method"] = "eth_sendTransaction";
-        obj["params"] = obj3;
-        obj["id"] = 25;
-        QJsonDocument doc(obj);
-        QByteArray data = doc.toJson();
+        QString data1 = d1+d2;
 
         request.setUrl(url1);
         request.setRawHeader("Content-Type", "application/json");
-        manager->post(request, data);
+        manager->post(request, generate_rpc_call("eth_sendTransaction", account1, this->ui->lineEdit_main_contract->text(), data1, transaction_fee, 1001264, 25));
 
         this->state=1;
     }
@@ -89,28 +71,11 @@ void DeployWindow::is_deployed(){
 
     QString d1 = "0x3f83acff";
     QString d2 = str2bytes32(this->ui->lineEdit_contract_name->text());
-
-    QJsonObject obj1;
-    obj1["from"] = account1;
-    obj1["to"] = this->ui->lineEdit_main_contract->text();
-    obj1["data"] = d1+d2;
-
-    QJsonArray obj3;
-    obj3.push_back(obj1);
-
-    QJsonObject obj;
-    obj["jsonrpc"] = "2.0";
-    obj["method"] = "eth_call";
-    obj["params"] = obj3;
-    obj["id"] = 79;
-    QJsonDocument doc(obj);
-    QByteArray data = doc.toJson();
-
-    qDebug() << "is_deployed " << QString::fromStdString(data.toStdString());
+    QString data1 = d1+d2;
 
     deployed_request.setUrl(url1);
     deployed_request.setRawHeader("Content-Type", "application/json");
-    deployed_manager->post(deployed_request, data);
+    deployed_manager->post(deployed_request, generate_rpc_call("eth_call", account1, this->ui->lineEdit_main_contract->text(), data1, transaction_fee, 0, 79));
 }
 
 void DeployWindow::managerFinished(QNetworkReply *reply) {
