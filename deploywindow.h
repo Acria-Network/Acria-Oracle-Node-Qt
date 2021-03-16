@@ -8,6 +8,7 @@
 
 #include "data.h"
 #include "processingwindow.h"
+#include "availabledatacontracts.h"
 
 namespace Ui {
 class DeployWindow;
@@ -30,6 +31,8 @@ private slots:
     void on_buttonBox_accepted();
     void is_deployed();
 
+    void on_pushButton_data_contracts_clicked();
+
 private:
     Ui::DeployWindow *ui;
 
@@ -43,6 +46,8 @@ private:
     Data *data;
 
     ProcessingWindow* processing_window;
+
+    AvailableDataContracts* available_data_contracts;
 
     uint state;
     QString hash1;

@@ -32,12 +32,15 @@ DeployWindow::DeployWindow(QWidget *parent, Data *_data, QString _type, Processi
     this->hash1 = _hash1;
 
     this->processing_window = _processing_window;
+
+    this->available_data_contracts = new AvailableDataContracts(this, this->data, this->type, "");
 }
 
 DeployWindow::~DeployWindow()
 {
     delete ui;
     delete manager;
+    delete available_data_contracts;
 }
 
 void DeployWindow::deploy(){
@@ -123,4 +126,10 @@ void DeployWindow::on_buttonBox_accepted()
         this->processing_window->show();
         this->deploy();
     }
+}
+
+void DeployWindow::on_pushButton_data_contracts_clicked()
+{
+    this->available_data_contracts->set_acria_main(this->ui->lineEdit_main_contract->text());
+    this->available_data_contracts->exec();
 }

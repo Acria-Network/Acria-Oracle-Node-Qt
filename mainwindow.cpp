@@ -33,9 +33,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     data->load_settings();
 
-    this->node = new Node(this->data, "ethereum");
-    this->binance_node = new Node(this->data, "binance");
-
     this->config = new Config();
 
     if(!fileExists("config.conf")){
@@ -56,23 +53,8 @@ MainWindow::MainWindow(QWidget *parent)
     this->acria_config = new AcriaConfig(this, this->config);
     this->processing_window = new ProcessingWindow();
 
-    this->tasks = new Tasks(this->data, "ethereum");
-    this->binance_tasks = new Tasks(this->data, "binance");
-
-    this->cinfo = new compinfo(this->data, "ethereum");
-    this->binance_cinfo = new compinfo(this->data, "binance");
-
-    this->igeth = new InfoGeth(this, this->node, this->data, "ethereum");
-    this->binance_igeth = new InfoGeth(this, this->binance_node, this->data, "binance");
-
-    this->balances = new Balances(this->data, "ethereum");
-    this->binance_balances = new Balances(this->data, "binance");
-
-    this->withdraw = new Withdraw(this->data, "ethereum");
-    this->binance_withdraw = new Withdraw(this->data, "binance");
-
-    this->deploy_window = new DeployWindow(this, this->data, "ethereum", this->processing_window, "");
-    this->binance_deploy_window = new DeployWindow(this, this->data, "binance", this->processing_window, "");
+    this->eth_based_chain["ethereum"] = new EthBasedChain(this, "ethereum", this->data, this->processing_window);
+    this->eth_based_chain["binance"] = new EthBasedChain(this, "binance", this->data, this->processing_window);
 
     ui->setupUi(this);
 
@@ -81,8 +63,6 @@ MainWindow::MainWindow(QWidget *parent)
     QtConcurrent::run(this, &MainWindow::get_status_acria);
     QtConcurrent::run(this, &MainWindow::get_status_config);
     QtConcurrent::run(this, &MainWindow::get_status_binance);
-
-    tasks->update_tasks();
 
     timer_update_requests = new QTimer(this);
     connect(timer_update_requests, SIGNAL(timeout()), this, SLOT(update_requests()));
@@ -95,6 +75,10 @@ MainWindow::MainWindow(QWidget *parent)
     timer_update_balances = new QTimer(this);
     connect(timer_update_balances, SIGNAL(timeout()), this, SLOT(update_balances()));
     timer_update_balances->start(INTERVAL_RUN);
+
+    timer_update_gas_price = new QTimer(this);
+    connect(timer_update_gas_price, SIGNAL(timeout()), this, SLOT(update_gas_price()));
+    timer_update_gas_price->start(INTERVAL_RUN);
 
     this->pi = new QProgressIndicator();
     this->ui->horizontalLayout->layout()->addWidget(pi);
@@ -128,7 +112,7 @@ void MainWindow::update_settings(){
 void MainWindow::get_status_geth(){
     QThread::msleep(INTERVAL_RUN_CONNECTION);
 
-    if(node->get_status_geth()){
+    if(this->eth_based_chain["ethereum"]->node->get_status_geth()){
         ui->status_geth->setText("Ok");
     }
 }
@@ -136,7 +120,7 @@ void MainWindow::get_status_geth(){
 void MainWindow::get_status_polkadot(){
     QThread::msleep(INTERVAL_RUN_CONNECTION);
 
-    if(node->get_status_polkadot()){
+    if(true){
         ui->status_polkadot->setText("Ok");
     }
 }
@@ -144,7 +128,7 @@ void MainWindow::get_status_polkadot(){
 void MainWindow::get_status_binance(){
     QThread::msleep(INTERVAL_RUN_CONNECTION);
 
-    if(binance_node->get_status_geth()){
+    if(this->eth_based_chain["binance"]->node->get_status_geth()){
         ui->status_binance->setText("Ok");
     }
 }
@@ -152,25 +136,35 @@ void MainWindow::get_status_binance(){
 void MainWindow::get_status_acria(){
     QThread::msleep(INTERVAL_RUN_CONNECTION);
 
-    if(node->get_status_acria()){
+    if(true){
         ui->status_acria->setText("Ok");
     }
 }
 
 void MainWindow::get_status_config(){
-    if(node->get_status_config()){
+    if(true){
         ui->status_config->setText("Ok");
     }
 }
 
 void MainWindow::update_requests(){
-    tasks->update_requests();
-    binance_tasks->update_requests();
+    if(this->data->transaction_fee_geth != 0)
+        this->eth_based_chain["ethereum"]->tasks->update_requests();
+    if(this->data->transaction_fee_binance != 0)
+        this->eth_based_chain["binance"]->tasks->update_requests();
 
-    std::vector<req> r = tasks->get_requests();
 
-    std::vector<req> r2 = binance_tasks->get_requests();
-    r.insert(r.end(), r2.begin(), r2.end());
+    //std::vector<req> r = tasks->get_requests();
+
+    //std::vector<req> r2 = binance_tasks->get_requests();
+    //r.insert(r.end(), r2.begin(), r2.end());
+
+    std::vector<req> r;
+    for (auto const& x : eth_based_chain)
+    {
+        std::vector<req> r2 = x.second->tasks->get_requests();
+        r.insert(r.end(), r2.begin(), r2.end());
+    }
 
     this->ui->tableWidget_req->clear();
     while (ui->tableWidget_req->rowCount() > 0)
@@ -231,13 +225,25 @@ void MainWindow::update_requests(){
     }
 }
 
-void MainWindow::update_events(){
-    cinfo->update_events();
-    binance_cinfo->update_events();
+void MainWindow::update_gas_price(){
+    for (auto const& x : eth_based_chain)
+    {
+        x.second->gas_price->update_gas_price();
+    }
+}
 
-    std::vector<comp> r = cinfo->get_completed();
-    std::vector<comp> r2 = binance_cinfo->get_completed();
-    r.insert(r.end(), r2.begin(), r2.end());
+void MainWindow::update_events(){
+    for (auto const& x : eth_based_chain)
+    {
+        x.second->cinfo->update_events();
+    }
+
+    std::vector<comp> r;
+    for (auto const& x : eth_based_chain)
+    {
+        std::vector<comp> r2 = x.second->cinfo->get_completed();
+        r.insert(r.end(), r2.begin(), r2.end());
+    }
 
     this->ui->tableWidget_comp->clear();
     while (ui->tableWidget_comp->rowCount() > 0)
@@ -274,8 +280,10 @@ void MainWindow::update_events(){
 }
 
 void MainWindow::update_balances(){
-    this->balances->update_withdrawable();
-    this->binance_balances->update_withdrawable();
+    for (auto const& x : eth_based_chain)
+    {
+        x.second->balances->update_withdrawable();
+    }
 
     this->ui->tableWidget_balances->clear();
     while (ui->tableWidget_balances->rowCount() > 0)
@@ -299,16 +307,16 @@ void MainWindow::update_balances(){
     this->ui->tableWidget_balances->setItem( 0, 2, new QTableWidgetItem("Withdrawable Fees"));
     this->ui->tableWidget_balances->setItem( 0, 3, new QTableWidgetItem("Completed Requests"));
 
-    uint eth_completed = this->cinfo->get_completed().size();
-    uint binance_completed = this->binance_cinfo->get_completed().size();
+    uint eth_completed = this->eth_based_chain["ethereum"]->cinfo->get_completed().size();
+    uint binance_completed = this->eth_based_chain["binance"]->cinfo->get_completed().size();
     uint polkadot_completed = 0;
 
-    double binance_total_fees = this->binance_cinfo->get_total_fees();
-    double eth_total_fees = this->cinfo->get_total_fees();
+    double binance_total_fees = this->eth_based_chain["binance"]->cinfo->get_total_fees();
+    double eth_total_fees = this->eth_based_chain["ethereum"]->cinfo->get_total_fees();
     double polkadot_total_fees = 0;
 
-    double binance_withdrawable = this->binance_balances->get_withdrawable();
-    double eth_withdrawable = this->balances->get_withdrawable();
+    double binance_withdrawable = this->eth_based_chain["binance"]->balances->get_withdrawable();
+    double eth_withdrawable = this->eth_based_chain["ethereum"]->balances->get_withdrawable();
     double polkadot_withdrawable = 0;
 
     this->ui->tableWidget_balances->setItem( 1, 3, new QTableWidgetItem(QString::number(eth_completed)));
@@ -331,34 +339,22 @@ MainWindow::~MainWindow()
     delete acria_config;
     delete processing_window;
 
-    delete node;
-    delete tasks;
-    delete cinfo;
     delete pi;
     delete pi2;
     delete data;
-    delete igeth;
-
-    delete binance_cinfo;
-    delete binance_tasks;
 
     delete timer_update_requests;
     delete timer_update_events;
     delete timer_update_balances;
-
-    delete balances;
-    delete binance_balances;
-
-    delete withdraw;
-    delete binance_withdraw;
-
-    delete binance_node;
-
-    delete binance_deploy_window;
-    delete deploy_window;
+    delete timer_update_gas_price;
 
     for(uint i=0; i<this->tm_resources.size();i++){
         delete this->tm_resources[i];
+    }
+
+    for (auto const& x : eth_based_chain)
+    {
+        delete x.second;
     }
 }
 
@@ -372,9 +368,12 @@ void MainWindow::on_pushButton_export_json_clicked()
 
 
     if(dir != ""){
-        std::vector<comp> r = cinfo->get_completed();
-        std::vector<comp> r2 = binance_cinfo->get_completed();
-        r.insert(r.end(), r2.begin(), r2.end());
+        std::vector<comp> r;
+        for (auto const& x : eth_based_chain)
+        {
+            std::vector<comp> r2 = x.second->cinfo->get_completed();
+            r.insert(r.end(), r2.begin(), r2.end());
+        }
 
         nlohmann::json tmp;
 
@@ -417,9 +416,12 @@ void MainWindow::on_pushButton_export_csv_clicked()
                                                  | QFileDialog::DontResolveSymlinks);
 
     if(dir != ""){
-        std::vector<comp> r = cinfo->get_completed();
-        std::vector<comp> r2 = binance_cinfo->get_completed();
-        r.insert(r.end(), r2.begin(), r2.end());
+        std::vector<comp> r;
+        for (auto const& x : eth_based_chain)
+        {
+            std::vector<comp> r2 = x.second->cinfo->get_completed();
+            r.insert(r.end(), r2.begin(), r2.end());
+        }
 
         QString tmp = "";
         QString delim = ";";
@@ -473,8 +475,10 @@ void MainWindow::on_pushButton_refresh_clicked()
     ui->status_acria->setText("...");
     ui->status_config->setText("...");
 
-    this->node->update_geth_status();
-    this->binance_node->update_geth_status();
+    for (auto const& x : eth_based_chain)
+    {
+        x.second->node->update_geth_status();
+    }
 
     QtConcurrent::run(this, &MainWindow::get_status_geth);
     QtConcurrent::run(this, &MainWindow::get_status_polkadot);
@@ -520,8 +524,10 @@ void MainWindow::on_pushButton_setting_save_clicked()
 
     this->data->save_settings();
 
-    this->cinfo->create_filter_events();
-    this->binance_cinfo->create_filter_events();
+    for (auto const& x : eth_based_chain)
+    {
+        x.second->cinfo->create_filter_events();
+    }
 
     QMessageBox msgBox;
     msgBox.setText("Successfully saved the settings!");
@@ -536,9 +542,9 @@ void MainWindow::on_pushButton_setting_discard_clicked()
 
 void MainWindow::on_pushButton_eth_info_clicked()
 {
-    this->igeth->update_info();
+    this->eth_based_chain["ethereum"]->igeth->update_info();
 
-    this->igeth->exec();
+    this->eth_based_chain["ethereum"]->igeth->exec();
 }
 
 void MainWindow::on_pushButton_binance_settings_clicked()
@@ -553,7 +559,7 @@ void MainWindow::on_pushButton_withdraw_eth_clicked()
     reply = QMessageBox::question(this, "Withdraw", "Withdraw everything from the Binance contract?", QMessageBox::Yes|QMessageBox::No);
       if (reply == QMessageBox::Yes) {
           this->processing_window->show();
-        this->withdraw->withdraw(processing_window);
+        this->eth_based_chain["ethereum"]->withdraw->withdraw(processing_window);
       } else {
 
       }
@@ -570,7 +576,7 @@ void MainWindow::on_pushButton_withdraw_binance_clicked()
     reply = QMessageBox::question(this, "Withdraw", "Withdraw everything from the Binance contract?", QMessageBox::Yes|QMessageBox::No);
       if (reply == QMessageBox::Yes) {
           this->processing_window->show();
-        this->binance_withdraw->withdraw(processing_window);
+        this->eth_based_chain["binance"]->withdraw->withdraw(processing_window);
       } else {
 
       }
@@ -578,17 +584,17 @@ void MainWindow::on_pushButton_withdraw_binance_clicked()
 
 void MainWindow::on_pushButton_binance_info_clicked()
 {
-    this->binance_igeth->update_info();
+    this->eth_based_chain["binance"]->igeth->update_info();
 
-    this->binance_igeth->exec();
+    this->eth_based_chain["binance"]->igeth->exec();
 }
 
 void MainWindow::on_pushButton_deploy_contract_binance_clicked()
 {
-     binance_deploy_window->exec();
+     this->eth_based_chain["binance"]->deploy_window->exec();
 }
 
 void MainWindow::on_pushButton_deploy_contract_eth_clicked()
 {
-    deploy_window->exec();
+    this->eth_based_chain["ethereum"]->deploy_window->exec();
 }

@@ -59,7 +59,7 @@ border-left:1px solid orange;
      <enum>QTabWidget::West</enum>
     </property>
     <property name="currentIndex">
-     <number>4</number>
+     <number>1</number>
     </property>
     <property name="iconSize">
      <size>
@@ -1419,7 +1419,7 @@ border:none;
 }</string>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <property name="iconSize">
        <size>

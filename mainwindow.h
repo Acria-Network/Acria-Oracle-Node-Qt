@@ -5,17 +5,11 @@
 #include <map>
 
 #include "acriaconfig.h"
-#include "node.h"
-#include "tasks.h"
-#include "compinfo.h"
 #include "qprogressindicator.h"
 #include "data.h"
-#include "infogeth.h"
 #include "config.h"
-#include "balances.h"
-#include "withdraw.h"
 #include "processingwindow.h"
-#include "deploywindow.h"
+#include "ethbasedchain.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -47,6 +41,8 @@ private slots:
     void update_events();
 
     void update_balances();
+
+    void update_gas_price();
 
     void on_pushButton_eth_settings_clicked();
 
@@ -91,25 +87,9 @@ private:
     AcriaConfig* acria_config;
     ProcessingWindow* processing_window;
 
-    Node* node;
-    Node* binance_node;
-
-    Tasks* tasks;
-    Tasks* binance_tasks;
-
-    compinfo* cinfo;
-    compinfo* binance_cinfo;
-
-    InfoGeth* igeth;
-    InfoGeth* binance_igeth;
+    std::map<QString, EthBasedChain*> eth_based_chain;
 
     Config* config;
-
-    Balances* balances;
-    Balances* binance_balances;
-
-    Withdraw* withdraw;
-    Withdraw* binance_withdraw;
 
     std::vector<Resource*> tm_resources;
     std::vector<QString> nt;
@@ -117,14 +97,12 @@ private:
     QProgressIndicator* pi;
     QProgressIndicator* pi2;
 
-    DeployWindow* deploy_window;
-    DeployWindow* binance_deploy_window;
-
     Data* data;
 
     QTimer *timer_update_requests;
     QTimer *timer_update_events;
     QTimer *timer_update_balances;
+    QTimer *timer_update_gas_price;
 
     void update_settings();
 };

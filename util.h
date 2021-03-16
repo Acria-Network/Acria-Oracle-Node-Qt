@@ -68,11 +68,15 @@ static QString str2bytes32(QString d2){
 
 static QByteArray generate_rpc_call(QString _method, QString _from, QString _to, QString _data, unsigned long long _transaction_fee, unsigned long long _gas, QJsonValue _id){
     QJsonObject obj1;
-    obj1["from"] = _from;
-    obj1["to"] = _to;
-    obj1["data"] = _data;
-    obj1["gasPrice"] = QString::fromStdString("0x" + n2hexstr(_transaction_fee));
 
+    if(_from != "")
+        obj1["from"] = _from;
+    if(_to != "")
+        obj1["to"] = _to;
+    if(_data != "")
+        obj1["data"] = _data;
+    if(_transaction_fee != 0)
+        obj1["gasPrice"] = QString::fromStdString("0x" + n2hexstr(_transaction_fee));
     if(_gas != 0)
         obj1["gas"] = QString::fromStdString("0x" + n2hexstr(_gas));
 
@@ -82,7 +86,8 @@ static QByteArray generate_rpc_call(QString _method, QString _from, QString _to,
     QJsonObject obj;
     obj["jsonrpc"] = "2.0";
     obj["method"] = _method;
-    obj["params"] = obj3;
+    if(!(_from == "" && _to == "" && _data == "" && _transaction_fee == 0 && _gas == 0))
+        obj["params"] = obj3;
     obj["id"] = _id;
     QJsonDocument doc(obj);
     QByteArray data = doc.toJson();

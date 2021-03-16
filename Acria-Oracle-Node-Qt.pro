@@ -12,12 +12,15 @@ CONFIG += console
 
 SOURCES += \
     acriaconfig.cpp \
+    availabledatacontracts.cpp \
     balances.cpp \
     compinfo.cpp \
     config.cpp \
     configitem.cpp \
     data.cpp \
     deploywindow.cpp \
+    ethbasedchain.cpp \
+    gasprice.cpp \
     infogeth.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -31,12 +34,15 @@ SOURCES += \
 
 HEADERS += \
     acriaconfig.h \
+    availabledatacontracts.h \
     balances.h \
     compinfo.h \
     config.h \
     configitem.h \
     data.h \
     deploywindow.h \
+    ethbasedchain.h \
+    gasprice.h \
     infogeth.h \
     mainwindow.h \
     node.h \
@@ -51,6 +57,7 @@ HEADERS += \
 
 FORMS += \
     acriaconfig.ui \
+    availabledatacontracts.ui \
     configitem.ui \
     deploywindow.ui \
     infogeth.ui \

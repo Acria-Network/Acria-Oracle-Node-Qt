@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>DeployWindow</class>
- <widget class="QDialog" name="DeployWindow">
+ <class>AvailableDataContracts</class>
+ <widget class="QDialog" name="AvailableDataContracts">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>279</width>
-    <height>160</height>
+    <width>400</width>
+    <height>300</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,10 +20,10 @@ color:white;</string>
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
-     <x>51</x>
-     <y>130</y>
-     <width>221</width>
-     <height>32</height>
+     <x>53</x>
+     <y>275</y>
+     <width>341</width>
+     <height>21</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -40,86 +40,76 @@ background-color:orange;</string>
     <enum>Qt::Horizontal</enum>
    </property>
    <property name="standardButtons">
-    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+    <set>QDialogButtonBox::Ok</set>
    </property>
   </widget>
-  <widget class="QLabel" name="label">
+  <widget class="QTableWidget" name="tableWidget_comp">
    <property name="geometry">
     <rect>
-     <x>15</x>
-     <y>83</y>
-     <width>161</width>
+     <x>10</x>
+     <y>10</y>
+     <width>371</width>
+     <height>251</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border:none;</string>
+   </property>
+   <property name="editTriggers">
+    <set>QAbstractItemView::NoEditTriggers</set>
+   </property>
+   <property name="showDropIndicator" stdset="0">
+    <bool>true</bool>
+   </property>
+   <property name="showGrid">
+    <bool>true</bool>
+   </property>
+   <property name="rowCount">
+    <number>0</number>
+   </property>
+   <property name="columnCount">
+    <number>5</number>
+   </property>
+   <attribute name="horizontalHeaderVisible">
+    <bool>false</bool>
+   </attribute>
+   <attribute name="horizontalHeaderHighlightSections">
+    <bool>true</bool>
+   </attribute>
+   <attribute name="verticalHeaderVisible">
+    <bool>false</bool>
+   </attribute>
+   <attribute name="verticalHeaderHighlightSections">
+    <bool>true</bool>
+   </attribute>
+   <column/>
+   <column/>
+   <column/>
+   <column/>
+   <column/>
+  </widget>
+  <widget class="QWidget" name="horizontalLayoutWidget_2">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>21</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_2"/>
+  </widget>
+  <widget class="QLabel" name="label_progress_2">
+   <property name="geometry">
+    <rect>
+     <x>36</x>
+     <y>9</y>
+     <width>71</width>
      <height>16</height>
     </rect>
    </property>
    <property name="text">
-    <string>Contract Name (must be unique):</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="lineEdit_contract_name">
-   <property name="geometry">
-    <rect>
-     <x>15</x>
-     <y>99</y>
-     <width>251</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color:#333333;
-border:none;
-/*font-size: 7px;*/</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="lineEdit_main_contract">
-   <property name="geometry">
-    <rect>
-     <x>15</x>
-     <y>27</y>
-     <width>251</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color:#333333;
-border:none;
-/*font-size: 7px;*/</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_2">
-   <property name="geometry">
-    <rect>
-     <x>15</x>
-     <y>11</y>
-     <width>91</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Main Contract:</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pushButton_data_contracts">
-   <property name="geometry">
-    <rect>
-     <x>15</x>
-     <y>53</y>
-     <width>251</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color:white;
-color:black;
-border: none;
-/*padding:30px;*/
-width:80px;
-padding-top:3px;
-padding-bottom:3px;
-background-color:orange;</string>
-   </property>
-   <property name="text">
-    <string>Show Available Data-Contracts</string>
+    <string>Please Wait...</string>
    </property>
   </widget>
  </widget>
@@ -128,7 +118,7 @@ background-color:orange;</string>
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>DeployWindow</receiver>
+   <receiver>AvailableDataContracts</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -144,7 +134,7 @@ background-color:orange;</string>
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>DeployWindow</receiver>
+   <receiver>AvailableDataContracts</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
