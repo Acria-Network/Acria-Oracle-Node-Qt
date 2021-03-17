@@ -82,6 +82,10 @@ private slots:
 
     void on_pushButton_deploy_contract_eth_clicked();
 
+    void on_pushButton_accounts_binance_clicked();
+
+    void on_pushButton_accounts_eth_clicked();
+
 private:
     Ui::MainWindow *ui;
     AcriaConfig* acria_config;

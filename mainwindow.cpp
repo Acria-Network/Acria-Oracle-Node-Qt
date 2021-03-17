@@ -99,14 +99,17 @@ void MainWindow::update_settings(){
     this->ui->lineEdit_geth_url->setText(this->data->geth_url);
     this->ui->lineEdit_eth_account->setText(this->data->eth_account);
     this->ui->lineEdit_eth_contract->setText(this->data->eth_contract);
+    this->ui->checkBox_eth->setChecked(this->data->eth_enabled);
 
     this->ui->lineEdit_polkadot_url->setText(this->data->polkadot_url);
     this->ui->lineEdit_polkadot_account->setText(this->data->polkadot_account);
     this->ui->lineEdit_polkadot_contract->setText(this->data->polkadot_contract);
+    this->ui->checkBox_polkadot->setChecked(this->data->polkadot_enabled);
 
     this->ui->lineEdit_binance_url->setText(this->data->binance_url);
     this->ui->lineEdit_binance_account->setText(this->data->binance_account);
     this->ui->lineEdit_binance_contract->setText(this->data->binance_contract);
+    this->ui->checkBox_binance->setChecked(this->data->binance_enabled);
 }
 
 void MainWindow::get_status_geth(){
@@ -148,16 +151,10 @@ void MainWindow::get_status_config(){
 }
 
 void MainWindow::update_requests(){
-    if(this->data->transaction_fee_geth != 0)
+    if(this->data->transaction_fee_geth != 0 && this->data->eth_enabled != false)
         this->eth_based_chain["ethereum"]->tasks->update_requests();
-    if(this->data->transaction_fee_binance != 0)
+    if(this->data->transaction_fee_binance != 0 && this->data->binance_enabled != false)
         this->eth_based_chain["binance"]->tasks->update_requests();
-
-
-    //std::vector<req> r = tasks->get_requests();
-
-    //std::vector<req> r2 = binance_tasks->get_requests();
-    //r.insert(r.end(), r2.begin(), r2.end());
 
     std::vector<req> r;
     for (auto const& x : eth_based_chain)
@@ -202,6 +199,8 @@ void MainWindow::update_requests(){
 
                         this->tm_resources.push_back(rr);
                         nt.push_back(r[d].chain + QString::number(r[d].id));
+
+                        QThread::msleep(100);
                     }
 
             }
@@ -513,14 +512,18 @@ void MainWindow::on_pushButton_setting_save_clicked()
     this->data->binance_url = this->ui->lineEdit_binance_url->text();
     this->data->binance_account = this->ui->lineEdit_binance_account->text();
     this->data->binance_contract = this->ui->lineEdit_binance_contract->text();
+    this->data->binance_enabled = this->ui->checkBox_binance->isChecked();
 
     this->data->geth_url = this->ui->lineEdit_geth_url->text();
     this->data->eth_account = this->ui->lineEdit_eth_account->text();
     this->data->eth_contract = this->ui->lineEdit_eth_contract->text();
+    this->data->eth_enabled = this->ui->checkBox_eth->isChecked();
+    qDebug() << "state eth " << this->ui->checkBox_eth->isChecked();
 
     this->data->polkadot_url = this->ui->lineEdit_polkadot_url->text();
     this->data->polkadot_account = this->ui->lineEdit_polkadot_account->text();
     this->data->polkadot_contract = this->ui->lineEdit_polkadot_contract->text();
+    this->data->polkadot_enabled = this->ui->checkBox_polkadot->isChecked();
 
     this->data->save_settings();
 
@@ -597,4 +600,22 @@ void MainWindow::on_pushButton_deploy_contract_binance_clicked()
 void MainWindow::on_pushButton_deploy_contract_eth_clicked()
 {
     this->eth_based_chain["ethereum"]->deploy_window->exec();
+}
+
+void MainWindow::on_pushButton_accounts_binance_clicked()
+{
+    this->eth_based_chain["binance"]->available_accounts->update_accounts();
+
+    if(this->eth_based_chain["binance"]->available_accounts->exec() == QDialog::Accepted){
+        this->ui->lineEdit_binance_account->setText(this->eth_based_chain["binance"]->available_accounts->selected_account);
+    }
+}
+
+void MainWindow::on_pushButton_accounts_eth_clicked()
+{
+    this->eth_based_chain["ethereum"]->available_accounts->update_accounts();
+
+    if(this->eth_based_chain["ethereum"]->available_accounts->exec() == QDialog::Accepted){
+        this->ui->lineEdit_eth_account->setText(this->eth_based_chain["ethereum"]->available_accounts->selected_account);
+    }
 }

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>InfoGeth</class>
- <widget class="QDialog" name="InfoGeth">
+ <class>AvailableAccounts</class>
+ <widget class="QDialog" name="AvailableAccounts">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>278</width>
-    <height>196</height>
+    <width>318</width>
+    <height>180</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Node Information</string>
+   <string>Available Accounts</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -24,9 +24,9 @@ color:white;</string>
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
-     <x>52</x>
-     <y>166</y>
-     <width>221</width>
+     <x>62</x>
+     <y>150</y>
+     <width>251</width>
      <height>32</height>
     </rect>
    </property>
@@ -44,88 +44,71 @@ background-color:orange;</string>
     <enum>Qt::Horizontal</enum>
    </property>
    <property name="standardButtons">
-    <set>QDialogButtonBox::Ok</set>
+    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
    </property>
+  </widget>
+  <widget class="QTableWidget" name="tableWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>20</y>
+     <width>291</width>
+     <height>121</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border:none;</string>
+   </property>
+   <property name="editTriggers">
+    <set>QAbstractItemView::NoEditTriggers</set>
+   </property>
+   <property name="showDropIndicator" stdset="0">
+    <bool>false</bool>
+   </property>
+   <property name="selectionMode">
+    <enum>QAbstractItemView::SingleSelection</enum>
+   </property>
+   <property name="selectionBehavior">
+    <enum>QAbstractItemView::SelectRows</enum>
+   </property>
+   <property name="showGrid">
+    <bool>true</bool>
+   </property>
+   <property name="rowCount">
+    <number>0</number>
+   </property>
+   <property name="columnCount">
+    <number>5</number>
+   </property>
+   <attribute name="horizontalHeaderVisible">
+    <bool>true</bool>
+   </attribute>
+   <attribute name="horizontalHeaderHighlightSections">
+    <bool>true</bool>
+   </attribute>
+   <attribute name="verticalHeaderVisible">
+    <bool>false</bool>
+   </attribute>
+   <attribute name="verticalHeaderHighlightSections">
+    <bool>true</bool>
+   </attribute>
+   <column/>
+   <column/>
+   <column/>
+   <column/>
+   <column/>
   </widget>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>14</y>
-     <width>43</width>
-     <height>12</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Version:</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_version">
-   <property name="geometry">
-    <rect>
-     <x>21</x>
-     <y>29</y>
-     <width>241</width>
+     <x>10</x>
+     <y>2</y>
+     <width>141</width>
      <height>16</height>
     </rect>
    </property>
    <property name="text">
-    <string/>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_3">
-   <property name="geometry">
-    <rect>
-     <x>19</x>
-     <y>82</y>
-     <width>43</width>
-     <height>12</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Items:</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_items">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>98</y>
-     <width>161</width>
-     <height>71</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_5">
-   <property name="geometry">
-    <rect>
-     <x>19</x>
-     <y>48</y>
-     <width>43</width>
-     <height>12</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Url:</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_url">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>63</y>
-     <width>241</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string/>
+    <string>Please select your account:</string>
    </property>
   </widget>
  </widget>
@@ -134,7 +117,7 @@ background-color:orange;</string>
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>InfoGeth</receiver>
+   <receiver>AvailableAccounts</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -150,7 +133,7 @@ background-color:orange;</string>
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>InfoGeth</receiver>
+   <receiver>AvailableAccounts</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

@@ -59,7 +59,7 @@ void DeployWindow::deploy(){
 
         request.setUrl(url1);
         request.setRawHeader("Content-Type", "application/json");
-        manager->post(request, generate_rpc_call("eth_sendTransaction", account1, this->ui->lineEdit_main_contract->text(), data1, transaction_fee, 1001264, 25));
+        manager->post(request, generate_rpc_call("eth_sendTransaction", account1, this->ui->lineEdit_main_contract->text(), data1, transaction_fee, 1301264, 25));
 
         this->state=1;
     }

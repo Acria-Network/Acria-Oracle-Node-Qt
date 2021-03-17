@@ -20,9 +20,6 @@ Node::Node(Data* _data, QString _type)
         this, SLOT(statusManagerFinished(QNetworkReply*)));
 
     this->status_geth = false;
-    this->status_polkadot = true;
-    this->status_acria = true;
-    this->status_config = true;
 
     update_geth_status();
 };
@@ -69,21 +66,12 @@ void Node::statusManagerFinished(QNetworkReply *reply) {
 
     this->geth_version = obj["result"].toString();
 
-    status_geth = true;
+    if(this->geth_version != "" && this->geth_version != nullptr)
+        status_geth = true;
+    else
+        status_geth = false;
 }
 
 bool Node::get_status_geth(){
     return status_geth;
-}
-
-bool Node::get_status_polkadot(){
-    return status_polkadot;
-}
-
-bool Node::get_status_acria(){
-    return status_acria;
-}
-
-bool Node::get_status_config(){
-    return status_config;
 }

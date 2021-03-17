@@ -13,14 +13,17 @@ public:
     QString geth_url;
     QString eth_account;
     QString eth_contract;
+    bool eth_enabled;
 
     QString polkadot_url;
     QString polkadot_account;
     QString polkadot_contract;
+    bool polkadot_enabled;
 
     QString binance_url;
     QString binance_account;
     QString binance_contract;
+    bool binance_enabled;
 
     std::vector<QString> items;
     std::vector<QString> binance_items;

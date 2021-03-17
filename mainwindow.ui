@@ -59,7 +59,7 @@ border-left:1px solid orange;
      <enum>QTabWidget::West</enum>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>4</number>
     </property>
     <property name="iconSize">
      <size>
@@ -1419,7 +1419,7 @@ border:none;
 }</string>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <property name="iconSize">
        <size>
@@ -1563,6 +1563,32 @@ background-color:orange;</string>
          <bool>true</bool>
         </property>
        </widget>
+       <widget class="QPushButton" name="pushButton_accounts_eth">
+        <property name="geometry">
+         <rect>
+          <x>288</x>
+          <y>66</y>
+          <width>91</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color:white;
+color:black;
+border: none;
+/*padding:30px;*/
+width:80px;
+padding-top:3px;
+padding-bottom:3px;
+background-color:orange;</string>
+        </property>
+        <property name="text">
+         <string>My Accounts</string>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+       </widget>
       </widget>
       <widget class="QWidget" name="tab_6">
        <property name="styleSheet">
@@ -1696,7 +1722,7 @@ background-color:orange;</string>
          <string>Contract:</string>
         </property>
        </widget>
-       <widget class="QCheckBox" name="checkBox_polkadot_2">
+       <widget class="QCheckBox" name="checkBox_binance">
         <property name="geometry">
          <rect>
           <x>10</x>
@@ -1800,6 +1826,32 @@ background-color:orange;</string>
         </property>
         <property name="text">
          <string>Deploy Contract</string>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_accounts_binance">
+        <property name="geometry">
+         <rect>
+          <x>288</x>
+          <y>66</y>
+          <width>91</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color:white;
+color:black;
+border: none;
+/*padding:30px;*/
+width:80px;
+padding-top:3px;
+padding-bottom:3px;
+background-color:orange;</string>
+        </property>
+        <property name="text">
+         <string>My Accounts</string>
         </property>
         <property name="flat">
          <bool>true</bool>

@@ -15,6 +15,7 @@ EthBasedChain::EthBasedChain(QWidget *parent, QString _type, Data* _data, Proces
     this->balances = new Balances(this->data, this->type);
     this->withdraw = new Withdraw(this->data, this->type);
     this->deploy_window = new DeployWindow(this->main_window, this->data, this->type, this->processing_window, "");
+    this->available_accounts = new AvailableAccounts(this->main_window, this->data, this->type);
 };
 
 EthBasedChain::~EthBasedChain(){
@@ -26,4 +27,5 @@ EthBasedChain::~EthBasedChain(){
     delete withdraw;
     delete deploy_window;
     delete gas_price;
+    delete available_accounts;
 };

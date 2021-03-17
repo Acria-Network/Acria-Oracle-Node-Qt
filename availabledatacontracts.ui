@@ -11,7 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Data Contracts</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>resources/acria_logo5_colored.svg</normaloff>resources/acria_logo5_colored.svg</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color:#232323;

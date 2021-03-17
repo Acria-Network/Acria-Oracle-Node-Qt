@@ -14,6 +14,7 @@
 #include "processingwindow.h"
 #include "deploywindow.h"
 #include "gasprice.h"
+#include "availableaccounts.h"
 
 
 class EthBasedChain{
@@ -34,6 +35,7 @@ public:
     Withdraw* withdraw;
     DeployWindow* deploy_window;
     GasPrice* gas_price;
+    AvailableAccounts* available_accounts;
 };
 
 #endif // ETHBASEDCHAIN_H

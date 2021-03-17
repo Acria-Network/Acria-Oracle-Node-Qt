@@ -12,6 +12,7 @@ CONFIG += console
 
 SOURCES += \
     acriaconfig.cpp \
+    availableaccounts.cpp \
     availabledatacontracts.cpp \
     balances.cpp \
     compinfo.cpp \
@@ -34,6 +35,7 @@ SOURCES += \
 
 HEADERS += \
     acriaconfig.h \
+    availableaccounts.h \
     availabledatacontracts.h \
     balances.h \
     compinfo.h \
@@ -57,6 +59,7 @@ HEADERS += \
 
 FORMS += \
     acriaconfig.ui \
+    availableaccounts.ui \
     availabledatacontracts.ui \
     configitem.ui \
     deploywindow.ui \

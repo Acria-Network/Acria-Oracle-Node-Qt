@@ -18,9 +18,6 @@ public:
     Node(Data* _data, QString _type);
     ~Node();
     bool get_status_geth();
-    bool get_status_polkadot();
-    bool get_status_acria();
-    bool get_status_config();
 
     void update_geth_status();
 
@@ -28,9 +25,6 @@ public:
 
 private:
     bool status_geth;
-    bool status_polkadot;
-    bool status_acria;
-    bool status_config;
 
     QString geth_version;
 

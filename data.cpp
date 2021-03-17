@@ -21,14 +21,17 @@ void Data::save_settings(){
     tmp["geth_url"] = geth_url.toStdString();
     tmp["eth_account"] = eth_account.toStdString();
     tmp["eth_contract"] = eth_contract.toStdString();
+    tmp["eth_enabled"] = eth_enabled;
 
     tmp["polkadot_url"] = polkadot_url.toStdString();
     tmp["polkadot_account"] = polkadot_account.toStdString();
     tmp["polkadot_contract"] = polkadot_contract.toStdString();
+    tmp["polkadot_enabled"] = polkadot_enabled;
 
     tmp["binance_url"] = binance_url.toStdString();
     tmp["binance_account"] = binance_account.toStdString();
     tmp["binance_contract"] = binance_contract.toStdString();
+    tmp["binance_enabled"] = binance_enabled;
 
     QString filename="settings.conf";
     QFile file(filename);
@@ -73,6 +76,7 @@ void Data::load_settings(){
         geth_url = QString::fromStdString(tmp["geth_url"]);
         eth_account = QString::fromStdString(tmp["eth_account"]);
         eth_contract = QString::fromStdString(tmp["eth_contract"]);
+        eth_enabled = tmp["eth_enabled"];
     }
     catch(...){
         qDebug() << "Error settings ethereum";
@@ -82,6 +86,7 @@ void Data::load_settings(){
         polkadot_url = QString::fromStdString(tmp["polkadot_url"]);
         polkadot_account = QString::fromStdString(tmp["polkadot_account"]);
         polkadot_contract = QString::fromStdString(tmp["polkadot_contract"]);
+        polkadot_enabled = tmp["polkadot_enabled"];
     }
     catch(...){
         qDebug() << "Error settings polkadot";
@@ -91,6 +96,7 @@ void Data::load_settings(){
         binance_url = QString::fromStdString(tmp["binance_url"]);
         binance_account = QString::fromStdString(tmp["binance_account"]);
         binance_contract = QString::fromStdString(tmp["binance_contract"]);
+        binance_enabled = tmp["binance_enabled"];
     }
     catch(...){
         qDebug() << "Error settings binance";
