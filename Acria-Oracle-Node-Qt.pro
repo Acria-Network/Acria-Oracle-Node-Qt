@@ -23,14 +23,17 @@ SOURCES += \
     ethbasedchain.cpp \
     gasprice.cpp \
     infogeth.cpp \
+    keccak256.cpp \
     main.cpp \
     mainwindow.cpp \
     node.cpp \
     processingwindow.cpp \
     qprogressindicator.cpp \
     resource.cpp \
+    sha3.cpp \
     tasks.cpp \
     uint256.cpp \
+    verifyethaddress.cpp \
     withdraw.cpp
 
 HEADERS += \
@@ -46,15 +49,18 @@ HEADERS += \
     ethbasedchain.h \
     gasprice.h \
     infogeth.h \
+    keccak256.h \
     mainwindow.h \
     node.h \
     processingwindow.h \
     qprogressindicator.h \
     resource.h \
+    sha3.h \
     span.h \
     tasks.h \
     uint256.h \
     util.h \
+    verifyethaddress.h \
     withdraw.h
 
 FORMS += \

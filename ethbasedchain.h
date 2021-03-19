@@ -36,6 +36,7 @@ public:
     DeployWindow* deploy_window;
     GasPrice* gas_price;
     AvailableAccounts* available_accounts;
+    std::map<uint, uint> state;
 };
 
 #endif // ETHBASEDCHAIN_H

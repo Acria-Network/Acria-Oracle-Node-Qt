@@ -86,6 +86,14 @@ private slots:
 
     void on_pushButton_accounts_eth_clicked();
 
+    void on_lineEdit_eth_contract_textChanged(const QString &arg1);
+
+    void on_lineEdit_binance_account_textChanged(const QString &arg1);
+
+    void on_lineEdit_eth_account_textChanged(const QString &arg1);
+
+    void on_lineEdit_binance_contract_textChanged(const QString &arg1);
+
 private:
     Ui::MainWindow *ui;
     AcriaConfig* acria_config;
@@ -109,5 +117,7 @@ private:
     QTimer *timer_update_gas_price;
 
     void update_settings();
+    void show_msgBox(QString text);
+    void line_edit_check_eth_address(QString address, QObject *senderObj);
 };
 #endif // MAINWINDOW_H

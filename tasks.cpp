@@ -131,9 +131,9 @@ void Tasks::r_managerFinished(QNetworkReply *reply) {
                     r.requestID = tmp.trimmed();
                     r.fee = QString(inf[i+1]).toULongLong(NULL,16);
                     r.expiration = QString(inf[i+2]).toUInt(NULL,16);
-                    r.callback = inf[i+3].remove(0, 24);
+                    r.callback = inf[i+4].remove(0, 24);
                     r.chain = this->type;
-                    r.id = QString(inf[i+4]).toUInt(NULL,16);
+                    r.id = QString(inf[i+3]).toUInt(NULL,16);
 
                     this->requests.push_back(r);
                 }

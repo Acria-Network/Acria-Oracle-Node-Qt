@@ -39,18 +39,18 @@ private:
 
     std::vector<uint> sent_id;
     std::vector<uint> unsent_id;
-    uint state;
+    uint* state;
 
     uint id;
 
 public:
     Resource();
-    Resource(QString url, std::vector<QString> _l_json, QString _contract, QString n, Data* _data, QString _type, uint _id);
+    Resource(QString url, std::vector<QString> _l_json, QString _contract, QString n, Data* _data, QString _type, uint _id, uint* state);
     ~Resource();
     void update_resource();
     void send_resource();
     void add_unsent_id(uint i){unsent_id.push_back(i);}
-    uint get_state(){return state;}
+    uint get_state(){return *state;}
 
 private slots:
     void managerFinished(QNetworkReply *reply);

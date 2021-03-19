@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "verifyethaddress.h"
 
 #include <QFileInfo>
 #include <QApplication>
@@ -10,6 +11,7 @@
 #include <QIcon>
 #include <QtConcurrent/QtConcurrent>
 #include <QtCore>
+#include <QLineEdit>
 
 
 bool fileExists(QString path) {
@@ -170,8 +172,9 @@ void MainWindow::update_requests(){
     }
     this->ui->tableWidget_req->setRowCount(r.size());
     qDebug() << "r " <<r.size();
-    this->ui->tableWidget_req->setColumnCount(6);
-    this->ui->tableWidget_req->setColumnWidth(4, 140);
+    this->ui->tableWidget_req->setColumnCount(7);
+    this->ui->tableWidget_req->setColumnWidth(4, 100);
+    this->ui->tableWidget_req->setColumnWidth(6, 50);
     this->ui->tableWidget_req->setColumnWidth(0, 20);
     for (uint d=0; d<r.size(); d++){
         this->ui->tableWidget_req->setItem( d, 0, new QTableWidgetItem(QString::number(d)));
@@ -181,6 +184,8 @@ void MainWindow::update_requests(){
         //this->ui->tableWidget_req->setItem( d, 4, new QTableWidgetItem(r[d].callback));
         this->ui->tableWidget_req->setItem( d, 4, new QTableWidgetItem(r[d].chain));
         this->ui->tableWidget_req->setItem( d, 5, new QTableWidgetItem(QString::number(r[d].id)));
+        uint state = this->eth_based_chain[r[d].chain]->state[r[d].id];
+        this->ui->tableWidget_req->setItem( d, 5, new QTableWidgetItem(state==0?"new":state==1?"data updated":state==2?"sent":"completed"));
     }
 
     for (uint d=0; d<r.size(); d++){
@@ -194,7 +199,8 @@ void MainWindow::update_requests(){
                             l_json.push_back(QString::fromStdString(conf1[i]["json"][f]));
                         }
 
-                        Resource* rr = new Resource(QString::fromStdString(conf1[i]["url"]), l_json, this->data->eth_contract, QString::fromStdString(conf1[i]["rname"]), this->data, r[d].chain, r[d].id);
+                        this->eth_based_chain[r[d].chain]->state[r[d].id] = 0;
+                        Resource* rr = new Resource(QString::fromStdString(conf1[i]["url"]), l_json, this->data->eth_contract, QString::fromStdString(conf1[i]["rname"]), this->data, r[d].chain, r[d].id, &this->eth_based_chain[r[d].chain]->state[r[d].id]);
                         rr->update_resource();
 
                         this->tm_resources.push_back(rr);
@@ -401,9 +407,7 @@ void MainWindow::on_pushButton_export_json_clicked()
             file.close();
        }
 
-       QMessageBox msgBox;
-       msgBox.setText("Successfully exported as Json!");
-       msgBox.exec();
+       show_msgBox("Successfully exported as Json!");
     }
 }
 
@@ -454,9 +458,7 @@ void MainWindow::on_pushButton_export_csv_clicked()
             file.close();
        }
 
-       QMessageBox msgBox;
-       msgBox.setText("Successfully exported as CSV!");
-       msgBox.exec();
+       show_msgBox("Successfully exported as CSV!");
     }
 }
 
@@ -507,6 +509,14 @@ void MainWindow::on_pushButton_config_settings_clicked()
     this->acria_config->show();
 }
 
+void MainWindow::show_msgBox(QString text){
+    QMessageBox msgBox;
+    msgBox.setStyleSheet("QWidget{background-color:#232323;color:white;}QPushButton{background-color:white;color:black;border: none;width:80px;padding-top:3px;padding-bottom:3px;background-color:orange;}");
+    msgBox.setWindowIcon(QPixmap("resources/acria_logo5_colored.svg"));
+    msgBox.setText(text);
+    msgBox.exec();
+}
+
 void MainWindow::on_pushButton_setting_save_clicked()
 {
     this->data->binance_url = this->ui->lineEdit_binance_url->text();
@@ -532,9 +542,7 @@ void MainWindow::on_pushButton_setting_save_clicked()
         x.second->cinfo->create_filter_events();
     }
 
-    QMessageBox msgBox;
-    msgBox.setText("Successfully saved the settings!");
-    msgBox.exec();
+    show_msgBox("Successfully saved the settings!");
 }
 
 void MainWindow::on_pushButton_setting_discard_clicked()
@@ -618,4 +626,33 @@ void MainWindow::on_pushButton_accounts_eth_clicked()
     if(this->eth_based_chain["ethereum"]->available_accounts->exec() == QDialog::Accepted){
         this->ui->lineEdit_eth_account->setText(this->eth_based_chain["ethereum"]->available_accounts->selected_account);
     }
+}
+
+void MainWindow::line_edit_check_eth_address(QString address, QObject *senderObj){
+    if(VerifyEthAddress::is_valid_eth_address(address)){
+        static_cast<QLineEdit*>(senderObj)->setStyleSheet("");
+    }
+    else{
+        static_cast<QLineEdit*>(senderObj)->setStyleSheet("background-color:#432627;");
+    }
+}
+
+void MainWindow::on_lineEdit_eth_contract_textChanged(const QString &arg1)
+{
+    this->line_edit_check_eth_address(arg1, sender());
+}
+
+void MainWindow::on_lineEdit_binance_account_textChanged(const QString &arg1)
+{
+    this->line_edit_check_eth_address(arg1, sender());
+}
+
+void MainWindow::on_lineEdit_eth_account_textChanged(const QString &arg1)
+{
+    this->line_edit_check_eth_address(arg1, sender());
+}
+
+void MainWindow::on_lineEdit_binance_contract_textChanged(const QString &arg1)
+{
+    this->line_edit_check_eth_address(arg1, sender());
 }

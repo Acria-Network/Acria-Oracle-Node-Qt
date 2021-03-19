@@ -19,8 +19,6 @@ Resource::Resource()
     this->url = "";
     this->contract = "";
 
-    this->state = 0;
-
     manager = new QNetworkAccessManager();
 
     QObject::connect(manager, SIGNAL(finished(QNetworkReply*)),
@@ -33,7 +31,7 @@ Resource::Resource()
         this, SLOT(send_managerFinished(QNetworkReply*)));
 }
 
-Resource::Resource(QString _url, std::vector<QString> _l_json, QString _contract, QString n, Data* _data, QString _type, uint _id) : Resource()
+Resource::Resource(QString _url, std::vector<QString> _l_json, QString _contract, QString n, Data* _data, QString _type, uint _id, uint* state) : Resource()
 {
     this->url = _url;
     this->l_json = _l_json;
@@ -42,6 +40,7 @@ Resource::Resource(QString _url, std::vector<QString> _l_json, QString _contract
     this->data = _data;
     this->type = _type;
     this->id = _id;
+    this->state = state;
 }
 
 Resource::~Resource()
@@ -111,7 +110,7 @@ void Resource::send_resource(){
     send_request.setRawHeader("Content-Type", "application/json");
     send_manager->post(send_request, generate_rpc_call("eth_sendTransaction", account1, contract1, data1, transaction_fee, 486400, 78));
 
-    this->state=1;
+    *this->state=1;
 }
 
 void Resource::managerFinished(QNetworkReply *reply) {
@@ -154,5 +153,5 @@ void Resource::send_managerFinished(QNetworkReply *reply) {
 
     qDebug() << answer;
 
-    this->state=2;
+    *this->state=2;
 }

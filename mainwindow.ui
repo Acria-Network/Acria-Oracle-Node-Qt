@@ -17,6 +17,9 @@
    <iconset>
     <normaloff>resources/acria_logo5_colored.svg</normaloff>resources/acria_logo5_colored.svg</iconset>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <property name="styleSheet">
     <string notr="true">background-color:#232323;
@@ -52,6 +55,10 @@ background-color: #222222;
 #tab, #tab_2, #tab_3, #tab_4, #tab_8{
 border:none;
 border-left:1px solid orange;
+}
+
+QLineEdit{
+background-color:#333333;
 }
 </string>
     </property>
@@ -1419,7 +1426,7 @@ border:none;
 }</string>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <property name="iconSize">
        <size>
@@ -1480,7 +1487,7 @@ border:none;
          </rect>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color:#333333;
+         <string notr="true">
 /*font-size: 7px;*/</string>
         </property>
        </widget>
