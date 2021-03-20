@@ -42,10 +42,12 @@ private:
     uint* state;
 
     uint id;
+    unsigned long long fee;
+    uint max_gas;
 
 public:
     Resource();
-    Resource(QString url, std::vector<QString> _l_json, QString _contract, QString n, Data* _data, QString _type, uint _id, uint* state);
+    Resource(QString url, std::vector<QString> _l_json, QString _contract, QString n, Data* _data, QString _type, uint _id, uint* state, uint _max_gas, unsigned long long _fee);
     ~Resource();
     void update_resource();
     void send_resource();

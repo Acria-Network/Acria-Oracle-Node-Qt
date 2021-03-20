@@ -32,10 +32,11 @@ AvailableDataContracts::~AvailableDataContracts()
 
 void AvailableDataContracts::set_acria_main(QString _acria_main){
     qDebug() << "Available Contracts";
-    this->ui->horizontalLayoutWidget_2->show();
+    this->ui->horizontalWidget->show();
     this->ui->label_progress_2->show();
-    this->acria_main = _acria_main;
+    this->acria_main = _acria_main.trimmed();
     this->update_data_contracts();
+    qDebug() << this->acria_main;
 }
 
 void AvailableDataContracts::update_data_contracts(){
@@ -125,7 +126,7 @@ void AvailableDataContracts::managerFinished(QNetworkReply *reply) {
     this->ui->tableWidget_comp->setColumnWidth(2, 250);
 
     if(contracts.size() != 0){
-        this->ui->horizontalLayoutWidget_2->hide();
+        this->ui->horizontalWidget->hide();
         this->ui->label_progress_2->hide();
         for (int d=contracts.size()-1; d>=0; d--){
             this->ui->tableWidget_comp->setItem( d, 0, new QTableWidgetItem(QString::number(d+1)));
@@ -134,7 +135,7 @@ void AvailableDataContracts::managerFinished(QNetworkReply *reply) {
         }
     }
     else{
-        this->ui->horizontalLayoutWidget_2->show();
+        this->ui->horizontalWidget->show();
         this->ui->label_progress_2->show();
     }
 }

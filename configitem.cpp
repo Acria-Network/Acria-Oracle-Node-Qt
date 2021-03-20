@@ -49,3 +49,10 @@ void ConfigItem::on_buttonBox_1_rejected()
 {
 
 }
+
+void ConfigItem::on_lineEdit_resource_name_textChanged(const QString &arg1)
+{
+    if(arg1.length()>32){
+        static_cast<QLineEdit*>(sender())->setText(arg1.mid(0, 32));
+    }
+}

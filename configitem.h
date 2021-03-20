@@ -26,6 +26,8 @@ private slots:
 
     void on_buttonBox_1_rejected();
 
+    void on_lineEdit_resource_name_textChanged(const QString &arg1);
+
 private:
     Ui::ConfigItem *ui;
     std::vector<QLineEdit*> t1;

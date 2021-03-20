@@ -7,6 +7,8 @@ ProcessingWindow::ProcessingWindow(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ProcessingWindow)
 {
+    setWindowFlags(Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
+
     ui->setupUi(this);
 
     this->ui->widget->hide();
@@ -16,6 +18,8 @@ ProcessingWindow::ProcessingWindow(QWidget *parent) :
 
     pi->startAnimation();
     pi->setColor(QColor::fromRgb(255,255,255));
+
+    this->setFixedSize(QSize(this->width(), this->height()));
 }
 
 ProcessingWindow::~ProcessingWindow()

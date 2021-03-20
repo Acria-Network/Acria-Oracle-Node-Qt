@@ -91,7 +91,7 @@ void Tasks::r_managerFinished(QNetworkReply *reply) {
     QJsonObject obj = ObjectFromString(answer);
     QString res = obj["result"].toString().remove(0, 2);
 
-    qDebug() << res;
+    qDebug() << answer;
 
     if(res.length() > 2){
         std::vector<QString> inf;
@@ -124,16 +124,26 @@ void Tasks::r_managerFinished(QNetworkReply *reply) {
 
                     QString tmp = "";
                     for(int f = 1; f< inf[i].length(); f+=2){
-                        tmp += QString(static_cast<char>((QString(inf[i].at(f-1)) + QString(inf[i].at(f))).toUInt(NULL,16)));
+                        uint char0 = (QString(inf[i].at(f-1)) + QString(inf[i].at(f))).toUInt(NULL,16);
+                        if(char0 != 0)
+                            tmp += QString(static_cast<char>(char0));
                     }
-                    qDebug() << "r.requestID " << tmp.trimmed();
 
                     r.requestID = tmp.trimmed();
                     r.fee = QString(inf[i+1]).toULongLong(NULL,16);
                     r.expiration = QString(inf[i+2]).toUInt(NULL,16);
-                    r.callback = inf[i+4].remove(0, 24);
+                    r.callback = inf[i+5].remove(0, 24);
                     r.chain = this->type;
                     r.id = QString(inf[i+3]).toUInt(NULL,16);
+                    r.max_gas = QString(inf[i+4]).toUInt(NULL, 16);
+
+                    qDebug() << "requestid " << r.requestID;
+                    qDebug() << "fee " << r.fee;
+                    qDebug() << "expiration " << r.expiration;
+                    qDebug() << "callback " << r.callback;
+                    qDebug() << "chain " << r.chain;
+                    qDebug() << "id " << r.id;
+                    qDebug() << "max_gas " << QString(inf[i+4]) << " " << r.max_gas;
 
                     this->requests.push_back(r);
                 }

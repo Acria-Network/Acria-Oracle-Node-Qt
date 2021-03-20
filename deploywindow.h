@@ -33,6 +33,8 @@ private slots:
 
     void on_pushButton_data_contracts_clicked();
 
+    void on_lineEdit_contract_name_textChanged(const QString &arg1);
+
 private:
     Ui::DeployWindow *ui;
 

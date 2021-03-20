@@ -10,6 +10,7 @@
 #include <cstdint>
 #include <ostream>
 #include <sstream>
+#include <keccak256.h>
 
 
 Resource::Resource()
@@ -31,7 +32,7 @@ Resource::Resource()
         this, SLOT(send_managerFinished(QNetworkReply*)));
 }
 
-Resource::Resource(QString _url, std::vector<QString> _l_json, QString _contract, QString n, Data* _data, QString _type, uint _id, uint* state) : Resource()
+Resource::Resource(QString _url, std::vector<QString> _l_json, QString _contract, QString n, Data* _data, QString _type, uint _id, uint* state, uint _max_gas, unsigned long long _fee) : Resource()
 {
     this->url = _url;
     this->l_json = _l_json;
@@ -41,6 +42,8 @@ Resource::Resource(QString _url, std::vector<QString> _l_json, QString _contract
     this->type = _type;
     this->id = _id;
     this->state = state;
+    this->max_gas = _max_gas;
+    this->fee = _fee;
 }
 
 Resource::~Resource()
@@ -88,8 +91,11 @@ void Resource::send_resource(){
 
     this->data->get_chain_info(this->type, &url1, &account1, &contract1, &transaction_fee);
 
-    QString d1 = "0x6974868e";
-    QString d2 = str2bytes32(this->item);
+    Keccak keccak;
+
+    QString d1 = "0x" + QString::fromStdString(keccak("fillRequest(bytes8,uint256,uint256)")).mid(0,8);
+    qDebug()<< "d1 " <<d1;
+    QString d2 = str2bytes8(this->item)+"000000000000000000000000000000000000000000000000";
 
     qDebug() << d1;
     qDebug() << d2;
@@ -108,7 +114,7 @@ void Resource::send_resource(){
 
     send_request.setUrl(url1);
     send_request.setRawHeader("Content-Type", "application/json");
-    send_manager->post(send_request, generate_rpc_call("eth_sendTransaction", account1, contract1, data1, transaction_fee, 486400, 78));
+    send_manager->post(send_request, generate_rpc_call("eth_sendTransaction", account1, contract1, data1, transaction_fee, 486400, 72));
 
     *this->state=1;
 }
@@ -140,6 +146,17 @@ void Resource::managerFinished(QNetworkReply *reply) {
 
     qDebug() << QString::fromStdString(value256.ToString());
 
+    QUrl url1;
+    QString contract1, account1;
+    unsigned long long transaction_fee = 0;
+
+    this->data->get_chain_info(this->type, &url1, &account1, &contract1, &transaction_fee);
+
+    unsigned long long total_gas = max_gas + 40000;
+
+    unsigned long long mfee = total_gas*transaction_fee;
+    qDebug() << "minimum fee " << mfee;
+    qDebug() << "paid fee " << fee;
     send_resource();
 }
 

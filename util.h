@@ -66,6 +66,19 @@ static QString str2bytes32(QString d2){
     return s;
 }
 
+static QString str2bytes8(QString d2){
+    for(uint i = d2.size(); i<8;i++){
+        d2 += " ";
+    }
+
+    QString s = "";
+    for(int i = 0; i<d2.size(); i++){
+        s += QString::fromStdString(n2hexstr(static_cast<uint>(QString(d2.at(i)).toStdString()[0]), 2));
+    }
+
+    return s;
+}
+
 static QByteArray generate_rpc_call(QString _method, QString _from, QString _to, QString _data, unsigned long long _transaction_fee, unsigned long long _gas, QJsonValue _id){
     QJsonObject obj1;
 

@@ -133,3 +133,10 @@ void DeployWindow::on_pushButton_data_contracts_clicked()
     this->available_data_contracts->set_acria_main(this->ui->lineEdit_main_contract->text());
     this->available_data_contracts->exec();
 }
+
+void DeployWindow::on_lineEdit_contract_name_textChanged(const QString &arg1)
+{
+    if(arg1.length()>32){
+        static_cast<QLineEdit*>(sender())->setText(arg1.mid(0, 32));
+    }
+}

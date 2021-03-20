@@ -31,6 +31,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     qDebug() << "started";
 
+    setWindowFlags(Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
+
     this->data = new Data();
 
     data->load_settings();
@@ -95,6 +97,8 @@ MainWindow::MainWindow(QWidget *parent)
     pi2->setColor(QColor::fromRgb(255,255,255));
 
     this->update_settings();
+
+    this->setFixedSize(QSize(this->width(), this->height()));
 }
 
 void MainWindow::update_settings(){
@@ -200,7 +204,7 @@ void MainWindow::update_requests(){
                         }
 
                         this->eth_based_chain[r[d].chain]->state[r[d].id] = 0;
-                        Resource* rr = new Resource(QString::fromStdString(conf1[i]["url"]), l_json, this->data->eth_contract, QString::fromStdString(conf1[i]["rname"]), this->data, r[d].chain, r[d].id, &this->eth_based_chain[r[d].chain]->state[r[d].id]);
+                        Resource* rr = new Resource(QString::fromStdString(conf1[i]["url"]), l_json, this->data->eth_contract, QString::fromStdString(conf1[i]["rname"]), this->data, r[d].chain, r[d].id, &this->eth_based_chain[r[d].chain]->state[r[d].id], r[d].max_gas, r[d].fee);
                         rr->update_resource();
 
                         this->tm_resources.push_back(rr);
