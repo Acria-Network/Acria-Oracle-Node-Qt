@@ -45,6 +45,8 @@ private:
     unsigned long long fee;
     uint max_gas;
 
+    unsigned long long get_minimum_transaction_fee();
+
 public:
     Resource();
     Resource(QString url, std::vector<QString> _l_json, QString _contract, QString n, Data* _data, QString _type, uint _id, uint* state, uint _max_gas, unsigned long long _fee);

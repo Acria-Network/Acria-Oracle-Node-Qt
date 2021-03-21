@@ -11,6 +11,7 @@
 #include <ostream>
 #include <sstream>
 #include <keccak256.h>
+#include <QThread>
 
 
 Resource::Resource()
@@ -53,8 +54,14 @@ Resource::~Resource()
 }
 
 void Resource::update_resource(){
-    request.setUrl(QUrl(url));
-    manager->get(request);
+    if(this->get_minimum_transaction_fee() < this->fee){
+        request.setUrl(QUrl(url));
+        manager->get(request);
+    }
+    else{
+        QThread::msleep(30000);
+        this->update_resource();
+    }
 }
 
 std::string digits = "0123456789abcdef";
@@ -146,6 +153,11 @@ void Resource::managerFinished(QNetworkReply *reply) {
 
     qDebug() << QString::fromStdString(value256.ToString());
 
+
+    send_resource();
+}
+
+unsigned long long Resource::get_minimum_transaction_fee(){
     QUrl url1;
     QString contract1, account1;
     unsigned long long transaction_fee = 0;
@@ -157,7 +169,8 @@ void Resource::managerFinished(QNetworkReply *reply) {
     unsigned long long mfee = total_gas*transaction_fee;
     qDebug() << "minimum fee " << mfee;
     qDebug() << "paid fee " << fee;
-    send_resource();
+
+    return mfee;
 }
 
 void Resource::send_managerFinished(QNetworkReply *reply) {
