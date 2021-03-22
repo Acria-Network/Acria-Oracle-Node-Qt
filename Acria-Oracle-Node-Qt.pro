@@ -27,6 +27,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     node.cpp \
+    noncemanager.cpp \
     processingwindow.cpp \
     qprogressindicator.cpp \
     resource.cpp \
@@ -52,6 +53,7 @@ HEADERS += \
     keccak256.h \
     mainwindow.h \
     node.h \
+    noncemanager.h \
     processingwindow.h \
     qprogressindicator.h \
     resource.h \

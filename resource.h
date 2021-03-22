@@ -4,6 +4,7 @@
 #include <QtNetwork/QNetworkReply>
 #include <QtNetwork/QNetworkAccessManager>
 #include <map>
+#include <QTimer>
 
 #include "json.hpp"
 #include "uint256.h"
@@ -26,6 +27,9 @@ private:
     QNetworkAccessManager *send_manager;
     QNetworkRequest send_request;
 
+    QNetworkAccessManager *deployed_manager;
+    QNetworkRequest deployed_request;
+
     QString s_value;
     double d_value;
     uint256 value256;
@@ -44,6 +48,9 @@ private:
     uint id;
     unsigned long long fee;
     uint max_gas;
+    QString hash;
+
+    QTimer* is_deployed_timer;
 
     unsigned long long get_minimum_transaction_fee();
 
@@ -60,6 +67,10 @@ private slots:
     void managerFinished(QNetworkReply *reply);
 
     void send_managerFinished(QNetworkReply *reply);
+
+    void deployed_managerFinished(QNetworkReply *reply);
+
+    void is_deployed();
 };
 
 #endif // RESOURCE_H

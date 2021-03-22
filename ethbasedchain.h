@@ -15,6 +15,7 @@
 #include "deploywindow.h"
 #include "gasprice.h"
 #include "availableaccounts.h"
+#include "noncemanager.h"
 
 
 class EthBasedChain{
@@ -37,6 +38,7 @@ public:
     GasPrice* gas_price;
     AvailableAccounts* available_accounts;
     std::map<uint, uint> state;
+    NonceManager* nonce_manager;
 };
 
 #endif // ETHBASEDCHAIN_H

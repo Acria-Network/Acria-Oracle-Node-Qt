@@ -12,6 +12,7 @@
 #include <sstream>
 #include <keccak256.h>
 #include <QThread>
+#include <QTimer>
 
 
 Resource::Resource()
@@ -31,6 +32,15 @@ Resource::Resource()
 
     QObject::connect(send_manager, SIGNAL(finished(QNetworkReply*)),
         this, SLOT(send_managerFinished(QNetworkReply*)));
+
+
+    deployed_manager = new QNetworkAccessManager();
+
+    QObject::connect(deployed_manager, SIGNAL(finished(QNetworkReply*)),
+        this, SLOT(deployed_managerFinished(QNetworkReply*)));
+
+    is_deployed_timer = new QTimer(this);
+    connect(is_deployed_timer, SIGNAL(timeout()), this, SLOT(is_deployed()));
 }
 
 Resource::Resource(QString _url, std::vector<QString> _l_json, QString _contract, QString n, Data* _data, QString _type, uint _id, uint* state, uint _max_gas, unsigned long long _fee) : Resource()
@@ -51,6 +61,7 @@ Resource::~Resource()
 {
     delete manager;
     delete send_manager;
+    delete is_deployed_timer;
 }
 
 void Resource::update_resource(){
@@ -184,4 +195,59 @@ void Resource::send_managerFinished(QNetworkReply *reply) {
     qDebug() << answer;
 
     *this->state=2;
+
+    QJsonObject obj = ObjectFromString(answer);
+    QString res = obj["result"].toString();
+
+    qDebug() << answer;
+
+    this->hash = res;
+    //this->is_deployed();
+    is_deployed_timer->start(10000);
+}
+
+void Resource::is_deployed(){
+    //QThread::msleep(10000);
+
+    QUrl url1;
+    QString contract1, account1;
+    unsigned long long transaction_fee = 0;
+
+    this->data->get_chain_info(this->type, &url1, &account1, &contract1, &transaction_fee);
+
+    QJsonArray obj3;
+    obj3.push_back(hash);
+
+    QJsonObject obj;
+    obj["jsonrpc"] = "2.0";
+    obj["method"] = "eth_getTransactionByHash";
+    obj["params"] = obj3;
+    obj["id"] = 26;
+    QJsonDocument doc(obj);
+    QByteArray data = doc.toJson();
+
+    deployed_request.setUrl(url1);
+    deployed_request.setRawHeader("Content-Type", "application/json");
+    deployed_manager->post(deployed_request, data);
+}
+
+void Resource::deployed_managerFinished(QNetworkReply *reply) {
+    if (reply->error()) {
+        qDebug() << reply->errorString();
+        return;
+    }
+
+    QString answer = reply->readAll();
+    nlohmann::json tmp1 = nlohmann::json::parse(answer.toStdString());
+
+    qDebug() << "deployed " << answer;
+
+    if(tmp1["result"]["blockNumber"] != nullptr){
+        *this->state=3;
+        qDebug() << "completed transaction: " << QString::fromStdString(tmp1["result"]["blockNumber"]);
+    }
+    else{
+        //this->is_deployed();
+        is_deployed_timer->start(10000);
+    }
 }

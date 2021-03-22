@@ -227,7 +227,7 @@ void MainWindow::update_requests(){
     }
 
     for(uint i=0; i<this->tm_resources.size();i++){
-        if(this->tm_resources[i]->get_state() == 2){
+        if(this->tm_resources[i]->get_state() == 4){
             delete this->tm_resources[i];
             this->tm_resources.erase(this->tm_resources.begin() + i);
         }
