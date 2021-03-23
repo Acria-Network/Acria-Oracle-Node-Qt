@@ -9,6 +9,8 @@
 #include "data.h"
 #include "processingwindow.h"
 #include "availabledatacontracts.h"
+#include "noncemanager.h"
+
 
 namespace Ui {
 class DeployWindow;
@@ -19,7 +21,7 @@ class DeployWindow : public QDialog
     Q_OBJECT
 
 public:
-    explicit DeployWindow(QWidget *parent = nullptr, Data *_data = nullptr, QString _type = nullptr, ProcessingWindow* _processing_window = nullptr, QString _hash1 = "");
+    explicit DeployWindow(QWidget *parent = nullptr, Data *_data = nullptr, QString _type = nullptr, ProcessingWindow* _processing_window = nullptr, QString _hash1 = "", NonceManager* _nonce_manager = nullptr);
     ~DeployWindow();
 
     void deploy();
@@ -50,6 +52,8 @@ private:
     ProcessingWindow* processing_window;
 
     AvailableDataContracts* available_data_contracts;
+
+    NonceManager* nonce_manager;
 
     uint state;
     QString hash1;

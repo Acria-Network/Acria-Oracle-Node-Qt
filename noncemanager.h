@@ -4,6 +4,7 @@
 #include "data.h"
 
 #include <QNetworkAccessManager>
+#include <QMutex>
 
 
 class NonceManager : public QObject
@@ -19,10 +20,16 @@ private:
     QNetworkAccessManager *manager;
     QNetworkRequest request;
 
+    QMutex mutex;
+
     void update_nonce();
 public:
     NonceManager(Data* _data, QString _type);
+    ~NonceManager();
     unsigned get_nonce();
+    bool is_ready(){return ready;}
+
+    void reset();
 
 private slots:
     void managerFinished(QNetworkReply *reply);

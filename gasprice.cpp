@@ -26,7 +26,7 @@ void GasPrice::update_gas_price(){
 
     request.setUrl(url1);
     request.setRawHeader("Content-Type", "application/json");
-    manager->post(request, generate_rpc_call("eth_gasPrice", "", "", "", 0, 0, 64));
+    manager->post(request, generate_rpc_call("eth_gasPrice", "", "", "", 0, 0, 64, -1));
 }
 
 void GasPrice::managerFinished(QNetworkReply *reply) {

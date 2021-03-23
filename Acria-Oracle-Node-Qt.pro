@@ -11,6 +11,7 @@ CONFIG += console
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    abouttransactionwindow.cpp \
     acriaconfig.cpp \
     availableaccounts.cpp \
     availabledatacontracts.cpp \
@@ -38,6 +39,7 @@ SOURCES += \
     withdraw.cpp
 
 HEADERS += \
+    abouttransactionwindow.h \
     acriaconfig.h \
     availableaccounts.h \
     availabledatacontracts.h \
@@ -66,6 +68,7 @@ HEADERS += \
     withdraw.h
 
 FORMS += \
+    abouttransactionwindow.ui \
     acriaconfig.ui \
     availableaccounts.ui \
     availabledatacontracts.ui \

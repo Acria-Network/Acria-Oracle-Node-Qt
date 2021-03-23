@@ -32,7 +32,7 @@ void AvailableAccounts::update_accounts(){
 
     request.setUrl(url1);
     request.setRawHeader("Content-Type", "application/json");
-    manager->post(request, generate_rpc_call("eth_accounts", "", "", "", 0, 0, 94));
+    manager->post(request, generate_rpc_call("eth_accounts", "", "", "", 0, 0, 94, -1));
 }
 
 void AvailableAccounts::managerFinished(QNetworkReply *reply) {

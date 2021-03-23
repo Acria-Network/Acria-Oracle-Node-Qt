@@ -66,7 +66,7 @@ background-color:#333333;
      <enum>QTabWidget::West</enum>
     </property>
     <property name="currentIndex">
-     <number>4</number>
+     <number>1</number>
     </property>
     <property name="iconSize">
      <size>
@@ -912,6 +912,12 @@ background-color:orange;</string>
         <height>151</height>
        </rect>
       </property>
+      <property name="mouseTracking">
+       <bool>false</bool>
+      </property>
+      <property name="tabletTracking">
+       <bool>false</bool>
+      </property>
       <property name="styleSheet">
        <string notr="true">border:none;</string>
       </property>
@@ -920,6 +926,9 @@ background-color:orange;</string>
       </property>
       <property name="showDropIndicator" stdset="0">
        <bool>true</bool>
+      </property>
+      <property name="selectionMode">
+       <enum>QAbstractItemView::SingleSelection</enum>
       </property>
       <property name="showGrid">
        <bool>true</bool>

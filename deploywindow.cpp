@@ -10,7 +10,7 @@
 #include <QJsonDocument>
 #include <QThread>
 
-DeployWindow::DeployWindow(QWidget *parent, Data *_data, QString _type, ProcessingWindow* _processing_window, QString _hash1) :
+DeployWindow::DeployWindow(QWidget *parent, Data *_data, QString _type, ProcessingWindow* _processing_window, QString _hash1, NonceManager* _nonce_manager) :
     QDialog(parent),
     ui(new Ui::DeployWindow)
 {
@@ -32,6 +32,8 @@ DeployWindow::DeployWindow(QWidget *parent, Data *_data, QString _type, Processi
     this->hash1 = _hash1;
 
     this->processing_window = _processing_window;
+
+    this->nonce_manager = _nonce_manager;
 
     this->available_data_contracts = new AvailableDataContracts(this, this->data, this->type, "");
 }
@@ -59,7 +61,7 @@ void DeployWindow::deploy(){
 
         request.setUrl(url1);
         request.setRawHeader("Content-Type", "application/json");
-        manager->post(request, generate_rpc_call("eth_sendTransaction", account1, this->ui->lineEdit_main_contract->text(), data1, transaction_fee, 1301264, 25));
+        manager->post(request, generate_rpc_call("eth_sendTransaction", account1, this->ui->lineEdit_main_contract->text(), data1, transaction_fee, 1301264, 25, this->nonce_manager->get_nonce()));
 
         this->state=1;
     }
@@ -78,7 +80,7 @@ void DeployWindow::is_deployed(){
 
     deployed_request.setUrl(url1);
     deployed_request.setRawHeader("Content-Type", "application/json");
-    deployed_manager->post(deployed_request, generate_rpc_call("eth_call", account1, this->ui->lineEdit_main_contract->text(), data1, transaction_fee, 0, 79));
+    deployed_manager->post(deployed_request, generate_rpc_call("eth_call", account1, this->ui->lineEdit_main_contract->text(), data1, transaction_fee, 0, 79, -1));
 }
 
 void DeployWindow::managerFinished(QNetworkReply *reply) {

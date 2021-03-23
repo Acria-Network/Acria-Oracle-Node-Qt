@@ -9,7 +9,7 @@
 #include <QJsonDocument>
 #include <QThread>
 
-Withdraw::Withdraw(Data *_data, QString _type)
+Withdraw::Withdraw(Data *_data, QString _type, NonceManager* _nonce_manager)
 {
     manager = new QNetworkAccessManager();
 
@@ -18,6 +18,7 @@ Withdraw::Withdraw(Data *_data, QString _type)
 
     this->data = _data;
     this->type = _type;
+    this->nonce_manager = _nonce_manager;
 }
 
 Withdraw::~Withdraw(){
@@ -38,7 +39,7 @@ void Withdraw::withdraw(ProcessingWindow* _processing_window){
 
     request.setUrl(url1);
     request.setRawHeader("Content-Type", "application/json");
-    manager->post(request, generate_rpc_call("eth_sendTransaction", account1, contract1, d1, transaction_fee, 486400, 11));
+    manager->post(request, generate_rpc_call("eth_sendTransaction", account1, contract1, d1, transaction_fee, 486400, 11, this->nonce_manager->get_nonce()));
 }
 
 void Withdraw::managerFinished(QNetworkReply *reply) {

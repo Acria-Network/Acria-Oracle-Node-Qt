@@ -6,6 +6,7 @@
 #include <math.h>
 
 #include "data.h"
+#include "noncemanager.h"
 
 
 class Balances : public QObject
@@ -21,8 +22,10 @@ private:
 
     unsigned long long withdrawable;
 
+    NonceManager* nonce_manager;
+
 public:
-    Balances(Data *_data, QString _type);
+    Balances(Data *_data, QString _type, NonceManager* _nonce_manager);
     ~Balances();
 
     void update_withdrawable();

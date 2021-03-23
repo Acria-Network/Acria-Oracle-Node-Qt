@@ -50,7 +50,7 @@ void AvailableDataContracts::update_data_contracts(){
 
     request.setUrl(url1);
     request.setRawHeader("Content-Type", "application/json");
-    manager->post(request, generate_rpc_call("eth_call", account, this->acria_main, data1, transaction_fee, 0, 58));
+    manager->post(request, generate_rpc_call("eth_call", account, this->acria_main, data1, transaction_fee, 0, 58, -1));
 }
 
 void AvailableDataContracts::managerFinished(QNetworkReply *reply) {
@@ -113,25 +113,25 @@ void AvailableDataContracts::managerFinished(QNetworkReply *reply) {
         }
     }
 
-    this->ui->tableWidget_comp->clear();
-    while (ui->tableWidget_comp->rowCount() > 0)
+    this->ui->tableWidget_contracts->clear();
+    while (ui->tableWidget_contracts->rowCount() > 0)
     {
-        ui->tableWidget_comp->removeRow(0);
+        ui->tableWidget_contracts->removeRow(0);
     }
 
-    this->ui->tableWidget_comp->setRowCount(contracts.size());
-    this->ui->tableWidget_comp->setColumnCount(3);
-    this->ui->tableWidget_comp->setColumnWidth(0, 40);
-    this->ui->tableWidget_comp->setColumnWidth(1, 100);
-    this->ui->tableWidget_comp->setColumnWidth(2, 250);
+    this->ui->tableWidget_contracts->setRowCount(contracts.size());
+    this->ui->tableWidget_contracts->setColumnCount(3);
+    this->ui->tableWidget_contracts->setColumnWidth(0, 40);
+    this->ui->tableWidget_contracts->setColumnWidth(1, 100);
+    this->ui->tableWidget_contracts->setColumnWidth(2, 250);
 
     if(contracts.size() != 0){
         this->ui->horizontalWidget->hide();
         this->ui->label_progress_2->hide();
         for (int d=contracts.size()-1; d>=0; d--){
-            this->ui->tableWidget_comp->setItem( d, 0, new QTableWidgetItem(QString::number(d+1)));
-            this->ui->tableWidget_comp->setItem( d, 1, new QTableWidgetItem(contracts[d].name));
-            this->ui->tableWidget_comp->setItem( d, 2, new QTableWidgetItem(contracts[d].address));
+            this->ui->tableWidget_contracts->setItem( d, 0, new QTableWidgetItem(QString::number(d+1)));
+            this->ui->tableWidget_contracts->setItem( d, 1, new QTableWidgetItem(contracts[d].name));
+            this->ui->tableWidget_contracts->setItem( d, 2, new QTableWidgetItem(contracts[d].address));
         }
     }
     else{

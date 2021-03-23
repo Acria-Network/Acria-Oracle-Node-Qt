@@ -6,7 +6,7 @@
 #include <QDebug>
 #include <QJsonArray>
 
-Balances::Balances(Data *_data, QString _type)
+Balances::Balances(Data *_data, QString _type, NonceManager* _nonce_manager)
 {
     manager = new QNetworkAccessManager();
 
@@ -17,12 +17,12 @@ Balances::Balances(Data *_data, QString _type)
     this->type = _type;
 
     this->withdrawable = 0;
+    this->nonce_manager = _nonce_manager;
 
     update_withdrawable();
 }
 
 Balances::~Balances(){
-    delete manager;
     delete manager;
 }
 
@@ -37,7 +37,7 @@ void Balances::update_withdrawable(){
 
     request.setUrl(url1);
     request.setRawHeader("Content-Type", "application/json");
-    manager->post(request, generate_rpc_call("eth_call", account, contract, data1, transaction_fee, 0, 77));
+    manager->post(request, generate_rpc_call("eth_call", account, contract, data1, transaction_fee, 0, 77, -1));
 }
 
 void Balances::managerFinished(QNetworkReply *reply) {

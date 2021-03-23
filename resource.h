@@ -9,6 +9,7 @@
 #include "json.hpp"
 #include "uint256.h"
 #include "data.h"
+#include "noncemanager.h"
 
 
 struct Source{
@@ -50,13 +51,17 @@ private:
     uint max_gas;
     QString hash;
 
+    unsigned nonce;
+
+    NonceManager* nonce_manager;
+
     QTimer* is_deployed_timer;
 
     unsigned long long get_minimum_transaction_fee();
 
 public:
     Resource();
-    Resource(QString url, std::vector<QString> _l_json, QString _contract, QString n, Data* _data, QString _type, uint _id, uint* state, uint _max_gas, unsigned long long _fee);
+    Resource(QString url, std::vector<QString> _l_json, QString _contract, QString n, Data* _data, QString _type, uint _id, uint* state, uint _max_gas, unsigned long long _fee, NonceManager* _nonce_manager);
     ~Resource();
     void update_resource();
     void send_resource();

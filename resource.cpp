@@ -43,7 +43,7 @@ Resource::Resource()
     connect(is_deployed_timer, SIGNAL(timeout()), this, SLOT(is_deployed()));
 }
 
-Resource::Resource(QString _url, std::vector<QString> _l_json, QString _contract, QString n, Data* _data, QString _type, uint _id, uint* state, uint _max_gas, unsigned long long _fee) : Resource()
+Resource::Resource(QString _url, std::vector<QString> _l_json, QString _contract, QString n, Data* _data, QString _type, uint _id, uint* state, uint _max_gas, unsigned long long _fee, NonceManager* _nonce_manager) : Resource()
 {
     this->url = _url;
     this->l_json = _l_json;
@@ -55,6 +55,9 @@ Resource::Resource(QString _url, std::vector<QString> _l_json, QString _contract
     this->state = state;
     this->max_gas = _max_gas;
     this->fee = _fee;
+    this->nonce_manager = _nonce_manager;
+
+    this->nonce = this->nonce_manager->get_nonce();
 }
 
 Resource::~Resource()
@@ -132,7 +135,7 @@ void Resource::send_resource(){
 
     send_request.setUrl(url1);
     send_request.setRawHeader("Content-Type", "application/json");
-    send_manager->post(send_request, generate_rpc_call("eth_sendTransaction", account1, contract1, data1, transaction_fee, 486400, 72));
+    send_manager->post(send_request, generate_rpc_call("eth_sendTransaction", account1, contract1, data1, transaction_fee, 486400, 72, this->nonce));
 
     *this->state=1;
 }
@@ -207,8 +210,6 @@ void Resource::send_managerFinished(QNetworkReply *reply) {
 }
 
 void Resource::is_deployed(){
-    //QThread::msleep(10000);
-
     QUrl url1;
     QString contract1, account1;
     unsigned long long transaction_fee = 0;
@@ -247,7 +248,6 @@ void Resource::deployed_managerFinished(QNetworkReply *reply) {
         qDebug() << "completed transaction: " << QString::fromStdString(tmp1["result"]["blockNumber"]);
     }
     else{
-        //this->is_deployed();
         is_deployed_timer->start(10000);
     }
 }

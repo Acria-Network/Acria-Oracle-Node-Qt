@@ -7,6 +7,7 @@
 
 #include "data.h"
 #include "processingwindow.h"
+#include "noncemanager.h"
 
 
 class Withdraw : public QObject
@@ -22,8 +23,10 @@ private:
 
     ProcessingWindow* processing_window;
 
+    NonceManager* nonce_manager;
+
 public:
-    Withdraw(Data *_data, QString _type);
+    Withdraw(Data *_data, QString _type, NonceManager* _nonce_manager);
     ~Withdraw();
 
     void withdraw(ProcessingWindow* _processing_window);

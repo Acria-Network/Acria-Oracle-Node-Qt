@@ -166,7 +166,7 @@ void Tasks::update_tasks(){
 
     request.setUrl(url1);
     request.setRawHeader("Content-Type", "application/json");
-    manager->post(request, generate_rpc_call("eth_call", account, contract, data1, transaction_fee, 0, 77));
+    manager->post(request, generate_rpc_call("eth_call", account, contract, data1, transaction_fee, 0, 77, -1));
 }
 
 void Tasks::update_requests(){
@@ -180,5 +180,5 @@ void Tasks::update_requests(){
 
     r_request.setUrl(url1);
     r_request.setRawHeader("Content-Type", "application/json");
-    r_manager->post(r_request, generate_rpc_call("eth_call", account, contract, data1, transaction_fee, 0, 78));
+    r_manager->post(r_request, generate_rpc_call("eth_call", account, contract, data1, transaction_fee, 0, 78, -1));
 }

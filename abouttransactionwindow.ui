@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>AvailableDataContracts</class>
- <widget class="QDialog" name="AvailableDataContracts">
+ <class>AboutTransactionWindow</class>
+ <widget class="QDialog" name="AboutTransactionWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>356</width>
+    <height>200</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Data Contracts</string>
+   <string>Transaction</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -23,47 +23,21 @@ color:white;</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QWidget" name="horizontalWidget" native="true">
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <property name="spacing">
-       <number>0</number>
-      </property>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_2"/>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_progress_2">
-        <property name="text">
-         <string>Please Wait...</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <widget class="QTableWidget" name="tableWidget_contracts">
+    <widget class="QTableWidget" name="tableWidget">
      <property name="styleSheet">
       <string notr="true">border:none;</string>
+     </property>
+     <property name="sizeAdjustPolicy">
+      <enum>QAbstractScrollArea::AdjustToContents</enum>
      </property>
      <property name="editTriggers">
       <set>QAbstractItemView::NoEditTriggers</set>
      </property>
      <property name="showDropIndicator" stdset="0">
       <bool>true</bool>
+     </property>
+     <property name="textElideMode">
+      <enum>Qt::ElideRight</enum>
      </property>
      <property name="showGrid">
       <bool>true</bool>
@@ -72,23 +46,23 @@ color:white;</string>
       <number>0</number>
      </property>
      <property name="columnCount">
-      <number>5</number>
+      <number>2</number>
      </property>
      <attribute name="horizontalHeaderVisible">
       <bool>false</bool>
      </attribute>
+     <attribute name="horizontalHeaderCascadingSectionResizes">
+      <bool>false</bool>
+     </attribute>
      <attribute name="horizontalHeaderHighlightSections">
-      <bool>true</bool>
+      <bool>false</bool>
      </attribute>
      <attribute name="verticalHeaderVisible">
       <bool>false</bool>
      </attribute>
      <attribute name="verticalHeaderHighlightSections">
-      <bool>true</bool>
+      <bool>false</bool>
      </attribute>
-     <column/>
-     <column/>
-     <column/>
      <column/>
      <column/>
     </widget>
@@ -109,7 +83,7 @@ background-color:orange;</string>
       <enum>Qt::Horizontal</enum>
      </property>
      <property name="standardButtons">
-      <set>QDialogButtonBox::Ok</set>
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
      </property>
     </widget>
    </item>
@@ -120,7 +94,7 @@ background-color:orange;</string>
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>AvailableDataContracts</receiver>
+   <receiver>AboutTransactionWindow</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -136,7 +110,7 @@ background-color:orange;</string>
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>AvailableDataContracts</receiver>
+   <receiver>AboutTransactionWindow</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

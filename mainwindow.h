@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <map>
+#include <QTableWidgetItem>
 
 #include "acriaconfig.h"
 #include "qprogressindicator.h"
@@ -93,6 +94,8 @@ private slots:
     void on_lineEdit_eth_account_textChanged(const QString &arg1);
 
     void on_lineEdit_binance_contract_textChanged(const QString &arg1);
+
+    void on_tableWidget_comp_cellDoubleClicked(int row, int column);
 
 private:
     Ui::MainWindow *ui;

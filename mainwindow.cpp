@@ -157,9 +157,9 @@ void MainWindow::get_status_config(){
 }
 
 void MainWindow::update_requests(){
-    if(this->data->transaction_fee_geth != 0 && this->data->eth_enabled != false)
+    if(this->data->transaction_fee_geth != 0 && this->data->eth_enabled != false && this->eth_based_chain["ethereum"]->nonce_manager->is_ready())
         this->eth_based_chain["ethereum"]->tasks->update_requests();
-    if(this->data->transaction_fee_binance != 0 && this->data->binance_enabled != false)
+    if(this->data->transaction_fee_binance != 0 && this->data->binance_enabled != false && this->eth_based_chain["binance"]->nonce_manager->is_ready())
         this->eth_based_chain["binance"]->tasks->update_requests();
 
     std::vector<req> r;
@@ -204,7 +204,7 @@ void MainWindow::update_requests(){
                         }
 
                         this->eth_based_chain[r[d].chain]->state[r[d].id] = 0;
-                        Resource* rr = new Resource(QString::fromStdString(conf1[i]["url"]), l_json, this->data->eth_contract, QString::fromStdString(conf1[i]["rname"]), this->data, r[d].chain, r[d].id, &this->eth_based_chain[r[d].chain]->state[r[d].id], r[d].max_gas, r[d].fee);
+                        Resource* rr = new Resource(QString::fromStdString(conf1[i]["url"]), l_json, this->data->eth_contract, QString::fromStdString(conf1[i]["rname"]), this->data, r[d].chain, r[d].id, &this->eth_based_chain[r[d].chain]->state[r[d].id], r[d].max_gas, r[d].fee, this->eth_based_chain[r[d].chain]->nonce_manager);
                         rr->update_resource();
 
                         this->tm_resources.push_back(rr);
@@ -523,6 +523,14 @@ void MainWindow::show_msgBox(QString text){
 
 void MainWindow::on_pushButton_setting_save_clicked()
 {
+    bool reset_b = false;
+    bool reset_e = false;
+
+    if(this->data->binance_url != this->ui->lineEdit_binance_url->text() || this->data->binance_account != this->ui->lineEdit_binance_account->text())
+        reset_b = true;
+    if(this->data->geth_url != this->ui->lineEdit_geth_url->text() || this->data->eth_account != this->ui->lineEdit_eth_account->text())
+        reset_e = true;
+
     this->data->binance_url = this->ui->lineEdit_binance_url->text();
     this->data->binance_account = this->ui->lineEdit_binance_account->text();
     this->data->binance_contract = this->ui->lineEdit_binance_contract->text();
@@ -532,7 +540,6 @@ void MainWindow::on_pushButton_setting_save_clicked()
     this->data->eth_account = this->ui->lineEdit_eth_account->text();
     this->data->eth_contract = this->ui->lineEdit_eth_contract->text();
     this->data->eth_enabled = this->ui->checkBox_eth->isChecked();
-    qDebug() << "state eth " << this->ui->checkBox_eth->isChecked();
 
     this->data->polkadot_url = this->ui->lineEdit_polkadot_url->text();
     this->data->polkadot_account = this->ui->lineEdit_polkadot_account->text();
@@ -545,6 +552,11 @@ void MainWindow::on_pushButton_setting_save_clicked()
     {
         x.second->cinfo->create_filter_events();
     }
+
+    if(reset_e)
+        this->eth_based_chain["ethereum"]->nonce_manager->reset();
+    if(reset_b)
+        this->eth_based_chain["binance"]->nonce_manager->reset();
 
     show_msgBox("Successfully saved the settings!");
 }
@@ -659,4 +671,13 @@ void MainWindow::on_lineEdit_eth_account_textChanged(const QString &arg1)
 void MainWindow::on_lineEdit_binance_contract_textChanged(const QString &arg1)
 {
     this->line_edit_check_eth_address(arg1, sender());
+}
+
+void MainWindow::on_tableWidget_comp_cellDoubleClicked(int row, int column)
+{
+    QString chain = this->ui->tableWidget_comp->model()->data(this->ui->tableWidget_comp->model()->index(row,2), Qt::DisplayRole).toString();
+    QString hash = this->ui->tableWidget_comp->model()->data(this->ui->tableWidget_comp->model()->index(row,4), Qt::DisplayRole).toString();
+    this->eth_based_chain[chain]->about_transaction_window->init(hash);
+    this->eth_based_chain[chain]->about_transaction_window->exec();
+    qDebug() << "nnnnnn" << this->ui->tableWidget_comp->model()->data(this->ui->tableWidget_comp->model()->index(row,4), Qt::DisplayRole).toString();
 }

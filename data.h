@@ -4,6 +4,7 @@
 #include <QString>
 #include <vector>
 #include <QUrl>
+#include <map>
 
 
 class Data

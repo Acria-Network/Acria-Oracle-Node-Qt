@@ -79,7 +79,7 @@ static QString str2bytes8(QString d2){
     return s;
 }
 
-static QByteArray generate_rpc_call(QString _method, QString _from, QString _to, QString _data, unsigned long long _transaction_fee, unsigned long long _gas, QJsonValue _id){
+static QByteArray generate_rpc_call(QString _method, QString _from, QString _to, QString _data, unsigned long long _transaction_fee, unsigned long long _gas, QJsonValue _id, int nonce){
     QJsonObject obj1;
 
     if(_from != "")
@@ -92,6 +92,12 @@ static QByteArray generate_rpc_call(QString _method, QString _from, QString _to,
         obj1["gasPrice"] = QString::fromStdString("0x" + n2hexstr(_transaction_fee));
     if(_gas != 0)
         obj1["gas"] = QString::fromStdString("0x" + n2hexstr(_gas));
+
+    /**
+     -- disabled nonce --
+    if(nonce != -1)
+        obj1["nonce"] = QString::fromStdString("0x" + n2hexstr(nonce));
+    **/
 
     QJsonArray obj3;
     obj3.push_back(obj1);
