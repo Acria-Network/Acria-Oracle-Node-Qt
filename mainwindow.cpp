@@ -31,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     qDebug() << "started";
 
-    setWindowFlags(Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
+    //setWindowFlags(Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
 
     this->data = new Data();
 
@@ -98,7 +98,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     this->update_settings();
 
-    this->setFixedSize(QSize(this->width(), this->height()));
+    //this->setFixedSize(QSize(this->width(), this->height()));
 }
 
 void MainWindow::update_settings(){
@@ -262,12 +262,20 @@ void MainWindow::update_events(){
 
     this->ui->tableWidget_comp->setRowCount(r.size());
     this->ui->tableWidget_comp->setColumnCount(6);
-    this->ui->tableWidget_comp->setColumnWidth(4, 200);
+    //this->ui->tableWidget_comp->setColumnWidth(4, 200);
     this->ui->tableWidget_comp->setColumnWidth(0, 20);
-    this->ui->tableWidget_comp->setColumnWidth(5, 30);
+    this->ui->tableWidget_comp->setColumnWidth(4, 50);
+
+    this->ui->tableWidget_comp->setHorizontalHeaderItem(0, new QTableWidgetItem("#"));
+    this->ui->tableWidget_comp->setHorizontalHeaderItem(1, new QTableWidgetItem("Item"));
+    this->ui->tableWidget_comp->setHorizontalHeaderItem(2, new QTableWidgetItem("Chain"));
+    this->ui->tableWidget_comp->setHorizontalHeaderItem(3, new QTableWidgetItem("Block"));
+    this->ui->tableWidget_comp->setHorizontalHeaderItem(4, new QTableWidgetItem("Fee"));
+    this->ui->tableWidget_comp->setHorizontalHeaderItem(5, new QTableWidgetItem("Hash"));
 
     if(r.size() != 0){
-        this->ui->horizontalLayoutWidget_2->hide();
+        this->ui->tableWidget_comp->horizontalHeader()->show();
+        this->ui->horizontalWidget_3->hide();
         this->ui->label_progress_2->hide();
 
         for (int d=r.size()-1; d>=0; d--){
@@ -278,14 +286,16 @@ void MainWindow::update_events(){
             //this->ui->tableWidget_comp->setItem( d, 2, new QTableWidgetItem(r[d].callback));
             this->ui->tableWidget_comp->setItem( dd, 2, new QTableWidgetItem(r[d].chain));
             this->ui->tableWidget_comp->setItem( dd, 3, new QTableWidgetItem(QString::number(r[d].block)));
-            this->ui->tableWidget_comp->setItem( dd, 4, new QTableWidgetItem(r[d].hash));
-            this->ui->tableWidget_comp->setItem( dd, 5, new QTableWidgetItem(QString::number(double(r[d].fee / pow(10,18)))));
+            this->ui->tableWidget_comp->setItem( dd, 5, new QTableWidgetItem(r[d].hash));
+            this->ui->tableWidget_comp->setItem( dd, 4, new QTableWidgetItem(QString::number(double(r[d].fee / pow(10,18)))));
         }
     }
     else{
-        this->ui->horizontalLayoutWidget_2->show();
+        this->ui->tableWidget_comp->horizontalHeader()->hide();
+        this->ui->horizontalWidget_3->show();
         this->ui->label_progress_2->show();
     }
+    this->ui->tableWidget_comp->horizontalHeader()->setStretchLastSection(true);
 }
 
 void MainWindow::update_balances(){
@@ -676,8 +686,8 @@ void MainWindow::on_lineEdit_binance_contract_textChanged(const QString &arg1)
 void MainWindow::on_tableWidget_comp_cellDoubleClicked(int row, int column)
 {
     QString chain = this->ui->tableWidget_comp->model()->data(this->ui->tableWidget_comp->model()->index(row,2), Qt::DisplayRole).toString();
-    QString hash = this->ui->tableWidget_comp->model()->data(this->ui->tableWidget_comp->model()->index(row,4), Qt::DisplayRole).toString();
+    QString hash = this->ui->tableWidget_comp->model()->data(this->ui->tableWidget_comp->model()->index(row,5), Qt::DisplayRole).toString();
     this->eth_based_chain[chain]->about_transaction_window->init(hash);
     this->eth_based_chain[chain]->about_transaction_window->exec();
-    qDebug() << "nnnnnn" << this->ui->tableWidget_comp->model()->data(this->ui->tableWidget_comp->model()->index(row,4), Qt::DisplayRole).toString();
+    qDebug() << "nnnnnn" << this->ui->tableWidget_comp->model()->data(this->ui->tableWidget_comp->model()->index(row,5), Qt::DisplayRole).toString();
 }
