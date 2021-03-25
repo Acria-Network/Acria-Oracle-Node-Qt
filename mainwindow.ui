@@ -128,7 +128,7 @@ background-color:#333333;
        <enum>QTabWidget::West</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <property name="iconSize">
        <size>
@@ -153,527 +153,625 @@ background-color:#333333;
        <attribute name="title">
         <string/>
        </attribute>
-       <widget class="QLabel" name="label">
-        <property name="geometry">
-         <rect>
-          <x>60</x>
-          <y>49</y>
-          <width>291</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Ethereum Node</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_eth_settings">
-        <property name="geometry">
-         <rect>
-          <x>20</x>
-          <y>49</y>
-          <width>21</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>resources/edit.png</normaloff>resources/edit.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>10</width>
-          <height>10</height>
-         </size>
-        </property>
-        <property name="flat">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QLabel" name="status_geth">
-        <property name="geometry">
-         <rect>
-          <x>380</x>
-          <y>49</y>
-          <width>21</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>...</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="status_polkadot">
-        <property name="geometry">
-         <rect>
-          <x>380</x>
-          <y>89</y>
-          <width>21</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>...</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_polkadot_settings">
-        <property name="geometry">
-         <rect>
-          <x>20</x>
-          <y>89</y>
-          <width>21</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>resources/edit.png</normaloff>resources/edit.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>10</width>
-          <height>10</height>
-         </size>
-        </property>
-        <property name="flat">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_4">
-        <property name="geometry">
-         <rect>
-          <x>60</x>
-          <y>89</y>
-          <width>291</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Polkadot Node</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_5">
-        <property name="geometry">
-         <rect>
-          <x>60</x>
-          <y>109</y>
-          <width>291</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Acria Node (Substrate)</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_acria_settings">
-        <property name="geometry">
-         <rect>
-          <x>20</x>
-          <y>109</y>
-          <width>21</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>resources/edit.png</normaloff>resources/edit.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>10</width>
-          <height>10</height>
-         </size>
-        </property>
-        <property name="flat">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QLabel" name="status_acria">
-        <property name="geometry">
-         <rect>
-          <x>380</x>
-          <y>109</y>
-          <width>21</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>...</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_23">
-        <property name="geometry">
-         <rect>
-          <x>23</x>
-          <y>30</y>
-          <width>21</width>
-          <height>16</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Edit</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_24">
-        <property name="geometry">
-         <rect>
-          <x>60</x>
-          <y>30</y>
-          <width>41</width>
-          <height>16</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Node</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_25">
-        <property name="geometry">
-         <rect>
-          <x>380</x>
-          <y>30</y>
-          <width>41</width>
-          <height>16</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Status</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_refresh">
-        <property name="geometry">
-         <rect>
-          <x>360</x>
-          <y>190</y>
-          <width>80</width>
-          <height>17</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color:white;
-color:black;
-border: none;
-/*padding:30px;*/
-width:80px;
-padding-top:3px;
-padding-bottom:3px;
-background-color:orange;</string>
-        </property>
-        <property name="text">
-         <string>Refresh</string>
-        </property>
-        <property name="flat">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_export_json_3">
-        <property name="geometry">
-         <rect>
-          <x>270</x>
-          <y>190</y>
-          <width>80</width>
-          <height>17</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color:white;
-color:black;
-border: none;
-/*padding:30px;*/
-width:80px;
-padding-top:3px;
-padding-bottom:3px;
-background-color:orange;</string>
-        </property>
-        <property name="text">
-         <string>Config</string>
-        </property>
-        <property name="flat">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_config_settings">
-        <property name="geometry">
-         <rect>
-          <x>20</x>
-          <y>130</y>
-          <width>21</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>resources/edit.png</normaloff>resources/edit.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>10</width>
-          <height>10</height>
-         </size>
-        </property>
-        <property name="flat">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QLabel" name="status_config">
-        <property name="geometry">
-         <rect>
-          <x>380</x>
-          <y>130</y>
-          <width>21</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>...</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_27">
-        <property name="geometry">
-         <rect>
-          <x>60</x>
-          <y>130</y>
-          <width>291</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Configuration File</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_2">
-        <property name="geometry">
-         <rect>
-          <x>7</x>
-          <y>180</y>
-          <width>80</width>
-          <height>25</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="pixmap">
-         <pixmap>resources/acria_logo4.svg</pixmap>
-        </property>
-        <property name="scaledContents">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_eth_info">
-        <property name="geometry">
-         <rect>
-          <x>393</x>
-          <y>48</y>
-          <width>21</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>resources/info.svg</normaloff>resources/info.svg</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>11</width>
-          <height>11</height>
-         </size>
-        </property>
-        <property name="flat">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_polkadot_info">
-        <property name="geometry">
-         <rect>
-          <x>393</x>
-          <y>88</y>
-          <width>21</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>resources/info.svg</normaloff>resources/info.svg</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>11</width>
-          <height>11</height>
-         </size>
-        </property>
-        <property name="flat">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_eth_info_3">
-        <property name="geometry">
-         <rect>
-          <x>393</x>
-          <y>108</y>
-          <width>21</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>resources/info.svg</normaloff>resources/info.svg</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>11</width>
-          <height>11</height>
-         </size>
-        </property>
-        <property name="flat">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_39">
-        <property name="geometry">
-         <rect>
-          <x>60</x>
-          <y>69</y>
-          <width>291</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Binance Smart Chain Node</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_binance_settings">
-        <property name="geometry">
-         <rect>
-          <x>20</x>
-          <y>69</y>
-          <width>21</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>resources/edit.png</normaloff>resources/edit.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>10</width>
-          <height>10</height>
-         </size>
-        </property>
-        <property name="flat">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_binance_info">
-        <property name="geometry">
-         <rect>
-          <x>393</x>
-          <y>68</y>
-          <width>21</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>resources/info.svg</normaloff>resources/info.svg</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>11</width>
-          <height>11</height>
-         </size>
-        </property>
-        <property name="flat">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QLabel" name="status_binance">
-        <property name="geometry">
-         <rect>
-          <x>380</x>
-          <y>69</y>
-          <width>21</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>...</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_42">
-        <property name="geometry">
-         <rect>
-          <x>170</x>
-          <y>2</y>
-          <width>111</width>
-          <height>16</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">color:orange;
+       <layout class="QVBoxLayout" name="verticalLayout_5">
+        <property name="topMargin">
+         <number>2</number>
+        </property>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_16">
+          <item>
+           <spacer name="horizontalSpacer_14">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>16</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_42">
+            <property name="minimumSize">
+             <size>
+              <width>111</width>
+              <height>16</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>111</width>
+              <height>16</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color:orange;
 background-color:#333333;
 border-radius:5px;</string>
-        </property>
-        <property name="text">
-         <string>Status</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-       <zorder>label</zorder>
-       <zorder>pushButton_eth_settings</zorder>
-       <zorder>status_geth</zorder>
-       <zorder>status_polkadot</zorder>
-       <zorder>pushButton_polkadot_settings</zorder>
-       <zorder>label_4</zorder>
-       <zorder>label_5</zorder>
-       <zorder>pushButton_acria_settings</zorder>
-       <zorder>status_acria</zorder>
-       <zorder>label_23</zorder>
-       <zorder>label_24</zorder>
-       <zorder>label_25</zorder>
-       <zorder>pushButton_refresh</zorder>
-       <zorder>pushButton_export_json_3</zorder>
-       <zorder>pushButton_config_settings</zorder>
-       <zorder>status_config</zorder>
-       <zorder>label_27</zorder>
-       <zorder>label_2</zorder>
-       <zorder>pushButton_eth_info</zorder>
-       <zorder>pushButton_polkadot_info</zorder>
-       <zorder>pushButton_eth_info_3</zorder>
-       <zorder>label_39</zorder>
-       <zorder>pushButton_binance_settings</zorder>
-       <zorder>status_binance</zorder>
-       <zorder>pushButton_binance_info</zorder>
-       <zorder>label_42</zorder>
+            </property>
+            <property name="text">
+             <string>Status</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_15">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>16</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QWidget" name="widget" native="true">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>120</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>250</height>
+           </size>
+          </property>
+          <widget class="QPushButton" name="pushButton_config_settings">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>101</y>
+             <width>21</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>resources/edit.png</normaloff>resources/edit.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>10</width>
+             <height>10</height>
+            </size>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
+          </widget>
+          <widget class="QLabel" name="status_config">
+           <property name="geometry">
+            <rect>
+             <x>370</x>
+             <y>101</y>
+             <width>21</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>...</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_27">
+           <property name="geometry">
+            <rect>
+             <x>50</x>
+             <y>101</y>
+             <width>291</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Configuration File</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="pushButton_binance_info">
+           <property name="geometry">
+            <rect>
+             <x>383</x>
+             <y>39</y>
+             <width>21</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>resources/info.svg</normaloff>resources/info.svg</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>11</width>
+             <height>11</height>
+            </size>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
+          </widget>
+          <widget class="QLabel" name="status_polkadot">
+           <property name="geometry">
+            <rect>
+             <x>370</x>
+             <y>60</y>
+             <width>21</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>...</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_5">
+           <property name="geometry">
+            <rect>
+             <x>50</x>
+             <y>80</y>
+             <width>291</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Acria Node (Substrate)</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_25">
+           <property name="geometry">
+            <rect>
+             <x>370</x>
+             <y>1</y>
+             <width>41</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Status</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_23">
+           <property name="geometry">
+            <rect>
+             <x>13</x>
+             <y>1</y>
+             <width>21</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Edit</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="status_acria">
+           <property name="geometry">
+            <rect>
+             <x>370</x>
+             <y>80</y>
+             <width>21</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>...</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_39">
+           <property name="geometry">
+            <rect>
+             <x>50</x>
+             <y>40</y>
+             <width>291</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Binance Smart Chain Node</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="pushButton_acria_settings">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>80</y>
+             <width>21</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>resources/edit.png</normaloff>resources/edit.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>10</width>
+             <height>10</height>
+            </size>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="pushButton_eth_info">
+           <property name="geometry">
+            <rect>
+             <x>383</x>
+             <y>19</y>
+             <width>21</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>resources/info.svg</normaloff>resources/info.svg</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>11</width>
+             <height>11</height>
+            </size>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="pushButton_binance_settings">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>40</y>
+             <width>21</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>resources/edit.png</normaloff>resources/edit.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>10</width>
+             <height>10</height>
+            </size>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label">
+           <property name="geometry">
+            <rect>
+             <x>50</x>
+             <y>20</y>
+             <width>291</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Ethereum Node</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="pushButton_eth_settings">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>20</y>
+             <width>21</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>resources/edit.png</normaloff>resources/edit.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>10</width>
+             <height>10</height>
+            </size>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
+          </widget>
+          <widget class="QLabel" name="status_binance">
+           <property name="geometry">
+            <rect>
+             <x>370</x>
+             <y>40</y>
+             <width>21</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>...</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="pushButton_polkadot_settings">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>60</y>
+             <width>21</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>resources/edit.png</normaloff>resources/edit.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>10</width>
+             <height>10</height>
+            </size>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_24">
+           <property name="geometry">
+            <rect>
+             <x>50</x>
+             <y>1</y>
+             <width>41</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Node</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="status_geth">
+           <property name="geometry">
+            <rect>
+             <x>370</x>
+             <y>20</y>
+             <width>21</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>...</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="pushButton_eth_info_3">
+           <property name="geometry">
+            <rect>
+             <x>383</x>
+             <y>79</y>
+             <width>21</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>resources/info.svg</normaloff>resources/info.svg</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>11</width>
+             <height>11</height>
+            </size>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="pushButton_polkadot_info">
+           <property name="geometry">
+            <rect>
+             <x>383</x>
+             <y>59</y>
+             <width>21</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>resources/info.svg</normaloff>resources/info.svg</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>11</width>
+             <height>11</height>
+            </size>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_4">
+           <property name="geometry">
+            <rect>
+             <x>50</x>
+             <y>60</y>
+             <width>291</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Polkadot Node</string>
+           </property>
+          </widget>
+          <zorder>pushButton_config_settings</zorder>
+          <zorder>status_config</zorder>
+          <zorder>label_27</zorder>
+          <zorder>status_polkadot</zorder>
+          <zorder>label_5</zorder>
+          <zorder>label_25</zorder>
+          <zorder>label_23</zorder>
+          <zorder>status_acria</zorder>
+          <zorder>label_39</zorder>
+          <zorder>pushButton_acria_settings</zorder>
+          <zorder>pushButton_binance_settings</zorder>
+          <zorder>label</zorder>
+          <zorder>pushButton_eth_settings</zorder>
+          <zorder>status_binance</zorder>
+          <zorder>pushButton_polkadot_settings</zorder>
+          <zorder>label_24</zorder>
+          <zorder>status_geth</zorder>
+          <zorder>pushButton_eth_info_3</zorder>
+          <zorder>pushButton_polkadot_info</zorder>
+          <zorder>label_4</zorder>
+          <zorder>pushButton_binance_info</zorder>
+          <zorder>pushButton_eth_info</zorder>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_15">
+          <property name="leftMargin">
+           <number>4</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="label_2">
+            <property name="maximumSize">
+             <size>
+              <width>80</width>
+              <height>25</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="pixmap">
+             <pixmap>resources/acria_logo4.svg</pixmap>
+            </property>
+            <property name="scaledContents">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_13">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_export_json_3">
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color:white;
+color:black;
+border: none;
+/*padding:30px;*/
+width:80px;
+padding-top:3px;
+padding-bottom:3px;
+background-color:orange;</string>
+            </property>
+            <property name="text">
+             <string>Config</string>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_refresh">
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color:white;
+color:black;
+border: none;
+/*padding:30px;*/
+width:80px;
+padding-top:3px;
+padding-bottom:3px;
+background-color:orange;</string>
+            </property>
+            <property name="text">
+             <string>Refresh</string>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="tab_2">
        <property name="styleSheet">
@@ -894,6 +992,9 @@ QTreeView#settingsTree {
         </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <property name="leftMargin">
+           <number>1</number>
+          </property>
           <item>
            <widget class="QWidget" name="widget_2" native="true">
             <property name="minimumSize">
@@ -944,6 +1045,12 @@ QTreeView#settingsTree {
               <height>0</height>
              </size>
             </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>17</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true">background-color:white;
 color:black;
@@ -968,6 +1075,12 @@ background-color:orange;</string>
              <size>
               <width>100</width>
               <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>17</height>
              </size>
             </property>
             <property name="styleSheet">
@@ -1003,115 +1116,238 @@ background-color:orange;</string>
        <attribute name="title">
         <string/>
        </attribute>
-       <widget class="QTableWidget" name="tableWidget_req">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>24</y>
-          <width>431</width>
-          <height>151</height>
-         </rect>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <property name="topMargin">
+         <number>2</number>
         </property>
-        <property name="styleSheet">
-         <string notr="true">border:none;</string>
-        </property>
-        <property name="editTriggers">
-         <set>QAbstractItemView::NoEditTriggers</set>
-        </property>
-        <property name="showDropIndicator" stdset="0">
-         <bool>true</bool>
-        </property>
-        <property name="showGrid">
-         <bool>true</bool>
-        </property>
-        <property name="rowCount">
-         <number>0</number>
-        </property>
-        <property name="columnCount">
-         <number>5</number>
-        </property>
-        <attribute name="horizontalHeaderVisible">
-         <bool>false</bool>
-        </attribute>
-        <attribute name="horizontalHeaderHighlightSections">
-         <bool>true</bool>
-        </attribute>
-        <attribute name="verticalHeaderVisible">
-         <bool>false</bool>
-        </attribute>
-        <attribute name="verticalHeaderHighlightSections">
-         <bool>true</bool>
-        </attribute>
-        <column/>
-        <column/>
-        <column/>
-        <column/>
-        <column/>
-       </widget>
-       <widget class="QLabel" name="label_26">
-        <property name="geometry">
-         <rect>
-          <x>7</x>
-          <y>180</y>
-          <width>80</width>
-          <height>25</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="pixmap">
-         <pixmap>resources/acria_logo4.svg</pixmap>
-        </property>
-        <property name="scaledContents">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QWidget" name="horizontalLayoutWidget">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>21</y>
-          <width>21</width>
-          <height>16</height>
-         </rect>
-        </property>
-        <layout class="QHBoxLayout" name="horizontalLayout"/>
-       </widget>
-       <widget class="QLabel" name="label_progress">
-        <property name="geometry">
-         <rect>
-          <x>36</x>
-          <y>20</y>
-          <width>71</width>
-          <height>16</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>No Requests</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_32">
-        <property name="geometry">
-         <rect>
-          <x>170</x>
-          <y>2</y>
-          <width>111</width>
-          <height>16</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">color:orange;
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_9">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <item>
+           <spacer name="horizontalSpacer_7">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>16</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_32">
+            <property name="minimumSize">
+             <size>
+              <width>111</width>
+              <height>16</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>111</width>
+              <height>16</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color:orange;
 background-color:#333333;
 border-radius:5px;</string>
-        </property>
-        <property name="text">
-         <string>Incoming Requests</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
+            </property>
+            <property name="text">
+             <string>Incoming Requests</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_8">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>16</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QWidget" name="horizontalWidget_6" native="true">
+          <layout class="QHBoxLayout" name="horizontalLayout_8">
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout"/>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_progress">
+             <property name="text">
+              <string>No Requests</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_6">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTableWidget" name="tableWidget_req">
+          <property name="styleSheet">
+           <string notr="true">QTreeView, QTableView {
+    alternate-background-color: rgba(0,0,0, 64);
+    background-color: #222222;
+    border: 0px;
+/*border: 1px solid #333333;*/
+gridline-color: #333333;
+}
+
+QTableView::item:selected{
+/*background-color: rgba(85, 58, 22, 174);*/
+background-color: #282828;
+color: palette(highlightedText);
+border:1px solid rgba(255, 120, 0, 160);
+}
+
+QHeaderView::section{
+background:#333333;
+border:none;
+gridline-color: #000000;
+}
+
+QTreeView {
+  selection-background-color: transparent;
+}
+
+QTreeView::item:focus {
+  border: none;
+}
+
+QTreeView::item:selected {
+  border: none;
+  border-radius: 3px;
+  color: palette(button-text);
+}
+
+QTreeView::item:hover {
+  border-radius: 3px;
+  background: #000000;
+}
+
+
+QTreeView::item:selected:active{
+  color: palette(button-text);
+  background: #040404;
+}
+
+QTreeView::item:selected:!active {
+  color: palette(button-text);
+  background: #080808;
+}
+
+QTreeView::item { 
+color: #debc85; 
+}
+QTreeView::item:selected { 
+color: #00004b; 
+}
+QTreeView#settingsTree {
+ background: #131313; 
+}
+</string>
+          </property>
+          <property name="editTriggers">
+           <set>QAbstractItemView::NoEditTriggers</set>
+          </property>
+          <property name="showDropIndicator" stdset="0">
+           <bool>true</bool>
+          </property>
+          <property name="showGrid">
+           <bool>true</bool>
+          </property>
+          <property name="rowCount">
+           <number>0</number>
+          </property>
+          <property name="columnCount">
+           <number>5</number>
+          </property>
+          <attribute name="horizontalHeaderVisible">
+           <bool>false</bool>
+          </attribute>
+          <attribute name="horizontalHeaderHighlightSections">
+           <bool>true</bool>
+          </attribute>
+          <attribute name="verticalHeaderVisible">
+           <bool>false</bool>
+          </attribute>
+          <attribute name="verticalHeaderHighlightSections">
+           <bool>true</bool>
+          </attribute>
+          <column/>
+          <column/>
+          <column/>
+          <column/>
+          <column/>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_7">
+          <property name="leftMargin">
+           <number>4</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="label_26">
+            <property name="maximumSize">
+             <size>
+              <width>80</width>
+              <height>25</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="pixmap">
+             <pixmap>resources/acria_logo4.svg</pixmap>
+            </property>
+            <property name="scaledContents">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_5">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="tab_8">
        <attribute name="icon">
@@ -1121,105 +1357,225 @@ border-radius:5px;</string>
        <attribute name="title">
         <string/>
        </attribute>
-       <widget class="QLabel" name="label_40">
-        <property name="geometry">
-         <rect>
-          <x>7</x>
-          <y>180</y>
-          <width>80</width>
-          <height>25</height>
-         </rect>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <property name="topMargin">
+         <number>2</number>
         </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="pixmap">
-         <pixmap>resources/acria_logo4.svg</pixmap>
-        </property>
-        <property name="scaledContents">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_41">
-        <property name="geometry">
-         <rect>
-          <x>170</x>
-          <y>2</y>
-          <width>111</width>
-          <height>16</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">color:orange;
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_10">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <item>
+           <spacer name="horizontalSpacer_9">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>16</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_41">
+            <property name="minimumSize">
+             <size>
+              <width>111</width>
+              <height>16</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>111</width>
+              <height>16</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color:orange;
 background-color:#333333;
 border-radius:5px;</string>
-        </property>
-        <property name="text">
-         <string>Balances</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-       <widget class="QTableWidget" name="tableWidget_balances">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>24</y>
-          <width>431</width>
-          <height>151</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">border:none;</string>
-        </property>
-        <property name="editTriggers">
-         <set>QAbstractItemView::NoEditTriggers</set>
-        </property>
-        <property name="showDropIndicator" stdset="0">
-         <bool>true</bool>
-        </property>
-        <property name="showGrid">
-         <bool>true</bool>
-        </property>
-        <property name="rowCount">
-         <number>0</number>
-        </property>
-        <property name="columnCount">
-         <number>5</number>
-        </property>
-        <attribute name="horizontalHeaderVisible">
-         <bool>false</bool>
-        </attribute>
-        <attribute name="horizontalHeaderHighlightSections">
-         <bool>true</bool>
-        </attribute>
-        <attribute name="verticalHeaderVisible">
-         <bool>false</bool>
-        </attribute>
-        <attribute name="verticalHeaderHighlightSections">
-         <bool>true</bool>
-        </attribute>
-        <column/>
-        <column/>
-        <column/>
-        <column/>
-        <column/>
-       </widget>
-       <widget class="QPushButton" name="pushButton_withdraw_eth">
-        <property name="geometry">
-         <rect>
-          <x>340</x>
-          <y>190</y>
-          <width>100</width>
-          <height>17</height>
-         </rect>
-        </property>
-        <property name="autoFillBackground">
-         <bool>false</bool>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color:white;
+            </property>
+            <property name="text">
+             <string>Balances</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_10">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>16</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QTableWidget" name="tableWidget_balances">
+          <property name="styleSheet">
+           <string notr="true">QTreeView, QTableView {
+    alternate-background-color: rgba(0,0,0, 64);
+    background-color: #222222;
+    border: 0px;
+/*border: 1px solid #333333;*/
+gridline-color: #333333;
+}
+
+QTableView::item:selected{
+/*background-color: rgba(85, 58, 22, 174);*/
+background-color: #282828;
+color: palette(highlightedText);
+border:1px solid rgba(255, 120, 0, 160);
+}
+
+QHeaderView::section{
+background:#333333;
+border:none;
+gridline-color: #000000;
+}
+
+QTreeView {
+  selection-background-color: transparent;
+}
+
+QTreeView::item:focus {
+  border: none;
+}
+
+QTreeView::item:selected {
+  border: none;
+  border-radius: 3px;
+  color: palette(button-text);
+}
+
+QTreeView::item:hover {
+  border-radius: 3px;
+  background: #000000;
+}
+
+
+QTreeView::item:selected:active{
+  color: palette(button-text);
+  background: #040404;
+}
+
+QTreeView::item:selected:!active {
+  color: palette(button-text);
+  background: #080808;
+}
+
+QTreeView::item { 
+color: #debc85; 
+}
+QTreeView::item:selected { 
+color: #00004b; 
+}
+QTreeView#settingsTree {
+ background: #131313; 
+}
+</string>
+          </property>
+          <property name="editTriggers">
+           <set>QAbstractItemView::NoEditTriggers</set>
+          </property>
+          <property name="showDropIndicator" stdset="0">
+           <bool>true</bool>
+          </property>
+          <property name="showGrid">
+           <bool>true</bool>
+          </property>
+          <property name="rowCount">
+           <number>0</number>
+          </property>
+          <property name="columnCount">
+           <number>5</number>
+          </property>
+          <attribute name="horizontalHeaderVisible">
+           <bool>false</bool>
+          </attribute>
+          <attribute name="horizontalHeaderHighlightSections">
+           <bool>true</bool>
+          </attribute>
+          <attribute name="verticalHeaderVisible">
+           <bool>false</bool>
+          </attribute>
+          <attribute name="verticalHeaderHighlightSections">
+           <bool>true</bool>
+          </attribute>
+          <column/>
+          <column/>
+          <column/>
+          <column/>
+          <column/>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_11">
+          <property name="leftMargin">
+           <number>4</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="label_40">
+            <property name="maximumSize">
+             <size>
+              <width>80</width>
+              <height>25</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="pixmap">
+             <pixmap>resources/acria_logo4.svg</pixmap>
+            </property>
+            <property name="scaledContents">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_11">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_withdraw_binance">
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="autoFillBackground">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color:white;
 color:black;
 border: none;
 /*padding:30px;*/
@@ -1227,31 +1583,37 @@ width:80px;
 padding-top:3px;
 padding-bottom:3px;
 background-color:orange;</string>
-        </property>
-        <property name="text">
-         <string>Withdraw Ether</string>
-        </property>
-        <property name="autoDefault">
-         <bool>true</bool>
-        </property>
-        <property name="flat">
-         <bool>false</bool>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_withdraw_polkadot">
-        <property name="geometry">
-         <rect>
-          <x>230</x>
-          <y>190</y>
-          <width>100</width>
-          <height>17</height>
-         </rect>
-        </property>
-        <property name="autoFillBackground">
-         <bool>false</bool>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color:white;
+            </property>
+            <property name="text">
+             <string>Withdraw Binance</string>
+            </property>
+            <property name="autoDefault">
+             <bool>true</bool>
+            </property>
+            <property name="flat">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_withdraw_polkadot">
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="autoFillBackground">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color:white;
 color:black;
 border: none;
 /*padding:30px;*/
@@ -1259,31 +1621,37 @@ width:80px;
 padding-top:3px;
 padding-bottom:3px;
 background-color:orange;</string>
-        </property>
-        <property name="text">
-         <string>Withdraw Polkadot</string>
-        </property>
-        <property name="autoDefault">
-         <bool>true</bool>
-        </property>
-        <property name="flat">
-         <bool>false</bool>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_withdraw_binance">
-        <property name="geometry">
-         <rect>
-          <x>120</x>
-          <y>190</y>
-          <width>100</width>
-          <height>17</height>
-         </rect>
-        </property>
-        <property name="autoFillBackground">
-         <bool>false</bool>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color:white;
+            </property>
+            <property name="text">
+             <string>Withdraw Polkadot</string>
+            </property>
+            <property name="autoDefault">
+             <bool>true</bool>
+            </property>
+            <property name="flat">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_withdraw_eth">
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="autoFillBackground">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color:white;
 color:black;
 border: none;
 /*padding:30px;*/
@@ -1291,17 +1659,21 @@ width:80px;
 padding-top:3px;
 padding-bottom:3px;
 background-color:orange;</string>
-        </property>
-        <property name="text">
-         <string>Withdraw Binance</string>
-        </property>
-        <property name="autoDefault">
-         <bool>true</bool>
-        </property>
-        <property name="flat">
-         <bool>false</bool>
-        </property>
-       </widget>
+            </property>
+            <property name="text">
+             <string>Withdraw Ether</string>
+            </property>
+            <property name="autoDefault">
+             <bool>true</bool>
+            </property>
+            <property name="flat">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="tab_3">
        <property name="styleSheet">
@@ -1316,88 +1688,26 @@ background-color:#333333;
        <attribute name="title">
         <string/>
        </attribute>
-       <widget class="QLabel" name="label_6">
-        <property name="geometry">
-         <rect>
-          <x>7</x>
-          <y>180</y>
-          <width>80</width>
-          <height>25</height>
-         </rect>
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <property name="spacing">
+         <number>0</number>
         </property>
-        <property name="text">
-         <string/>
+        <property name="leftMargin">
+         <number>1</number>
         </property>
-        <property name="pixmap">
-         <pixmap>resources/acria_logo4.svg</pixmap>
+        <property name="topMargin">
+         <number>0</number>
         </property>
-        <property name="scaledContents">
-         <bool>true</bool>
+        <property name="rightMargin">
+         <number>0</number>
         </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_setting_discard">
-        <property name="geometry">
-         <rect>
-          <x>270</x>
-          <y>190</y>
-          <width>80</width>
-          <height>17</height>
-         </rect>
+        <property name="bottomMargin">
+         <number>0</number>
         </property>
-        <property name="styleSheet">
-         <string notr="true">background-color:white;
-color:black;
-border: none;
-/*padding:30px;*/
-width:80px;
-padding-top:3px;
-padding-bottom:3px;
-background-color:orange;</string>
-        </property>
-        <property name="text">
-         <string>Discard</string>
-        </property>
-        <property name="flat">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_setting_save">
-        <property name="geometry">
-         <rect>
-          <x>360</x>
-          <y>190</y>
-          <width>80</width>
-          <height>17</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color:white;
-color:black;
-border: none;
-/*padding:30px;*/
-width:80px;
-padding-top:3px;
-padding-bottom:3px;
-background-color:orange;</string>
-        </property>
-        <property name="text">
-         <string>Save</string>
-        </property>
-        <property name="flat">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QTabWidget" name="tabWidget_2">
-        <property name="geometry">
-         <rect>
-          <x>1</x>
-          <y>0</y>
-          <width>451</width>
-          <height>171</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">#tabWidget_2, #tabWidget_2 QTabBar{
+        <item>
+         <widget class="QTabWidget" name="tabWidget_2">
+          <property name="styleSheet">
+           <string notr="true">#tabWidget_2, #tabWidget_2 QTabBar{
 border:none;
 }
 
@@ -1422,137 +1732,137 @@ background-color: #444444;
 background-color: #333333;
 border:none;
 }</string>
-        </property>
-        <property name="currentIndex">
-         <number>2</number>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>12</width>
-          <height>12</height>
-         </size>
-        </property>
-        <property name="elideMode">
-         <enum>Qt::ElideNone</enum>
-        </property>
-        <widget class="QWidget" name="tab_5">
-         <property name="styleSheet">
-          <string notr="true">border:none;</string>
-         </property>
-         <attribute name="icon">
-          <iconset>
-           <normaloff>resources/ethereum_colored.svg</normaloff>resources/ethereum_colored.svg</iconset>
-         </attribute>
-         <attribute name="title">
-          <string>Ethereum</string>
-         </attribute>
-         <widget class="QCheckBox" name="checkBox_eth">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>134</y>
-            <width>171</width>
-            <height>18</height>
-           </rect>
           </property>
-          <property name="text">
-           <string>Enabled</string>
+          <property name="currentIndex">
+           <number>0</number>
           </property>
-          <property name="checked">
-           <bool>true</bool>
+          <property name="iconSize">
+           <size>
+            <width>12</width>
+            <height>12</height>
+           </size>
           </property>
-         </widget>
-         <widget class="QLabel" name="label_29">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>48</y>
-            <width>71</width>
-            <height>16</height>
-           </rect>
+          <property name="elideMode">
+           <enum>Qt::ElideNone</enum>
           </property>
-          <property name="text">
-           <string>Account:</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_eth_contract">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>106</y>
-            <width>271</width>
-            <height>20</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">
+          <widget class="QWidget" name="tab_5">
+           <property name="styleSheet">
+            <string notr="true">border:none;</string>
+           </property>
+           <attribute name="icon">
+            <iconset>
+             <normaloff>resources/ethereum_colored.svg</normaloff>resources/ethereum_colored.svg</iconset>
+           </attribute>
+           <attribute name="title">
+            <string>Ethereum</string>
+           </attribute>
+           <widget class="QCheckBox" name="checkBox_eth">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>134</y>
+              <width>171</width>
+              <height>18</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Enabled</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+           <widget class="QLabel" name="label_29">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>48</y>
+              <width>71</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Account:</string>
+            </property>
+           </widget>
+           <widget class="QLineEdit" name="lineEdit_eth_contract">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>106</y>
+              <width>271</width>
+              <height>20</height>
+             </rect>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">
 /*font-size: 7px;*/</string>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_28">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>4</y>
-            <width>91</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Ethereum Node:</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_geth_url">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>20</y>
-            <width>271</width>
-            <height>20</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color:#333333;</string>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_30">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>90</y>
-            <width>91</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Contract:</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_eth_account">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>64</y>
-            <width>271</width>
-            <height>20</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color:#333333;
+            </property>
+           </widget>
+           <widget class="QLabel" name="label_28">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>4</y>
+              <width>91</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Ethereum Node:</string>
+            </property>
+           </widget>
+           <widget class="QLineEdit" name="lineEdit_geth_url">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>20</y>
+              <width>271</width>
+              <height>20</height>
+             </rect>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color:#333333;</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="label_30">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>90</y>
+              <width>91</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Contract:</string>
+            </property>
+           </widget>
+           <widget class="QLineEdit" name="lineEdit_eth_account">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>64</y>
+              <width>271</width>
+              <height>20</height>
+             </rect>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color:#333333;
 /*font-size: 7px;*/</string>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="pushButton_deploy_contract_eth">
-          <property name="geometry">
-           <rect>
-            <x>288</x>
-            <y>108</y>
-            <width>91</width>
-            <height>17</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color:white;
+            </property>
+           </widget>
+           <widget class="QPushButton" name="pushButton_deploy_contract_eth">
+            <property name="geometry">
+             <rect>
+              <x>288</x>
+              <y>108</y>
+              <width>91</width>
+              <height>17</height>
+             </rect>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color:white;
 color:black;
 border: none;
 /*padding:30px;*/
@@ -1560,25 +1870,25 @@ width:80px;
 padding-top:3px;
 padding-bottom:3px;
 background-color:orange;</string>
-          </property>
-          <property name="text">
-           <string>Deploy Contract</string>
-          </property>
-          <property name="flat">
-           <bool>true</bool>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="pushButton_accounts_eth">
-          <property name="geometry">
-           <rect>
-            <x>288</x>
-            <y>66</y>
-            <width>91</width>
-            <height>17</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color:white;
+            </property>
+            <property name="text">
+             <string>Deploy Contract</string>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="pushButton_accounts_eth">
+            <property name="geometry">
+             <rect>
+              <x>288</x>
+              <y>66</y>
+              <width>91</width>
+              <height>17</height>
+             </rect>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color:white;
 color:black;
 border: none;
 /*padding:30px;*/
@@ -1586,241 +1896,241 @@ width:80px;
 padding-top:3px;
 padding-bottom:3px;
 background-color:orange;</string>
-          </property>
-          <property name="text">
-           <string>My Accounts</string>
-          </property>
-          <property name="flat">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </widget>
-        <widget class="QWidget" name="tab_6">
-         <property name="styleSheet">
-          <string notr="true">border:none;</string>
-         </property>
-         <attribute name="icon">
-          <iconset>
-           <normaloff>resources/polkadot_colored.svg</normaloff>resources/polkadot_colored.svg</iconset>
-         </attribute>
-         <attribute name="title">
-          <string>Polkadot</string>
-         </attribute>
-         <widget class="QCheckBox" name="checkBox_polkadot">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>134</y>
-            <width>171</width>
-            <height>18</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Enabled</string>
-          </property>
-          <property name="checked">
-           <bool>true</bool>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_35">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>90</y>
-            <width>71</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Contract:</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_polkadot_contract">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>106</y>
-            <width>271</width>
-            <height>20</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color:#333333;
+            </property>
+            <property name="text">
+             <string>My Accounts</string>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </widget>
+          <widget class="QWidget" name="tab_6">
+           <property name="styleSheet">
+            <string notr="true">border:none;</string>
+           </property>
+           <attribute name="icon">
+            <iconset>
+             <normaloff>resources/polkadot_colored.svg</normaloff>resources/polkadot_colored.svg</iconset>
+           </attribute>
+           <attribute name="title">
+            <string>Polkadot</string>
+           </attribute>
+           <widget class="QCheckBox" name="checkBox_polkadot">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>134</y>
+              <width>171</width>
+              <height>18</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Enabled</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+           <widget class="QLabel" name="label_35">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>90</y>
+              <width>71</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Contract:</string>
+            </property>
+           </widget>
+           <widget class="QLineEdit" name="lineEdit_polkadot_contract">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>106</y>
+              <width>271</width>
+              <height>20</height>
+             </rect>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color:#333333;
 /*font-size: 7px;*/</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_polkadot_url">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>20</y>
-            <width>271</width>
-            <height>20</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color:#333333;</string>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_33">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>48</y>
-            <width>71</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Account:</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_polkadot_account">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>64</y>
-            <width>271</width>
-            <height>20</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color:#333333;
+            </property>
+           </widget>
+           <widget class="QLineEdit" name="lineEdit_polkadot_url">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>20</y>
+              <width>271</width>
+              <height>20</height>
+             </rect>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color:#333333;</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="label_33">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>48</y>
+              <width>71</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Account:</string>
+            </property>
+           </widget>
+           <widget class="QLineEdit" name="lineEdit_polkadot_account">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>64</y>
+              <width>271</width>
+              <height>20</height>
+             </rect>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color:#333333;
 /*font-size: 7px;*/</string>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_34">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>4</y>
-            <width>71</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Polkadot Node:</string>
-          </property>
-         </widget>
-        </widget>
-        <widget class="QWidget" name="tab_7">
-         <property name="styleSheet">
-          <string notr="true">border:none;</string>
-         </property>
-         <attribute name="icon">
-          <iconset>
-           <normaloff>resources/binance_colored.svg</normaloff>resources/binance_colored.svg</iconset>
-         </attribute>
-         <attribute name="title">
-          <string>Binance</string>
-         </attribute>
-         <widget class="QLabel" name="label_36">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>90</y>
-            <width>71</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Contract:</string>
-          </property>
-         </widget>
-         <widget class="QCheckBox" name="checkBox_binance">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>134</y>
-            <width>171</width>
-            <height>18</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Enabled</string>
-          </property>
-          <property name="checked">
-           <bool>true</bool>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_binance_contract">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>106</y>
-            <width>271</width>
-            <height>20</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color:#333333;
+            </property>
+           </widget>
+           <widget class="QLabel" name="label_34">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>4</y>
+              <width>71</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Polkadot Node:</string>
+            </property>
+           </widget>
+          </widget>
+          <widget class="QWidget" name="tab_7">
+           <property name="styleSheet">
+            <string notr="true">border:none;</string>
+           </property>
+           <attribute name="icon">
+            <iconset>
+             <normaloff>resources/binance_colored.svg</normaloff>resources/binance_colored.svg</iconset>
+           </attribute>
+           <attribute name="title">
+            <string>Binance</string>
+           </attribute>
+           <widget class="QLabel" name="label_36">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>90</y>
+              <width>71</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Contract:</string>
+            </property>
+           </widget>
+           <widget class="QCheckBox" name="checkBox_binance">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>134</y>
+              <width>171</width>
+              <height>18</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Enabled</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+           <widget class="QLineEdit" name="lineEdit_binance_contract">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>106</y>
+              <width>271</width>
+              <height>20</height>
+             </rect>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color:#333333;
 /*font-size: 7px;*/</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_binance_url">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>20</y>
-            <width>271</width>
-            <height>20</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color:#333333;</string>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_37">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>48</y>
-            <width>71</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Account:</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_binance_account">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>64</y>
-            <width>271</width>
-            <height>20</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color:#333333;
+            </property>
+           </widget>
+           <widget class="QLineEdit" name="lineEdit_binance_url">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>20</y>
+              <width>271</width>
+              <height>20</height>
+             </rect>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color:#333333;</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="label_37">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>48</y>
+              <width>71</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Account:</string>
+            </property>
+           </widget>
+           <widget class="QLineEdit" name="lineEdit_binance_account">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>64</y>
+              <width>271</width>
+              <height>20</height>
+             </rect>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color:#333333;
 /*font-size: 7px;*/</string>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_38">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>4</y>
-            <width>71</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Binance Node:</string>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="pushButton_deploy_contract_binance">
-          <property name="geometry">
-           <rect>
-            <x>288</x>
-            <y>108</y>
-            <width>91</width>
-            <height>17</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color:white;
+            </property>
+           </widget>
+           <widget class="QLabel" name="label_38">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>4</y>
+              <width>71</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Binance Node:</string>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="pushButton_deploy_contract_binance">
+            <property name="geometry">
+             <rect>
+              <x>288</x>
+              <y>108</y>
+              <width>91</width>
+              <height>17</height>
+             </rect>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color:white;
 color:black;
 border: none;
 /*padding:30px;*/
@@ -1828,25 +2138,25 @@ width:80px;
 padding-top:3px;
 padding-bottom:3px;
 background-color:orange;</string>
-          </property>
-          <property name="text">
-           <string>Deploy Contract</string>
-          </property>
-          <property name="flat">
-           <bool>true</bool>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="pushButton_accounts_binance">
-          <property name="geometry">
-           <rect>
-            <x>288</x>
-            <y>66</y>
-            <width>91</width>
-            <height>17</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color:white;
+            </property>
+            <property name="text">
+             <string>Deploy Contract</string>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="pushButton_accounts_binance">
+            <property name="geometry">
+             <rect>
+              <x>288</x>
+              <y>66</y>
+              <width>91</width>
+              <height>17</height>
+             </rect>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color:white;
 color:black;
 border: none;
 /*padding:30px;*/
@@ -1854,31 +2164,126 @@ width:80px;
 padding-top:3px;
 padding-bottom:3px;
 background-color:orange;</string>
-          </property>
-          <property name="text">
-           <string>My Accounts</string>
-          </property>
-          <property name="flat">
-           <bool>true</bool>
-          </property>
+            </property>
+            <property name="text">
+             <string>My Accounts</string>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </widget>
          </widget>
-        </widget>
-       </widget>
-       <widget class="QWidget" name="widget" native="true">
-        <property name="geometry">
-         <rect>
-          <x>1</x>
-          <y>159</y>
-          <width>461</width>
-          <height>111</height>
-         </rect>
-        </property>
-       </widget>
-       <zorder>widget</zorder>
-       <zorder>label_6</zorder>
-       <zorder>pushButton_setting_discard</zorder>
-       <zorder>pushButton_setting_save</zorder>
-       <zorder>tabWidget_2</zorder>
+        </item>
+        <item>
+         <widget class="QWidget" name="horizontalWidget_9" native="true">
+          <layout class="QHBoxLayout" name="horizontalLayout_13">
+           <property name="leftMargin">
+            <number>7</number>
+           </property>
+           <property name="bottomMargin">
+            <number>4</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="label_6">
+             <property name="maximumSize">
+              <size>
+               <width>80</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="pixmap">
+              <pixmap>resources/acria_logo4.svg</pixmap>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_12">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_setting_discard">
+             <property name="minimumSize">
+              <size>
+               <width>100</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>17</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color:white;
+color:black;
+border: none;
+/*padding:30px;*/
+width:80px;
+padding-top:3px;
+padding-bottom:3px;
+background-color:orange;</string>
+             </property>
+             <property name="text">
+              <string>Discard</string>
+             </property>
+             <property name="flat">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_setting_save">
+             <property name="minimumSize">
+              <size>
+               <width>100</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>17</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color:white;
+color:black;
+border: none;
+/*padding:30px;*/
+width:80px;
+padding-top:3px;
+padding-bottom:3px;
+background-color:orange;</string>
+             </property>
+             <property name="text">
+              <string>Save</string>
+             </property>
+             <property name="flat">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </widget>
     </item>

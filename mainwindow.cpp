@@ -180,6 +180,15 @@ void MainWindow::update_requests(){
     this->ui->tableWidget_req->setColumnWidth(4, 100);
     this->ui->tableWidget_req->setColumnWidth(6, 50);
     this->ui->tableWidget_req->setColumnWidth(0, 20);
+
+    this->ui->tableWidget_req->setHorizontalHeaderItem(0, new QTableWidgetItem("#"));
+    this->ui->tableWidget_req->setHorizontalHeaderItem(1, new QTableWidgetItem("Item"));
+    this->ui->tableWidget_req->setHorizontalHeaderItem(2, new QTableWidgetItem("Fee"));
+    this->ui->tableWidget_req->setHorizontalHeaderItem(3, new QTableWidgetItem("Expiration"));
+    this->ui->tableWidget_req->setHorizontalHeaderItem(4, new QTableWidgetItem("Chain"));
+    this->ui->tableWidget_req->setHorizontalHeaderItem(5, new QTableWidgetItem("Id"));
+    this->ui->tableWidget_req->setHorizontalHeaderItem(6, new QTableWidgetItem("Status"));
+
     for (uint d=0; d<r.size(); d++){
         this->ui->tableWidget_req->setItem( d, 0, new QTableWidgetItem(QString::number(d)));
         this->ui->tableWidget_req->setItem( d, 1, new QTableWidgetItem(r[d].requestID));
@@ -189,8 +198,10 @@ void MainWindow::update_requests(){
         this->ui->tableWidget_req->setItem( d, 4, new QTableWidgetItem(r[d].chain));
         this->ui->tableWidget_req->setItem( d, 5, new QTableWidgetItem(QString::number(r[d].id)));
         uint state = this->eth_based_chain[r[d].chain]->state[r[d].id];
-        this->ui->tableWidget_req->setItem( d, 5, new QTableWidgetItem(state==0?"new":state==1?"data updated":state==2?"sent":"completed"));
+        this->ui->tableWidget_req->setItem( d, 6, new QTableWidgetItem(state==0?"new":state==1?"data updated":state==2?"sent":"completed"));
     }
+
+    this->ui->tableWidget_req->horizontalHeader()->setStretchLastSection(true);
 
     for (uint d=0; d<r.size(); d++){
             if (!std::count(nt.begin(), nt.end(), r[d].chain + QString::number(r[d].id))){
@@ -218,11 +229,13 @@ void MainWindow::update_requests(){
     }
 
     if(r.size() != 0){
-        this->ui->horizontalLayoutWidget->hide();
+        this->ui->tableWidget_req->horizontalHeader()->show();
+        this->ui->horizontalWidget_6->hide();
         this->ui->label_progress->hide();
     }
     else{
-        this->ui->horizontalLayoutWidget->show();
+        this->ui->tableWidget_req->horizontalHeader()->hide();
+        this->ui->horizontalWidget_6->show();
         this->ui->label_progress->show();
     }
 
@@ -310,21 +323,26 @@ void MainWindow::update_balances(){
         ui->tableWidget_balances->removeRow(0);
     }
 
-    this->ui->tableWidget_balances->setRowCount(5);
+    this->ui->tableWidget_balances->setRowCount(4);
     this->ui->tableWidget_balances->setColumnCount(4);
 
-    this->ui->tableWidget_balances->setColumnWidth(1, 100);
-    this->ui->tableWidget_balances->setColumnWidth(2, 100);
-    this->ui->tableWidget_balances->setColumnWidth(3, 120);
+    this->ui->tableWidget_balances->setColumnWidth(1, 128);
+    this->ui->tableWidget_balances->setColumnWidth(2, 128);
+    this->ui->tableWidget_balances->setColumnWidth(3, 128);
 
-    this->ui->tableWidget_balances->setItem( 0, 0, new QTableWidgetItem(""));
-    this->ui->tableWidget_balances->setItem( 1, 0, new QTableWidgetItem("Ethereum"));
-    this->ui->tableWidget_balances->setItem( 2, 0, new QTableWidgetItem("Polkadot"));
-    this->ui->tableWidget_balances->setItem( 3, 0, new QTableWidgetItem("Binance"));
-    this->ui->tableWidget_balances->setItem( 4, 0, new QTableWidgetItem("Total"));
-    this->ui->tableWidget_balances->setItem( 0, 1, new QTableWidgetItem("Fees Earned Total"));
-    this->ui->tableWidget_balances->setItem( 0, 2, new QTableWidgetItem("Withdrawable Fees"));
-    this->ui->tableWidget_balances->setItem( 0, 3, new QTableWidgetItem("Completed Requests"));
+    this->ui->tableWidget_balances->setHorizontalHeaderItem(1, new QTableWidgetItem("Chain"));
+    this->ui->tableWidget_balances->setHorizontalHeaderItem(1, new QTableWidgetItem("Fees Earned Total"));
+    this->ui->tableWidget_balances->setHorizontalHeaderItem(2, new QTableWidgetItem("Withdrawable Fees"));
+    this->ui->tableWidget_balances->setHorizontalHeaderItem(3, new QTableWidgetItem("Completed Requests"));
+    this->ui->tableWidget_balances->horizontalHeader()->show();
+
+    this->ui->tableWidget_balances->setItem( 0, 0, new QTableWidgetItem("Ethereum"));
+    this->ui->tableWidget_balances->setItem( 1, 0, new QTableWidgetItem("Polkadot"));
+    this->ui->tableWidget_balances->setItem( 2, 0, new QTableWidgetItem("Binance"));
+    this->ui->tableWidget_balances->setItem( 3, 0, new QTableWidgetItem("Total"));
+    //this->ui->tableWidget_balances->setItem( 0, 1, new QTableWidgetItem("Fees Earned Total"));
+    //this->ui->tableWidget_balances->setItem( 0, 2, new QTableWidgetItem("Withdrawable Fees"));
+    //this->ui->tableWidget_balances->setItem( 0, 3, new QTableWidgetItem("Completed Requests"));
 
     uint eth_completed = this->eth_based_chain["ethereum"]->cinfo->get_completed().size();
     uint binance_completed = this->eth_based_chain["binance"]->cinfo->get_completed().size();
@@ -338,18 +356,20 @@ void MainWindow::update_balances(){
     double eth_withdrawable = this->eth_based_chain["ethereum"]->balances->get_withdrawable();
     double polkadot_withdrawable = 0;
 
-    this->ui->tableWidget_balances->setItem( 1, 3, new QTableWidgetItem(QString::number(eth_completed)));
-    this->ui->tableWidget_balances->setItem( 2, 3, new QTableWidgetItem(QString::number(polkadot_completed)));
-    this->ui->tableWidget_balances->setItem( 3, 3, new QTableWidgetItem(QString::number(binance_completed)));
-    this->ui->tableWidget_balances->setItem( 4, 3, new QTableWidgetItem(QString::number(binance_completed + polkadot_completed + eth_completed)));
+    this->ui->tableWidget_balances->setItem( 0, 3, new QTableWidgetItem(QString::number(eth_completed)));
+    this->ui->tableWidget_balances->setItem( 1, 3, new QTableWidgetItem(QString::number(polkadot_completed)));
+    this->ui->tableWidget_balances->setItem( 2, 3, new QTableWidgetItem(QString::number(binance_completed)));
+    this->ui->tableWidget_balances->setItem( 3, 3, new QTableWidgetItem(QString::number(binance_completed + polkadot_completed + eth_completed)));
 
-    this->ui->tableWidget_balances->setItem( 3, 1, new QTableWidgetItem(QString::number(binance_total_fees)));
-    this->ui->tableWidget_balances->setItem( 2, 1, new QTableWidgetItem(QString::number(polkadot_total_fees)));
-    this->ui->tableWidget_balances->setItem( 1, 1, new QTableWidgetItem(QString::number(eth_total_fees)));
+    this->ui->tableWidget_balances->setItem( 2, 1, new QTableWidgetItem(QString::number(binance_total_fees)));
+    this->ui->tableWidget_balances->setItem( 1, 1, new QTableWidgetItem(QString::number(polkadot_total_fees)));
+    this->ui->tableWidget_balances->setItem( 0, 1, new QTableWidgetItem(QString::number(eth_total_fees)));
 
-    this->ui->tableWidget_balances->setItem( 3, 2, new QTableWidgetItem(QString::number(binance_withdrawable)));
-    this->ui->tableWidget_balances->setItem( 2, 2, new QTableWidgetItem(QString::number(polkadot_withdrawable)));
-    this->ui->tableWidget_balances->setItem( 1, 2, new QTableWidgetItem(QString::number(eth_withdrawable)));
+    this->ui->tableWidget_balances->setItem( 2, 2, new QTableWidgetItem(QString::number(binance_withdrawable)));
+    this->ui->tableWidget_balances->setItem( 1, 2, new QTableWidgetItem(QString::number(polkadot_withdrawable)));
+    this->ui->tableWidget_balances->setItem( 0, 2, new QTableWidgetItem(QString::number(eth_withdrawable)));
+
+    this->ui->tableWidget_balances->horizontalHeader()->setStretchLastSection(true);
 }
 
 MainWindow::~MainWindow()
