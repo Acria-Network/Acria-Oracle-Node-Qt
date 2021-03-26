@@ -240,7 +240,7 @@ void MainWindow::update_requests(){
     }
 
     for(uint i=0; i<this->tm_resources.size();i++){
-        if(this->tm_resources[i]->get_state() == 4){
+        if(this->tm_resources[i]->get_state() == 3){
             delete this->tm_resources[i];
             this->tm_resources.erase(this->tm_resources.begin() + i);
         }
@@ -276,7 +276,7 @@ void MainWindow::update_events(){
     this->ui->tableWidget_comp->setRowCount(r.size());
     this->ui->tableWidget_comp->setColumnCount(6);
     //this->ui->tableWidget_comp->setColumnWidth(4, 200);
-    this->ui->tableWidget_comp->setColumnWidth(0, 20);
+    this->ui->tableWidget_comp->setColumnWidth(0, 30);
     this->ui->tableWidget_comp->setColumnWidth(4, 50);
 
     this->ui->tableWidget_comp->setHorizontalHeaderItem(0, new QTableWidgetItem("#"));

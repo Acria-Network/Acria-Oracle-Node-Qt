@@ -15,7 +15,7 @@ EthBasedChain::EthBasedChain(QWidget *parent, QString _type, Data* _data, Proces
     this->nonce_manager = new NonceManager(this->data, this->type);
     this->balances = new Balances(this->data, this->type, this->nonce_manager);
     this->withdraw = new Withdraw(this->data, this->type, this->nonce_manager);
-    this->deploy_window = new DeployWindow(this->main_window, this->data, this->type, this->processing_window, "");
+    this->deploy_window = new DeployWindow(this->main_window, this->data, this->type, this->processing_window, "", this->nonce_manager);
     this->available_accounts = new AvailableAccounts(this->main_window, this->data, this->type);
     this->about_transaction_window = new AboutTransactionWindow(this->main_window, this->data, this->type);
 };
