@@ -31,8 +31,6 @@ MainWindow::MainWindow(QWidget *parent)
 {
     qDebug() << "started";
 
-    //setWindowFlags(Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
-
     this->data = new Data();
 
     data->load_settings();
@@ -97,8 +95,6 @@ MainWindow::MainWindow(QWidget *parent)
     pi2->setColor(QColor::fromRgb(255,255,255));
 
     this->update_settings();
-
-    //this->setFixedSize(QSize(this->width(), this->height()));
 }
 
 void MainWindow::update_settings(){
@@ -175,7 +171,7 @@ void MainWindow::update_requests(){
         ui->tableWidget_req->removeRow(0);
     }
     this->ui->tableWidget_req->setRowCount(r.size());
-    qDebug() << "r " <<r.size();
+
     this->ui->tableWidget_req->setColumnCount(7);
     this->ui->tableWidget_req->setColumnWidth(4, 100);
     this->ui->tableWidget_req->setColumnWidth(6, 50);
@@ -194,7 +190,6 @@ void MainWindow::update_requests(){
         this->ui->tableWidget_req->setItem( d, 1, new QTableWidgetItem(r[d].requestID));
         this->ui->tableWidget_req->setItem( d, 2, new QTableWidgetItem(QString::number(double(r[d].fee / pow(10,18)))));
         this->ui->tableWidget_req->setItem( d, 3, new QTableWidgetItem(QString::number(r[d].expiration)));
-        //this->ui->tableWidget_req->setItem( d, 4, new QTableWidgetItem(r[d].callback));
         this->ui->tableWidget_req->setItem( d, 4, new QTableWidgetItem(r[d].chain));
         this->ui->tableWidget_req->setItem( d, 5, new QTableWidgetItem(QString::number(r[d].id)));
         uint state = this->eth_based_chain[r[d].chain]->state[r[d].id];
@@ -275,7 +270,6 @@ void MainWindow::update_events(){
 
     this->ui->tableWidget_comp->setRowCount(r.size());
     this->ui->tableWidget_comp->setColumnCount(6);
-    //this->ui->tableWidget_comp->setColumnWidth(4, 200);
     this->ui->tableWidget_comp->setColumnWidth(0, 30);
     this->ui->tableWidget_comp->setColumnWidth(4, 50);
 
@@ -293,10 +287,8 @@ void MainWindow::update_events(){
 
         for (int d=r.size()-1; d>=0; d--){
             uint dd = r.size()-1-d;
-            qDebug() << r.size() << dd << d;
             this->ui->tableWidget_comp->setItem( dd, 0, new QTableWidgetItem(QString::number(d)));
-            this->ui->tableWidget_comp->setItem( dd, 1, new QTableWidgetItem(r[d].requestID));
-            //this->ui->tableWidget_comp->setItem( d, 2, new QTableWidgetItem(r[d].callback));
+            this->ui->tableWidget_comp->setItem( dd, 1, new QTableWidgetItem(r[d].requestID.trimmed().replace("\0","")));
             this->ui->tableWidget_comp->setItem( dd, 2, new QTableWidgetItem(r[d].chain));
             this->ui->tableWidget_comp->setItem( dd, 3, new QTableWidgetItem(QString::number(r[d].block)));
             this->ui->tableWidget_comp->setItem( dd, 5, new QTableWidgetItem(r[d].hash));
@@ -330,7 +322,7 @@ void MainWindow::update_balances(){
     this->ui->tableWidget_balances->setColumnWidth(2, 128);
     this->ui->tableWidget_balances->setColumnWidth(3, 128);
 
-    this->ui->tableWidget_balances->setHorizontalHeaderItem(1, new QTableWidgetItem("Chain"));
+    this->ui->tableWidget_balances->setHorizontalHeaderItem(0, new QTableWidgetItem("Chain"));
     this->ui->tableWidget_balances->setHorizontalHeaderItem(1, new QTableWidgetItem("Fees Earned Total"));
     this->ui->tableWidget_balances->setHorizontalHeaderItem(2, new QTableWidgetItem("Withdrawable Fees"));
     this->ui->tableWidget_balances->setHorizontalHeaderItem(3, new QTableWidgetItem("Completed Requests"));
@@ -340,9 +332,6 @@ void MainWindow::update_balances(){
     this->ui->tableWidget_balances->setItem( 1, 0, new QTableWidgetItem("Polkadot"));
     this->ui->tableWidget_balances->setItem( 2, 0, new QTableWidgetItem("Binance"));
     this->ui->tableWidget_balances->setItem( 3, 0, new QTableWidgetItem("Total"));
-    //this->ui->tableWidget_balances->setItem( 0, 1, new QTableWidgetItem("Fees Earned Total"));
-    //this->ui->tableWidget_balances->setItem( 0, 2, new QTableWidgetItem("Withdrawable Fees"));
-    //this->ui->tableWidget_balances->setItem( 0, 3, new QTableWidgetItem("Completed Requests"));
 
     uint eth_completed = this->eth_based_chain["ethereum"]->cinfo->get_completed().size();
     uint binance_completed = this->eth_based_chain["binance"]->cinfo->get_completed().size();
@@ -705,9 +694,10 @@ void MainWindow::on_lineEdit_binance_contract_textChanged(const QString &arg1)
 
 void MainWindow::on_tableWidget_comp_cellDoubleClicked(int row, int column)
 {
+    Q_UNUSED(column)
+
     QString chain = this->ui->tableWidget_comp->model()->data(this->ui->tableWidget_comp->model()->index(row,2), Qt::DisplayRole).toString();
     QString hash = this->ui->tableWidget_comp->model()->data(this->ui->tableWidget_comp->model()->index(row,5), Qt::DisplayRole).toString();
     this->eth_based_chain[chain]->about_transaction_window->init(hash);
     this->eth_based_chain[chain]->about_transaction_window->exec();
-    qDebug() << "nnnnnn" << this->ui->tableWidget_comp->model()->data(this->ui->tableWidget_comp->model()->index(row,5), Qt::DisplayRole).toString();
 }

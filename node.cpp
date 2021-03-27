@@ -60,7 +60,7 @@ void Node::statusManagerFinished(QNetworkReply *reply) {
 
     qDebug() << "answer " <<answer;
 
-    QJsonObject obj = ObjectFromString(answer);
+    QJsonObject obj = Util::ObjectFromString(answer);
 
     qDebug() << obj["result"].toString();
 

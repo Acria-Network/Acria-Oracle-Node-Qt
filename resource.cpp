@@ -116,14 +116,14 @@ void Resource::send_resource(){
 
     QString d1 = "0x" + QString::fromStdString(keccak("fillRequest(bytes8,uint256,uint256)")).mid(0,8);
     qDebug()<< "d1 " <<d1;
-    QString d2 = str2bytes8(this->item)+"000000000000000000000000000000000000000000000000";
+    QString d2 = Util::str2bytes8(this->item)+"000000000000000000000000000000000000000000000000";
 
     qDebug() << d1;
     qDebug() << d2;
 
     QString d3 = QString::fromStdString(value256.GetHex());
 
-    QString d4 = QString::fromStdString(n2hexstr(this->id));
+    QString d4 = QString::fromStdString(Util::n2hexstr(this->id));
     for(uint i = d4.size(); i<64;i++){
         d4 = "0" + d4;
     }
@@ -135,7 +135,7 @@ void Resource::send_resource(){
 
     send_request.setUrl(url1);
     send_request.setRawHeader("Content-Type", "application/json");
-    send_manager->post(send_request, generate_rpc_call("eth_sendTransaction", account1, contract1, data1, transaction_fee, 486400, 72, this->nonce));
+    send_manager->post(send_request, Util::generate_rpc_call("eth_sendTransaction", account1, contract1, data1, transaction_fee, 486400, 72, this->nonce));
 
     *this->state=1;
 }
@@ -199,7 +199,7 @@ void Resource::send_managerFinished(QNetworkReply *reply) {
 
     *this->state=2;
 
-    QJsonObject obj = ObjectFromString(answer);
+    QJsonObject obj = Util::ObjectFromString(answer);
     QString res = obj["result"].toString();
 
     qDebug() << answer;

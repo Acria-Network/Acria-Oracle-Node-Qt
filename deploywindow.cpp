@@ -56,12 +56,12 @@ void DeployWindow::deploy(){
         this->data->get_chain_info(this->type, &url1, &account1, &contract1, &transaction_fee);
 
         QString d1 = "0x1cd23fd9";
-        QString d2 = str2bytes32(this->ui->lineEdit_contract_name->text());
+        QString d2 = Util::str2bytes32(this->ui->lineEdit_contract_name->text());
         QString data1 = d1+d2;
 
         request.setUrl(url1);
         request.setRawHeader("Content-Type", "application/json");
-        manager->post(request, generate_rpc_call("eth_sendTransaction", account1, this->ui->lineEdit_main_contract->text().trimmed(), data1, transaction_fee, 1601264, 25, this->nonce_manager->get_nonce()));
+        manager->post(request, Util::generate_rpc_call("eth_sendTransaction", account1, this->ui->lineEdit_main_contract->text().trimmed(), data1, transaction_fee, 1601264, 25, this->nonce_manager->get_nonce()));
 
         this->state=1;
     }
@@ -75,12 +75,12 @@ void DeployWindow::is_deployed(){
     this->data->get_chain_info(this->type, &url1, &account1, &contract1, &transaction_fee);
 
     QString d1 = "0x3f83acff";
-    QString d2 = str2bytes32(this->ui->lineEdit_contract_name->text());
+    QString d2 = Util::str2bytes32(this->ui->lineEdit_contract_name->text());
     QString data1 = d1+d2;
 
     deployed_request.setUrl(url1);
     deployed_request.setRawHeader("Content-Type", "application/json");
-    deployed_manager->post(deployed_request, generate_rpc_call("eth_call", account1, this->ui->lineEdit_main_contract->text(), data1, transaction_fee, 0, 79, -1));
+    deployed_manager->post(deployed_request, Util::generate_rpc_call("eth_call", account1, this->ui->lineEdit_main_contract->text(), data1, transaction_fee, 0, 79, -1));
 }
 
 void DeployWindow::managerFinished(QNetworkReply *reply) {
@@ -90,7 +90,7 @@ void DeployWindow::managerFinished(QNetworkReply *reply) {
     }
 
     QString answer = reply->readAll();
-    QJsonObject obj = ObjectFromString(answer);
+    QJsonObject obj = Util::ObjectFromString(answer);
     QString res = obj["result"].toString();
 
     qDebug() << answer;
@@ -108,7 +108,7 @@ void DeployWindow::deployed_managerFinished(QNetworkReply *reply) {
     }
 
     QString answer = reply->readAll();
-    QJsonObject obj = ObjectFromString(answer);
+    QJsonObject obj = Util::ObjectFromString(answer);
     QString res = obj["result"].toString();
 
     qDebug() << res;

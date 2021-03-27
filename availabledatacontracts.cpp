@@ -50,7 +50,7 @@ void AvailableDataContracts::update_data_contracts(){
 
     request.setUrl(url1);
     request.setRawHeader("Content-Type", "application/json");
-    manager->post(request, generate_rpc_call("eth_call", account, this->acria_main, data1, transaction_fee, 0, 58, -1));
+    manager->post(request, Util::generate_rpc_call("eth_call", account, this->acria_main, data1, transaction_fee, 0, 58, -1));
 }
 
 void AvailableDataContracts::managerFinished(QNetworkReply *reply) {
@@ -60,7 +60,7 @@ void AvailableDataContracts::managerFinished(QNetworkReply *reply) {
     }
 
     QString answer = reply->readAll();
-    QJsonObject obj = ObjectFromString(answer);
+    QJsonObject obj = Util::ObjectFromString(answer);
     QString res = obj["result"].toString().remove(0, 2);
 
     qDebug() << res;
@@ -123,7 +123,7 @@ void AvailableDataContracts::managerFinished(QNetworkReply *reply) {
     this->ui->tableWidget_contracts->setColumnCount(3);
     this->ui->tableWidget_contracts->setColumnWidth(0, 40);
     this->ui->tableWidget_contracts->setColumnWidth(1, 100);
-    this->ui->tableWidget_contracts->setColumnWidth(2, 250);
+    this->ui->tableWidget_contracts->setColumnWidth(2, 240);
 
     if(contracts.size() != 0){
         this->ui->horizontalWidget->hide();
@@ -133,9 +133,18 @@ void AvailableDataContracts::managerFinished(QNetworkReply *reply) {
             this->ui->tableWidget_contracts->setItem( d, 1, new QTableWidgetItem(contracts[d].name));
             this->ui->tableWidget_contracts->setItem( d, 2, new QTableWidgetItem(contracts[d].address));
         }
+
+        this->ui->tableWidget_contracts->horizontalHeader()->show();
     }
     else{
         this->ui->horizontalWidget->show();
         this->ui->label_progress_2->show();
+        this->ui->tableWidget_contracts->horizontalHeader()->hide();
     }
+
+    this->ui->tableWidget_contracts->setHorizontalHeaderItem(0, new QTableWidgetItem("#"));
+    this->ui->tableWidget_contracts->setHorizontalHeaderItem(1, new QTableWidgetItem("Name"));
+    this->ui->tableWidget_contracts->setHorizontalHeaderItem(2, new QTableWidgetItem("Address"));
+
+    this->ui->tableWidget_contracts->horizontalHeader()->setStretchLastSection(true);
 }

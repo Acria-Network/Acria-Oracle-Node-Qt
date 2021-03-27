@@ -26,7 +26,7 @@ void GasPrice::update_gas_price(){
 
     request.setUrl(url1);
     request.setRawHeader("Content-Type", "application/json");
-    manager->post(request, generate_rpc_call("eth_gasPrice", "", "", "", 0, 0, 64, -1));
+    manager->post(request, Util::generate_rpc_call("eth_gasPrice", "", "", "", 0, 0, 64, -1));
 }
 
 void GasPrice::managerFinished(QNetworkReply *reply) {
@@ -36,7 +36,7 @@ void GasPrice::managerFinished(QNetworkReply *reply) {
     }
 
     QString answer = reply->readAll();
-    QJsonObject obj = ObjectFromString(answer);
+    QJsonObject obj = Util::ObjectFromString(answer);
     QString res = obj["result"].toString().remove(0, 2);
 
     qDebug() << res;

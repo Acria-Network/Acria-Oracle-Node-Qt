@@ -101,7 +101,7 @@ void compinfo::filter_managerFinished(QNetworkReply *reply) {
     }
 
     QString answer = reply->readAll();
-    QJsonObject obj = ObjectFromString(answer);
+    QJsonObject obj = Util::ObjectFromString(answer);
     QString res = obj["result"].toString();
 
     qDebug() << answer;
@@ -152,7 +152,7 @@ void compinfo::managerFinished(QNetworkReply *reply) {
         }
         inf.push_back(res1);
 
-        c.requestID = hex2str(inf[0]).trimmed();
+        c.requestID = Util::hex2str(inf[0]).trimmed();
         c.callback = inf[1].remove(0,24);
         c.id = QString(inf[3]).toUInt(NULL,16);
         c.fee = QString(inf[2]).toULongLong(NULL,16);

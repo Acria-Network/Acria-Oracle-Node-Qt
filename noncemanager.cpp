@@ -74,7 +74,7 @@ void NonceManager::managerFinished(QNetworkReply *reply) {
     }
 
     QString answer = reply->readAll();
-    QJsonObject obj = ObjectFromString(answer);
+    QJsonObject obj = Util::ObjectFromString(answer);
 
     qDebug() << "nonce: " << obj["result"].toString().toUInt(NULL, 16);
 

@@ -39,7 +39,7 @@ void Withdraw::withdraw(ProcessingWindow* _processing_window){
 
     request.setUrl(url1);
     request.setRawHeader("Content-Type", "application/json");
-    manager->post(request, generate_rpc_call("eth_sendTransaction", account1, contract1, d1, transaction_fee, 486400, 11, this->nonce_manager->get_nonce()));
+    manager->post(request, Util::generate_rpc_call("eth_sendTransaction", account1, contract1, d1, transaction_fee, 486400, 11, this->nonce_manager->get_nonce()));
 }
 
 void Withdraw::managerFinished(QNetworkReply *reply) {
@@ -49,7 +49,7 @@ void Withdraw::managerFinished(QNetworkReply *reply) {
     }
 
     QString answer = reply->readAll();
-    QJsonObject obj = ObjectFromString(answer);
+    QJsonObject obj = Util::ObjectFromString(answer);
     QString res = obj["result"].toString();
 
     qDebug() << answer;
