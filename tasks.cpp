@@ -91,7 +91,7 @@ void Tasks::r_managerFinished(QNetworkReply *reply) {
     QJsonObject obj = Util::ObjectFromString(answer);
     QString res = obj["result"].toString().remove(0, 2);
 
-    qDebug() << answer;
+    //qDebug() << answer;
 
     if(res.length() > 2){
         std::vector<QString> inf;

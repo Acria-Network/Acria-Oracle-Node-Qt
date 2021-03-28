@@ -63,6 +63,9 @@ public:
     Resource();
     Resource(QString url, std::vector<QString> _l_json, QString _contract, QString n, Data* _data, QString _type, uint _id, uint* state, uint _max_gas, unsigned long long _fee, NonceManager* _nonce_manager);
     ~Resource();
+
+    QString error;
+
     void update_resource();
     void send_resource();
     void add_unsent_id(uint i){unsent_id.push_back(i);}

@@ -104,7 +104,7 @@ void compinfo::filter_managerFinished(QNetworkReply *reply) {
     QJsonObject obj = Util::ObjectFromString(answer);
     QString res = obj["result"].toString();
 
-    qDebug() << answer;
+    //qDebug() << answer;
 
     this->filter = res;
 }
@@ -119,7 +119,7 @@ void compinfo::managerFinished(QNetworkReply *reply) {
 
     QString answer = reply->readAll();
 
-    qDebug() << answer;
+    //qDebug() << answer;
 
     nlohmann::json tmp1 = nlohmann::json::parse(answer.toStdString());
 

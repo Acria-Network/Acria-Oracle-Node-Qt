@@ -83,14 +83,27 @@ void DeployWindow::is_deployed(){
     deployed_manager->post(deployed_request, Util::generate_rpc_call("eth_call", account1, this->ui->lineEdit_main_contract->text(), data1, transaction_fee, 0, 79, -1));
 }
 
+void DeployWindow::handle_error(QString err){
+    this->processing_window->completed(err, true);
+    this->state=3;
+}
+
 void DeployWindow::managerFinished(QNetworkReply *reply) {
     if (reply->error()) {
         qDebug() << reply->errorString();
+        this->handle_error(reply->errorString());
         return;
     }
 
     QString answer = reply->readAll();
     QJsonObject obj = Util::ObjectFromString(answer);
+    if(obj.contains("error")){
+        qDebug() << "error deploy";
+        qDebug() << answer;
+        nlohmann::json tmp1 = nlohmann::json::parse(answer.toStdString());
+        this->handle_error(QString::fromStdString(tmp1["error"]["message"].dump()));
+        return;
+    }
     QString res = obj["result"].toString();
 
     qDebug() << answer;
@@ -109,10 +122,22 @@ void DeployWindow::deployed_managerFinished(QNetworkReply *reply) {
 
     QString answer = reply->readAll();
     QJsonObject obj = Util::ObjectFromString(answer);
+    qDebug() << answer;
+
+    if(obj.contains("error")){
+        qDebug() << "error deploy";
+        nlohmann::json tmp1 = nlohmann::json::parse(answer.toStdString());
+        this->handle_error(QString::fromStdString(tmp1["error"]["message"].dump()));
+        return;
+    }
     QString res = obj["result"].toString();
 
     qDebug() << res;
-
+    if(res == "0x"){
+        qDebug() << "error deploy 0x";
+        this->handle_error("Error: potentially wrong contract address");
+        return;
+    }
     if(res != "0x0000000000000000000000000000000000000000000000000000000000000000"){
         this->processing_window->completed("0x" + res.remove(0, 26));
         this->state=3;

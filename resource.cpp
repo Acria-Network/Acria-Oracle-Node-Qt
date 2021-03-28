@@ -143,6 +143,8 @@ void Resource::send_resource(){
 void Resource::managerFinished(QNetworkReply *reply) {
     if (reply->error()) {
         qDebug() << reply->errorString();
+        this->error = reply->errorString();
+        *this->state=8;
         return;
     }
 
@@ -190,6 +192,8 @@ unsigned long long Resource::get_minimum_transaction_fee(){
 void Resource::send_managerFinished(QNetworkReply *reply) {
     if (reply->error()) {
         qDebug() << reply->errorString();
+        this->error = reply->errorString();
+        *this->state=9;
         return;
     }
 
@@ -235,6 +239,8 @@ void Resource::is_deployed(){
 void Resource::deployed_managerFinished(QNetworkReply *reply) {
     if (reply->error()) {
         qDebug() << reply->errorString();
+        this->error = reply->errorString();
+        *this->state=10;
         return;
     }
 

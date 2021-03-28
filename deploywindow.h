@@ -57,6 +57,8 @@ private:
 
     uint state;
     QString hash1;
+
+    void handle_error(QString err);
 };
 
 #endif // DEPLOYWINDOW_H

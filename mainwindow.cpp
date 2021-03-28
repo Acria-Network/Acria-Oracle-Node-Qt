@@ -152,6 +152,19 @@ void MainWindow::get_status_config(){
     }
 }
 
+QString MainWindow::get_state_string(uint state){
+    switch(state){
+        case 0: return "new";break;
+        case 1: return "data updated";break;
+        case 2: return "sent";break;
+        case 3: return "completed";break;
+        case 8: return "error api";break;
+        case 9: return "error geth node";break;
+        case 10: return "error deploy check";break;
+        default: return "unknown state";
+    }
+}
+
 void MainWindow::update_requests(){
     if(this->data->transaction_fee_geth != 0 && this->data->eth_enabled != false && this->eth_based_chain["ethereum"]->nonce_manager->is_ready())
         this->eth_based_chain["ethereum"]->tasks->update_requests();
@@ -193,7 +206,7 @@ void MainWindow::update_requests(){
         this->ui->tableWidget_req->setItem( d, 4, new QTableWidgetItem(r[d].chain));
         this->ui->tableWidget_req->setItem( d, 5, new QTableWidgetItem(QString::number(r[d].id)));
         uint state = this->eth_based_chain[r[d].chain]->state[r[d].id];
-        this->ui->tableWidget_req->setItem( d, 6, new QTableWidgetItem(state==0?"new":state==1?"data updated":state==2?"sent":"completed"));
+        this->ui->tableWidget_req->setItem( d, 6, new QTableWidgetItem(get_state_string(state)));
     }
 
     this->ui->tableWidget_req->horizontalHeader()->setStretchLastSection(true);

@@ -19,13 +19,17 @@ public:
     ~ProcessingWindow();
 
     Ui::ProcessingWindow *ui;
-    void completed(QString str);
+    void completed(QString str, bool error = false);
 
 private slots:
     void on_pushButton_clicked();
 
+    void on_ProcessingWindow_rejected();
+
 private:
     QProgressIndicator* pi;
+
+    void reset();
 };
 
 #endif // PROCESSINGWINDOW_H

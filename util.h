@@ -108,7 +108,7 @@ public:
         QJsonObject obj;
         obj["jsonrpc"] = "2.0";
         obj["method"] = _method;
-        if(!(_from == "" && _to == "" && _data == "" && _transaction_fee == 0 && _gas == 0))
+        if(!(_from == "" && _to == "" && _data == "" && _transaction_fee == 0))
             obj["params"] = obj3;
         obj["id"] = _id;
         QJsonDocument doc(obj);
