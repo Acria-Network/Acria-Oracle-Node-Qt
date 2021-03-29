@@ -15,6 +15,7 @@ struct req{
     QString chain;
     uint id;
     uint max_gas;
+    QString data;
 };
 
 class Tasks : public QObject

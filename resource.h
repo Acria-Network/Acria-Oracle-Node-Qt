@@ -35,6 +35,8 @@ private:
     double d_value;
     uint256 value256;
     QString url;
+    QString url_data;
+    QString parameter_type;
     QString contract;
     QString item;
     std::vector<QString> l_json;
@@ -50,6 +52,7 @@ private:
     unsigned long long fee;
     uint max_gas;
     QString hash;
+    QString request_data;
 
     unsigned nonce;
 
@@ -59,9 +62,11 @@ private:
 
     unsigned long long get_minimum_transaction_fee();
 
+    QString convert_parameter();
+
 public:
     Resource();
-    Resource(QString url, std::vector<QString> _l_json, QString _contract, QString n, Data* _data, QString _type, uint _id, uint* state, uint _max_gas, unsigned long long _fee, NonceManager* _nonce_manager);
+    Resource(QString url, std::vector<QString> _l_json, QString _contract, QString n, Data* _data, QString _type, uint _id, uint* state, uint _max_gas, unsigned long long _fee, QString _request_data, QString _url_data, QString _parameter_type, NonceManager* _nonce_manager);
     ~Resource();
 
     QString error;

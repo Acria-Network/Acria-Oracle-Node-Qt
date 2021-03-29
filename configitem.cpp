@@ -33,6 +33,8 @@ void ConfigItem::on_buttonBox_1_accepted()
 {
     nlohmann::json tmp;
     tmp["url"] = this->ui->lineEdit_2_api_url->text().toStdString();
+    tmp["url_data"] = this->ui->lineEdit_2_api_url_2->text().toStdString();
+    tmp["parameter_type"] = this->ui->lineEdit_2_parameter_type->text().toStdString();
     tmp["rname"] = this->ui->lineEdit_resource_name->text().toStdString();
 
     for(uint i = 0;i<this->t1.size();i++){

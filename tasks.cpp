@@ -136,6 +136,10 @@ void Tasks::r_managerFinished(QNetworkReply *reply) {
                     r.chain = this->type;
                     r.id = QString(inf[i+3]).toUInt(NULL,16);
                     r.max_gas = QString(inf[i+4]).toUInt(NULL, 16);
+                    if(QString(inf[i+6]).replace("0", "") != ""){
+                        qDebug() << "request data: " <<  QString(inf[i+6]);
+                        r.data = QString(inf[i+6]);
+                    }
 
                     qDebug() << "requestid " << r.requestID;
                     qDebug() << "fee " << r.fee;

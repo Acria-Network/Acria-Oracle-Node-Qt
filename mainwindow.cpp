@@ -223,7 +223,7 @@ void MainWindow::update_requests(){
                         }
 
                         this->eth_based_chain[r[d].chain]->state[r[d].id] = 0;
-                        Resource* rr = new Resource(QString::fromStdString(conf1[i]["url"]), l_json, this->data->eth_contract, QString::fromStdString(conf1[i]["rname"]), this->data, r[d].chain, r[d].id, &this->eth_based_chain[r[d].chain]->state[r[d].id], r[d].max_gas, r[d].fee, this->eth_based_chain[r[d].chain]->nonce_manager);
+                        Resource* rr = new Resource(QString::fromStdString(conf1[i]["url"]), l_json, this->data->eth_contract, QString::fromStdString(conf1[i]["rname"]), this->data, r[d].chain, r[d].id, &this->eth_based_chain[r[d].chain]->state[r[d].id], r[d].max_gas, r[d].fee, r[d].data, QString::fromStdString(conf1[i]["url_data"]), QString::fromStdString(conf1[i]["parameter_type"]), this->eth_based_chain[r[d].chain]->nonce_manager);
                         rr->update_resource();
 
                         this->tm_resources.push_back(rr);

@@ -43,7 +43,7 @@ Resource::Resource()
     connect(is_deployed_timer, SIGNAL(timeout()), this, SLOT(is_deployed()));
 }
 
-Resource::Resource(QString _url, std::vector<QString> _l_json, QString _contract, QString n, Data* _data, QString _type, uint _id, uint* state, uint _max_gas, unsigned long long _fee, NonceManager* _nonce_manager) : Resource()
+Resource::Resource(QString _url, std::vector<QString> _l_json, QString _contract, QString n, Data* _data, QString _type, uint _id, uint* state, uint _max_gas, unsigned long long _fee, QString _request_data, QString _url_data, QString _parameter_type, NonceManager* _nonce_manager) : Resource()
 {
     this->url = _url;
     this->l_json = _l_json;
@@ -56,6 +56,9 @@ Resource::Resource(QString _url, std::vector<QString> _l_json, QString _contract
     this->max_gas = _max_gas;
     this->fee = _fee;
     this->nonce_manager = _nonce_manager;
+    this->request_data = _request_data;
+    this->url_data = _url_data;
+    this->parameter_type = _parameter_type;
 
     this->nonce = this->nonce_manager->get_nonce();
 }
@@ -67,9 +70,36 @@ Resource::~Resource()
     delete is_deployed_timer;
 }
 
+QString Resource::convert_parameter(){
+    qDebug() << "parameter type: " << this->parameter_type;
+    QStringList data = this->parameter_type.split(" => ");
+    QString str = this->request_data;
+
+    for(int i = 0; i<data.size(); i++){
+        if(data.at(i) == "timestamp"){
+            str = QString::number(str.toULongLong(NULL, 16));
+            qDebug() << "timestamp " << str;
+        }
+        else if(data.at(i).indexOf("from_timestamp ") != -1){
+            QString format = QString(data.at(i)).replace("from_timestamp ", "");
+            QDateTime timestamp;
+            timestamp.setTime_t(str.toULongLong());
+            str = timestamp.toString(format);
+            qDebug() << "timestamp2 " << str;
+        }
+    }
+
+    return str;
+}
+
 void Resource::update_resource(){
     if(this->get_minimum_transaction_fee() < this->fee){
-        request.setUrl(QUrl(url));
+        qDebug() << "request_data: " << this->request_data;
+        if(this->request_data != "")
+            request.setUrl(QUrl(url_data.replace("%data%", this->convert_parameter())));
+        else
+            request.setUrl(QUrl(url));
+
         manager->get(request);
     }
     else{
