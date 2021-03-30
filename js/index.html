@@ -1,0 +1,430 @@
+<html>
+    <style>
+        body{
+        background-color:#232323;
+color:white;}
+
+
+
+html {
+  box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+.background {
+  padding: 0 25px 25px;
+  position: relative;
+  width: 100%;
+}
+
+.background::after {
+  content: '';
+
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#60a9ff', endColorstr='#4394f4',GradientType=0 );
+  height: 350px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+@media (min-width: 900px) {
+  .background {
+    padding: 0 0 25px;
+  }
+}
+
+.container {
+  margin: 0 auto;
+  
+ 
+  width: 100%;
+}
+
+.panel {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 15px 25px;
+  position: relative;
+  width: 100%;
+  z-index: 10;
+}
+
+.pricing-table {
+  box-shadow: 0px 10px 13px -6px rgba(0, 0, 0, 0.08), 0px 20px 31px 3px rgba(0, 0, 0, 0.09), 0px 8px 20px 7px rgba(0, 0, 0, 0.02);
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 900px) {
+  .pricing-table {
+    flex-direction: row;
+  }
+}
+
+.pricing-table * {
+  text-align: center;
+}
+
+.pricing-plan {
+  border-bottom: 1px solid #e1f1ff;
+  padding: 25px;
+}
+
+.pricing-plan:last-child {
+  border-bottom: none;
+}
+
+@media (min-width: 900px) {
+  .pricing-plan {
+    border-bottom: none;
+    border-right: 1px solid #e1f1ff;
+    flex-basis: 100%;
+    padding: 25px 50px;
+  }
+
+  .pricing-plan:last-child {
+    border-right: none;
+  }
+}
+
+.pricing-img {
+  margin-bottom: 25px;
+  max-width: 200px;
+    max-height: 200px;
+}
+
+.pricing-header {
+  color: #888;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.pricing-features {
+  color: white;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin: 50px 0 25px;
+}
+
+.pricing-features-item {
+  border-top: 1px solid #e1f1ff;
+  font-size: 16px;
+  line-height: 1.5;
+  padding: 15px 0;
+}
+
+.pricing-features-item:last-child {
+  border-bottom: 1px solid #e1f1ff;
+}
+
+.pricing-price {
+  color: white;
+  display: block;
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.pricing-button {
+  border: 1px solid #9dd1ff;
+  border-radius: 10px;
+  color: #348EFE;
+  display: inline-block;
+  margin: 25px 0;
+  padding: 15px 35px;
+  text-decoration: none;
+  transition: all 150ms ease-in-out;
+  width:200px;
+}
+
+.pricing-button:hover,
+.pricing-button:focus {
+  background-color: #e1f1ff;
+}
+
+.pricing-button.is-featured {
+  background-color: #48aaff;
+  color: #fff;
+}
+
+.pricing-button.is-featured:hover,
+.pricing-button.is-featured:active {
+  background-color: #269aff;
+}
+
+
+
+.file-upload{display:block;text-align:center;font-family: Helvetica, Arial, sans-serif;font-size: 12px;}
+.file-upload .file-select{display:block;border: 2px solid #dce4ec;color: #34495e;cursor:pointer;height:40px;line-height:40px;text-align:left;background:#FFFFFF;overflow:hidden;position:relative;}
+.file-upload .file-select .file-select-button{background:#dce4ec;padding:0 10px;display:inline-block;height:40px;line-height:40px;}
+.file-upload .file-select .file-select-name{line-height:40px;display:inline-block;padding:0 10px;}
+.file-upload .file-select:hover{border-color:#34495e;transition:all .2s ease-in-out;-moz-transition:all .2s ease-in-out;-webkit-transition:all .2s ease-in-out;-o-transition:all .2s ease-in-out;}
+.file-upload .file-select:hover .file-select-button{background:#34495e;color:#FFFFFF;transition:all .2s ease-in-out;-moz-transition:all .2s ease-in-out;-webkit-transition:all .2s ease-in-out;-o-transition:all .2s ease-in-out;}
+.file-upload.active .file-select{border-color:#3fa46a;transition:all .2s ease-in-out;-moz-transition:all .2s ease-in-out;-webkit-transition:all .2s ease-in-out;-o-transition:all .2s ease-in-out;}
+.file-upload.active .file-select .file-select-button{background:#3fa46a;color:#FFFFFF;transition:all .2s ease-in-out;-moz-transition:all .2s ease-in-out;-webkit-transition:all .2s ease-in-out;-o-transition:all .2s ease-in-out;}
+.file-upload .file-select input[type=file]{z-index:100;cursor:pointer;position:absolute;height:100%;width:100%;top:0;left:0;opacity:0;filter:alpha(opacity=0);}
+.file-upload .file-select.file-select-disabled{opacity:0.65;}
+.file-upload .file-select.file-select-disabled:hover{cursor:default;display:block;border: 2px solid #dce4ec;color: #34495e;cursor:pointer;height:40px;line-height:40px;margin-top:5px;text-align:left;background:#FFFFFF;overflow:hidden;position:relative;}
+.file-upload .file-select.file-select-disabled:hover .file-select-button{background:#dce4ec;color:#666666;padding:0 10px;display:inline-block;height:40px;line-height:40px;}
+.file-upload .file-select.file-select-disabled:hover .file-select-name{line-height:40px;display:inline-block;padding:0 10px;}
+
+
+.button1{
+    color: black;
+                    border: none;
+                    padding: 12px;
+                    width: 100%;
+                    background-color: #ffa500;
+                    font-size:20px;
+}
+.button2{
+    margin-top:35px;
+    width:45%;
+}
+
+.panel{
+    box-shadow: none;
+    background-color: #232323;
+    color: white;
+}
+
+.pricing-img{
+    background-color: white;
+    border-radius: 50%;
+    padding: 20px;
+}
+
+.pwd{
+    padding: 10px;
+    margin-top: 5px;
+    width: 100%;
+}
+
+.pricing-header{
+    margin-top: 0;
+    margin-bottom:0;
+    color: white;
+}
+
+.pricing-features{
+    margin-top: 20px;
+}
+
+.keystore_available{
+  color:green !important;
+}
+    </style>
+    <body oncontextmenu="return false;">
+       
+        <div class="background">
+            <div class="container">
+              <div class="panel pricing-table">
+                
+                <div class="pricing-plan">
+                  <img src="img/ethereum_colored.svg" alt="" class="pricing-img">
+                  <h2 class="pricing-header">Ethereum</h2>
+                  <ul class="pricing-features">
+                    <li class="pricing-features-item" id="keystore_e">Keystore available</li>
+                    <li class="pricing-features-item">Address<br/><span id="wallet" style="font-size:10px;">...</span></li>
+                  </ul>
+                  <span class="pricing-price" id="ethLocked">Locked</span>
+                  <div style="width:100%;margin-bottom:20px;" onclick="select_wallet('ethereum')">
+                    <button class="file-upload button1" id="selectWalletEth">
+                        Select Wallet File
+                    </button>
+                </div>
+                  <label style="color:white;" for="pwd">Password:</label>
+                    <input type="password" id="pwdEth" class="pwd" name="pwd">
+                    <div>
+                        <button class="button1 button2" onclick="decrypt_eth_wallet(document.getElementById('pwdEth').value, ethWalletPath,'ethereum')">Unlock</button>
+                        <button class="button1 button2" id="create_wallet" onclick="create_eth_wallet(document.getElementById('pwdEth').value, 'ethereum')">Create Wallet</button>
+                    </div>
+                </div>
+                
+                <div class="pricing-plan">
+                  <img src="img/polkadot_colored.svg" alt="" class="pricing-img">
+                  <h2 class="pricing-header">Polkadot</h2>
+                  <ul class="pricing-features">
+                    <li class="pricing-features-item" id="keystore_p">Keystore available</li>
+                    <li class="pricing-features-item">Address<br/><span id="walletp" style="font-size:10px;">...</span></li>
+                  </ul>
+                  <span class="pricing-price" id="polLocked">Locked</span>
+                  <div style="width:100%;margin-bottom:20px;">
+                    <button class="file-upload button1" id="selectWalletEth">
+                        Select Wallet File
+                    </button>
+                </div>
+                  <label style="color:white;" for="pwd">Password:</label>
+                    <input type="password" id="pwdPol" class="pwd" name="pwd">
+                    <div>
+                        <button class="button1 button2">Unlock</button>
+                        <button class="button1 button2" id="create_wallet_pol" onclick="create_wallet_polkadot()">Create Wallet</button>
+                    </div>
+                </div>
+                
+                <div class="pricing-plan">
+                  <img src="img/binance_colored.svg" alt="" class="pricing-img">
+                  <h2 class="pricing-header">Binance</h2>
+                  <ul class="pricing-features">
+                    <li class="pricing-features-item" id="keystore_b">Keystore available</li>
+                    <li class="pricing-features-item">Address<br/><span id="walletb" style="font-size:10px;">...</span></li>
+                  </ul>
+                  <span class="pricing-price" id="binLocked">Locked</span>
+                  <div style="width:100%;margin-bottom:20px;" onclick="select_wallet('binance')">
+                    <button class="file-upload button1" id="selectWalletBin">
+                        Select Wallet File
+                    </button>
+                </div>
+                  <label style="color:white;" for="pwd">Password:</label>
+                    <input type="password" id="pwdBin" class="pwd" name="pwd">
+                    <div>
+                        <button class="button1 button2" onclick="decrypt_eth_wallet(document.getElementById('pwdBin').value, binWalletPath,'binance')">Unlock</button>
+                        <button class="button1 button2" id="create_wallet_bin" onclick="create_eth_wallet(document.getElementById('pwdBin').value, 'binance')">Create Wallet</button>
+                    </div>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+    </body>
+
+    <script type="text/javascript" src="qwebchannel.js"></script>
+    <script type="text/javascript" src="polkadot.js"></script>
+    <script type="text/javascript" src="web3.js"></script>
+    <script>
+
+        function readTextFile(file){
+            var rawFile = new XMLHttpRequest();
+            rawFile.open("GET", file, false);
+            rawFile.onreadystatechange = function ()
+            {
+                if(rawFile.readyState === 4)
+                {
+                    if(rawFile.status === 200 || rawFile.status == 0)
+                    {
+                        var allText = rawFile.responseText;
+                    }
+                }
+            }
+            rawFile.send(null);
+            return allText;
+        }
+
+        function create_eth_wallet(password, type){
+            let account = web3.eth.accounts.create(web3.utils.randomHex(32));
+            let wallet = web3.eth.accounts.wallet.add(account);
+            let keystore = wallet.encrypt(password);
+
+            new QWebChannel(qt.webChannelTransport, function (channel) {
+                let JSobject = channel.objects.AccountManager.save_wallet(JSON.stringify(keystore), type, account["address"], function(n) {
+                    if(type=="ethereum")
+                        document.getElementById("wallet").innerHTML = account["address"];
+                    else if(type=="binance")
+                        document.getElementById("walletb").innerHTML = account["address"];
+
+                    nn = "..." + n.substr(n.length - 20)
+                    if(type=="ethereum"){
+                        document.getElementById("selectWalletEth").innerHTML = nn;
+                        ethWalletPath = n
+                        ethPrivateKey = wallet["privateKey"];
+                        ethAddress = wallet["address"];
+                    }
+                    else if(type=="binance"){
+                        document.getElementById("selectWalletBin").innerHTML = nn;
+                        binWalletPath = n
+                        binPrivateKey = wallet["privateKey"];
+                        binAddress = wallet["address"];
+                    }
+
+                    console.log(keystore);
+                    console.log(JSobject);
+                });
+            });
+        }
+        
+        function create_wallet_polkadot(){
+          const keyring = new Keyring({ type: 'sr25519' });
+          alert(keyring);
+
+            new QWebChannel(qt.webChannelTransport, function (channel) {
+                let JSobject = channel.objects.AccountManager.save_wallet(JSON.stringify(keystore), "polkadot", account["address"], function(n) {
+                });
+            });
+        }
+
+        function decrypt_eth_wallet(password, path, type){
+            new QWebChannel(qt.webChannelTransport, function (channel) {
+                let JSobject = channel.objects.AccountManager.read_keystore(path, function(n) {
+                    try {
+                        wallet = web3.eth.accounts.decrypt(JSON.parse(n), password);
+                        if(type=="ethereum"){
+                            document.getElementById("wallet").innerHTML = wallet["address"];
+                            document.getElementById("ethLocked").innerHTML = "Unlocked";
+                            document.getElementById("ethLocked").className += ' keystore_available';
+                            ethPrivateKey = wallet["privateKey"];
+                            ethAddress = wallet["address"];
+                        }
+                        else if(type=="binance"){
+                            document.getElementById("walletb").innerHTML = wallet["address"];
+                            document.getElementById("binLocked").innerHTML = "Unlocked";
+                            document.getElementById("binLocked").className += ' keystore_available';
+                            binPrivateKey = wallet["privateKey"];
+                            binAddress = wallet["address"];
+                        }
+                    }
+                    catch (e) {
+                        alert(e);
+                        if(type=="ethereum"){
+                            document.getElementById("ethLocked").innerHTML = "Locked";
+                            document.getElementById("ethLocked").classList.remove('keystore_available');
+                            ethPrivateKey = "";
+                            ethAddress = "";
+                        }
+                        else if(type=="binance"){
+                            document.getElementById("binLocked").innerHTML = "Locked";
+                            document.getElementById("binLocked").classList.remove('keystore_available');
+                            binPrivateKey = "";
+                            binAddress = "";
+                        }
+                    }
+                });
+            });
+        }
+        var ethWalletPath;
+        var ethPrivateKey;
+        var ethAddress;
+
+        var binWalletPath;
+        var binPrivateKey;
+        var binAddress;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            if(ethWalletPath.length > 4){
+                document.getElementById('selectWalletEth').innerHTML = '...' + ethWalletPath.substr(ethWalletPath.length - 20);
+            }
+        }, false);
+
+        function select_wallet(type){
+            new QWebChannel(qt.webChannelTransport, function (channel) {
+                let JSobject = channel.objects.AccountManager.select_file(function(n) {
+                    if(type == 'ethereum')
+                        document.getElementById("selectWalletEth").innerHTML = "..." + n.substr(n.length - 20);
+                    else if(type == 'binance')
+                        document.getElementById("selectWalletBin").innerHTML = "..." + n.substr(n.length - 20);
+                    if(type=="ethereum")
+                        ethWalletPath = n;
+                    else if(type=="binance")
+                        binWalletPath = n;
+                });
+            });
+        }
+        var web3 = new Web3();
+
+    </script>
+</html>
