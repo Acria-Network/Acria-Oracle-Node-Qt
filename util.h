@@ -100,6 +100,7 @@ public:
         if(_gas != 0)
             obj1["gas"] = QString::fromStdString("0x" + n2hexstr(_gas));
 
+        Q_UNUSED(nonce);
         /**
          -- disabled nonce --
         if(nonce != -1)
