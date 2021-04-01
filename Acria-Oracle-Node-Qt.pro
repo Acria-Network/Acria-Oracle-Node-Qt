@@ -1,5 +1,7 @@
 QT       += core gui
 QT       += network
+QT       += webkit webenginewidgets
+QT += webchannel
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -12,17 +14,23 @@ CONFIG += console
 
 SOURCES += \
     abouttransactionwindow.cpp \
+    accountmanager.cpp \
     acriaconfig.cpp \
     availableaccounts.cpp \
     availabledatacontracts.cpp \
     balances.cpp \
+    bignum256.cpp \
     compinfo.cpp \
     config.cpp \
     configitem.cpp \
     data.cpp \
     deploywindow.cpp \
+    ecdsa.cpp \
+    endian.cpp \
     ethbasedchain.cpp \
     gasprice.cpp \
+    hash.cpp \
+    hmac_drbg.cpp \
     infogeth.cpp \
     keccak256.cpp \
     main.cpp \
@@ -32,7 +40,10 @@ SOURCES += \
     processingwindow.cpp \
     qprogressindicator.cpp \
     resource.cpp \
+    rlp.cpp \
+    sha256.cpp \
     sha3.cpp \
+    signtransaction.cpp \
     tasks.cpp \
     uint256.cpp \
     verifyethaddress.cpp \
@@ -40,17 +51,24 @@ SOURCES += \
 
 HEADERS += \
     abouttransactionwindow.h \
+    accountmanager.h \
     acriaconfig.h \
     availableaccounts.h \
     availabledatacontracts.h \
     balances.h \
+    bignum256.h \
+    common.h \
     compinfo.h \
     config.h \
     configitem.h \
     data.h \
     deploywindow.h \
+    ecdsa.h \
+    endian.h \
     ethbasedchain.h \
     gasprice.h \
+    hash.h \
+    hmac_drbg.h \
     infogeth.h \
     keccak256.h \
     mainwindow.h \
@@ -59,7 +77,10 @@ HEADERS += \
     processingwindow.h \
     qprogressindicator.h \
     resource.h \
+    rlp.h \
+    sha256.h \
     sha3.h \
+    signtransaction.h \
     span.h \
     tasks.h \
     uint256.h \
@@ -69,6 +90,7 @@ HEADERS += \
 
 FORMS += \
     abouttransactionwindow.ui \
+    accountmanager.ui \
     acriaconfig.ui \
     availableaccounts.ui \
     availabledatacontracts.ui \

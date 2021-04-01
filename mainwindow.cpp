@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "verifyethaddress.h"
+#include "signtransaction.h"
 
 #include <QFileInfo>
 #include <QApplication>
@@ -12,13 +13,13 @@
 #include <QtConcurrent/QtConcurrent>
 #include <QtCore>
 #include <QLineEdit>
+//#include <QJSEngine>
+//#include <QJSValue>
 
 
 bool fileExists(QString path) {
-    QFileInfo check_file(path);
-
     // check if file exists and if yes: Is it really a file and no directory?
-    if (check_file.exists() && check_file.isFile()) {
+    if (QFile::exists(path)) {
         return true;
     } else {
         return false;
@@ -30,6 +31,68 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     qDebug() << "started";
+/*
+    Transaction tx;
+    tx.nonce=SignTransaction::fixHexValue("0x1D");
+    tx.gasPrice=SignTransaction::fixHexValue("0x4A817C800");
+    tx.gasLimit=SignTransaction::fixHexValue("0x076C00");
+    tx.to=SignTransaction::fixHexValue("0x7F94430FeEeE2bc4AE6dBB507288Ac952d6a2B45");
+    tx.value=SignTransaction::fixHexValue("");
+    tx.data=SignTransaction::fixHexValue("0x09468b4c5553442F47425000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000108088265e6ac0000000000000000000000000000000000000000000000000000000000000000005");
+    tx.chainId = 6432;
+    tx.v=SignTransaction::fixHexValue(RLP::intToHex(tx.chainId));//as per EIP 155
+    //tx.r="0x0";
+    //tx.s="0x0";
+*/
+    /*
+        Transaction tx;
+        tx.nonce=SignTransaction::fixHexValue("0x19");
+        tx.gasPrice=SignTransaction::fixHexValue("0x4A817C800");
+        tx.gasLimit=SignTransaction::fixHexValue("0x076C00");
+        tx.to=SignTransaction::fixHexValue("0x7F94430FeEeE2bc4AE6dBB507288Ac952d6a2B45");
+        tx.value=SignTransaction::fixHexValue("");
+        tx.data=SignTransaction::fixHexValue("0x09468b4c5553442F47425000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000108088265e6ac0000000000000000000000000000000000000000000000000000000000000000001");
+        tx.chainId = 6432;
+        tx.v=SignTransaction::fixHexValue(RLP::intToHex(tx.chainId));//as per EIP 155
+        //tx.r="0x0";
+        //tx.s="0x0";
+       */
+
+    /*
+    Transaction tx;
+    tx.nonce=SignTransaction::fixHexValue("0x9");
+    tx.gasPrice=SignTransaction::fixHexValue("0x4A817C800");
+    tx.gasLimit=SignTransaction::fixHexValue("0x5208");
+    tx.to=SignTransaction::fixHexValue("0x3535353535353535353535353535353535353535");
+    tx.value=SignTransaction::fixHexValue("DE0B6B3A7640000");
+    tx.data=SignTransaction::fixHexValue("");
+    tx.chainId = 1;
+    tx.v=SignTransaction::fixHexValue(RLP::intToHex(tx.chainId));//as per EIP 155
+    //tx.r="0x0";
+    //tx.s="0x0";*/
+/*
+      std::string privkey = "1c28847b1ae871f0b4f9758a8129e4c7c09a2005ece548ca3a29382a59de6fbf";
+    //std::string privkey = "4646464646464646464646464646464646464646464646464646464646464646";
+
+        qDebug() << QString::fromStdString(SignTransaction::sign_transaction(tx, privkey));
+*/
+
+
+
+
+    /*
+    QJSEngine engine;
+
+    QJSValue m = engine.importModule("js/js.js");
+
+    QJSValue sumFunction = m.property("addTwice");
+
+    QJSValueList args;
+    args << "{version: 3,id: '04e9bcbb-96fa-497b-94d1-14df4cd20af6',address: '2c7536e3605d9c16a7a3d7b1898e529396a65c23',crypto: {ciphertext: 'a1c25da3ecde4e6a24f3697251dd15d6208520efc84ad97397e906e6df24d251',cipherparams: { iv: '2885df2b63f7ef247d753c82fa20038a' },cipher: 'aes-128-ctr',kdf: 'scrypt',kdfparams: {dklen: 32,salt: '4531b3c174cc3ff32a6a7a85d6761b410db674807b2d216d022318ceee50be10',n: 262144,r: 8,p: 1},mac: 'b8b010fff37f9ae5559a352a185e86f9b9c1d7f7a9f1bd4e82a5dd35468fc7f6'}}" << "test!";
+
+    qDebug() << sumFunction.call(args).toString();
+*/
+
 
     this->data = new Data();
 
@@ -37,6 +100,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     this->config = new Config();
 
+    /*
     if(!fileExists("config.conf")){
         QMessageBox::StandardButton reply;
         reply = QMessageBox::question(this, "Config Missing", "No Configuration File Found. Create one now?", QMessageBox::Yes|QMessageBox::No);
@@ -50,10 +114,26 @@ MainWindow::MainWindow(QWidget *parent)
         if(!this->config->parseConfig()){
             qDebug() << "Error config";
         }
+    }*/
+
+    if(!fileExists("config.conf")){
+    }
+    else{
+        qDebug() << "reading config";
+        if(!this->config->parseConfig()){
+            qDebug() << "Error config";
+        }
     }
 
     this->acria_config = new AcriaConfig(this, this->config);
+
     this->processing_window = new ProcessingWindow();
+
+    this->account_manager = new AccountManager(this, data);
+
+    if(account_manager->exec()){
+
+    }
 
     this->eth_based_chain["ethereum"] = new EthBasedChain(this, "ethereum", this->data, this->processing_window);
     this->eth_based_chain["binance"] = new EthBasedChain(this, "binance", this->data, this->processing_window);
@@ -166,6 +246,11 @@ QString MainWindow::get_state_string(uint state){
 }
 
 void MainWindow::update_requests(){
+    if(this->data->changed == true){
+        this->update_settings();
+        this->data->changed = false;
+    }
+
     if(this->data->transaction_fee_geth != 0 && this->data->eth_enabled != false && this->eth_based_chain["ethereum"]->nonce_manager->is_ready())
         this->eth_based_chain["ethereum"]->tasks->update_requests();
     if(this->data->transaction_fee_binance != 0 && this->data->binance_enabled != false && this->eth_based_chain["binance"]->nonce_manager->is_ready())
@@ -376,9 +461,12 @@ void MainWindow::update_balances(){
 
 MainWindow::~MainWindow()
 {
+    this->data->save_settings();
+
     delete ui;
     delete acria_config;
     delete processing_window;
+    delete account_manager;
 
     delete pi;
     delete pi2;

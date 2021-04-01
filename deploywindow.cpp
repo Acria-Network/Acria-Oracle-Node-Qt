@@ -2,6 +2,8 @@
 #include "ui_deploywindow.h"
 #include "util.h"
 #include "json.hpp"
+#include "keccak256.h"
+#include "signtransaction.h"
 
 #include <QtNetwork/QNetworkReply>
 #include <QtNetwork/QNetworkAccessManager>
@@ -45,6 +47,7 @@ DeployWindow::~DeployWindow()
     delete available_data_contracts;
 }
 
+/*
 void DeployWindow::deploy(){
     if(this->state == 3){
         this->state = 0;
@@ -66,6 +69,69 @@ void DeployWindow::deploy(){
         this->state=1;
     }
 }
+*/
+void DeployWindow::deploy(){
+    if(this->state == 3){
+        this->state = 0;
+        QUrl url1;
+        QString contract1, account1, privkey;
+        unsigned long long transaction_fee = 0;
+        unsigned nonce = this->nonce_manager->get_nonce();
+
+        this->data->get_chain_info(this->type, &url1, &account1, &contract1, &transaction_fee, &privkey);
+
+        privkey.remove(0, 2);
+        qDebug() << "priv key " << privkey;
+        qDebug() << privkey;
+
+        Keccak keccak;
+
+        QString d1 = "0x" + QString::fromStdString(keccak("createNode(bytes32)")).mid(0,8);
+        QString d2 = Util::str2bytes32(this->ui->lineEdit_contract_name->text());
+        QString data1 = d1+d2;
+
+        Transaction tx;
+
+        std::string nonce_ = RLP::intToHex(nonce);
+        if(nonce == 0)
+            nonce_ = "";
+        tx.nonce=SignTransaction::fixHexValue(nonce_);
+        tx.gasPrice=SignTransaction::fixHexValue(RLP::intToHex(transaction_fee));
+        tx.gasLimit=SignTransaction::fixHexValue(RLP::intToHex(1901264));
+        tx.to=SignTransaction::fixHexValue(this->ui->lineEdit_main_contract->text().trimmed().toStdString());
+        tx.value=SignTransaction::fixHexValue("");
+        tx.data=SignTransaction::fixHexValue(data1.toStdString());
+        tx.chainId = 6432;
+        tx.v=SignTransaction::fixHexValue(RLP::intToHex(tx.chainId));//as per EIP 155
+
+        qDebug() << QString::fromStdString(tx.nonce);
+        qDebug() << QString::fromStdString(tx.gasPrice);
+        qDebug() << QString::fromStdString(tx.gasLimit);
+        qDebug() << QString::fromStdString(tx.to);
+        qDebug() << QString::fromStdString(tx.value);
+        qDebug() << QString::fromStdString(tx.data);
+        qDebug() << QString::fromStdString(tx.v);
+
+        QString transaction = QString::fromStdString(SignTransaction::sign_transaction(tx, privkey.toStdString()));
+        qDebug() << transaction;
+
+        QJsonArray obj3;
+        obj3.push_back("0x" + transaction);
+
+        QJsonObject obj;
+        obj["jsonrpc"] = "2.0";
+        obj["method"] = "eth_sendRawTransaction";
+        obj["params"] = obj3;
+        obj["id"] = 30;
+        QJsonDocument doc(obj);
+        QByteArray data = doc.toJson();
+
+        request.setUrl(url1);
+        request.setRawHeader("Content-Type", "application/json");
+        manager->post(request, data);
+    }
+}
+
 
 void DeployWindow::is_deployed(){
     QUrl url1;

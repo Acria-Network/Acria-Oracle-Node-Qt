@@ -7,14 +7,14 @@
 
 Config::Config()
 {
-    config_location = "config.conf";
+    config_location = "./config.conf";
 }
 
 bool Config::createConfig(QString conf){
     QString filename=this->config_location;
     QFile file(filename);
 
-    if(!file.exists()){
+    if(file.exists()){
         qDebug() << "Config File exists: "<<filename;
     }else{
         qDebug() << filename<<" does not exist";
@@ -33,7 +33,7 @@ QString Config::loadConfig(){
     QString filename=this->config_location;
     QFile file(filename);
 
-    if(!file.exists()){
+    if(file.exists()){
         qDebug() << "Config File exists: "<<filename;
     }else{
         qDebug() << filename<<" does not exist";

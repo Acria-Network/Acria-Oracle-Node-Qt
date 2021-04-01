@@ -11,6 +11,7 @@
 #include "config.h"
 #include "processingwindow.h"
 #include "ethbasedchain.h"
+#include "accountmanager.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -111,6 +112,8 @@ private:
 
     QProgressIndicator* pi;
     QProgressIndicator* pi2;
+
+    AccountManager* account_manager;
 
     Data* data;
 

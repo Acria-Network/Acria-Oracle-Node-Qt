@@ -13,6 +13,7 @@
 #include <keccak256.h>
 #include <QThread>
 #include <QTimer>
+#include "signtransaction.h"
 
 
 Resource::Resource()
@@ -60,7 +61,7 @@ Resource::Resource(QString _url, std::vector<QString> _l_json, QString _contract
     this->url_data = _url_data;
     this->parameter_type = _parameter_type;
 
-    this->nonce = this->nonce_manager->get_nonce();
+    //this->nonce = this->nonce_manager->get_nonce();
 }
 
 Resource::~Resource()
@@ -76,7 +77,7 @@ QString Resource::convert_parameter(){
     QString str = this->request_data;
 
     for(int i = 0; i<data.size(); i++){
-        if(data.at(i) == "timestamp"){
+        if(data.at(i) == "timestamp" || data.at(i) == "number"){
             str = QString::number(str.toULongLong(NULL, 16));
             qDebug() << "timestamp " << str;
         }
@@ -86,6 +87,12 @@ QString Resource::convert_parameter(){
             timestamp.setTime_t(str.toULongLong());
             str = timestamp.toString(format);
             qDebug() << "timestamp2 " << str;
+        }
+        else if(data.at(i) == "string"){
+            str = Util::hex2str(str).trimmed();
+        }
+        else if(data.at(i) == "address"){
+            str = str.remove(0, 24);
         }
     }
 
@@ -136,6 +143,76 @@ std::string tohex(std::string number) {                        // Decimal to Hex
 }
 
 void Resource::send_resource(){
+    this->nonce = this->nonce_manager->get_nonce();
+
+    QUrl url1;
+    QString contract1, account1, privkey;
+    unsigned long long transaction_fee = 0; unsigned chain_id = 0;
+
+    this->data->get_chain_info(this->type, &url1, &account1, &contract1, &transaction_fee, &privkey, &chain_id);
+
+    privkey.remove(0, 2);
+
+    Keccak keccak;
+
+    QString d1 = "0x" + QString::fromStdString(keccak("fillRequest(bytes8,uint256,uint256)")).mid(0,8);
+    QString d2 = Util::str2bytes8(this->item)+"000000000000000000000000000000000000000000000000";
+    QString d3 = QString::fromStdString(value256.GetHex());
+    QString d4 = QString::fromStdString(Util::n2hexstr(this->id));
+    for(uint i = d4.size(); i<64;i++){
+        d4 = "0" + d4;
+    }
+
+    qDebug() << d1;
+    qDebug() << d2;
+    qDebug() << d4;
+    qDebug() << d3;
+
+    QString data1 = d1+d2+d3+d4;
+
+    qDebug() << data1;
+
+    qDebug() << "chain_id " <<chain_id;
+
+    Transaction tx;
+    std::string nonce_ = RLP::intToHex(nonce);
+    if(nonce == 0)
+        nonce_ = "";
+    tx.nonce=SignTransaction::fixHexValue(nonce_);
+    //tx.gasPrice=SignTransaction::fixHexValue("0x4A817C800");
+    tx.gasPrice=SignTransaction::fixHexValue(RLP::intToHex(transaction_fee));
+    tx.gasLimit=SignTransaction::fixHexValue("0x076C00");
+    tx.to=SignTransaction::fixHexValue(contract1.toStdString());
+    tx.value=SignTransaction::fixHexValue("");
+    //tx.data=SignTransaction::fixHexValue("0xa9059cbb");
+    tx.data=SignTransaction::fixHexValue(data1.toStdString());
+    //tx.chainId = chain_id;
+    tx.chainId = 6432;
+    tx.v=SignTransaction::fixHexValue(RLP::intToHex(tx.chainId));//as per EIP 155
+
+    //std::string privkey = "1c28847b1ae871f0b4f9758a8129e4c7c09a2005ece548ca3a29382a59de6fbf";
+
+    QString transaction = QString::fromStdString(SignTransaction::sign_transaction(tx, privkey.toStdString()));
+    qDebug() << transaction;
+
+    QJsonArray obj3;
+    obj3.push_back("0x" + transaction);
+
+    QJsonObject obj;
+    obj["jsonrpc"] = "2.0";
+    obj["method"] = "eth_sendRawTransaction";
+    obj["params"] = obj3;
+    obj["id"] = 29;
+    QJsonDocument doc(obj);
+    QByteArray data = doc.toJson();
+
+    send_request.setUrl(url1);
+    send_request.setRawHeader("Content-Type", "application/json");
+    send_manager->post(send_request, data);
+}
+
+/*
+void Resource::send_resource(){
     QUrl url1;
     QString contract1, account1;
     unsigned long long transaction_fee = 0;
@@ -169,6 +246,7 @@ void Resource::send_resource(){
 
     *this->state=1;
 }
+*/
 
 void Resource::managerFinished(QNetworkReply *reply) {
     if (reply->error()) {
