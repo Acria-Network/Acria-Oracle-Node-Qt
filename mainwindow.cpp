@@ -197,38 +197,70 @@ void MainWindow::update_settings(){
 void MainWindow::get_status_geth(){
     QThread::msleep(INTERVAL_RUN_CONNECTION);
 
-    if(this->eth_based_chain["ethereum"]->node->get_status_geth()){
-        ui->status_geth->setText("Ok");
-    }
+    if(this->data->eth_private_key != "")
+        this->ui->label_keystore_unlocked_eth->setPixmap(QPixmap("./resources/success.svg"));
+    else
+        this->ui->label_keystore_unlocked_eth->setPixmap(QPixmap("./resources/error.svg"));
+
+    if(this->eth_based_chain["ethereum"]->node->get_status_geth())
+        this->ui->label_node_reachable_eth->setPixmap(QPixmap("./resources/success.svg"));
+    else
+        this->ui->label_node_reachable_eth->setPixmap(QPixmap("./resources/error.svg"));
+
+    if(this->data->eth_enabled)
+        this->ui->label_enabled_eth->setPixmap(QPixmap("./resources/success.svg"));
+    else
+        this->ui->label_enabled_eth->setPixmap(QPixmap("./resources/error.svg"));
+
+    if(this->ui->lineEdit_eth_contract->text().trimmed() != "")
+        this->ui->label_contract_deployed_eth->setPixmap(QPixmap("./resources/success.svg"));
+    else
+        this->ui->label_contract_deployed_eth->setPixmap(QPixmap("./resources/error.svg"));
 }
 
 void MainWindow::get_status_polkadot(){
     QThread::msleep(INTERVAL_RUN_CONNECTION);
 
     if(true){
-        ui->status_polkadot->setText("Ok");
+        //ui->status_polkadot->setText("Ok");
     }
 }
 
 void MainWindow::get_status_binance(){
     QThread::msleep(INTERVAL_RUN_CONNECTION);
 
-    if(this->eth_based_chain["binance"]->node->get_status_geth()){
-        ui->status_binance->setText("Ok");
-    }
+    if(this->data->binance_private_key != "")
+        this->ui->label_keystore_unlocked_binance->setPixmap(QPixmap("./resources/success.svg"));
+    else
+        this->ui->label_keystore_unlocked_binance->setPixmap(QPixmap("./resources/error.svg"));
+
+    if(this->eth_based_chain["binance"]->node->get_status_geth())
+        this->ui->label_node_reachable_binance->setPixmap(QPixmap("./resources/success.svg"));
+    else
+        this->ui->label_node_reachable_binance->setPixmap(QPixmap("./resources/error.svg"));
+
+    if(this->data->binance_enabled)
+        this->ui->label_enabled_binance->setPixmap(QPixmap("./resources/success.svg"));
+    else
+        this->ui->label_enabled_binance->setPixmap(QPixmap("./resources/error.svg"));
+
+    if(this->ui->lineEdit_binance_contract->text().trimmed() != "")
+        this->ui->label_contract_deployed_binance->setPixmap(QPixmap("./resources/success.svg"));
+    else
+        this->ui->label_contract_deployed_binance->setPixmap(QPixmap("./resources/error.svg"));
 }
 
 void MainWindow::get_status_acria(){
     QThread::msleep(INTERVAL_RUN_CONNECTION);
 
     if(true){
-        ui->status_acria->setText("Ok");
+        //ui->status_acria->setText("Ok");
     }
 }
 
 void MainWindow::get_status_config(){
     if(true){
-        ui->status_config->setText("Ok");
+        //ui->status_config->setText("Ok");
     }
 }
 
@@ -595,10 +627,10 @@ void MainWindow::on_pushButton_export_json_3_clicked()
 
 void MainWindow::on_pushButton_refresh_clicked()
 {
-    ui->status_geth->setText("...");
-    ui->status_polkadot->setText("...");
-    ui->status_acria->setText("...");
-    ui->status_config->setText("...");
+    //ui->status_geth->setText("...");
+    //ui->status_polkadot->setText("...");
+    //ui->status_acria->setText("...");
+    //ui->status_config->setText("...");
 
     for (auto const& x : eth_based_chain)
     {
