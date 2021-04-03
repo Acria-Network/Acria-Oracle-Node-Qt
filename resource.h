@@ -37,7 +37,6 @@ private:
     QString url;
     QString url_data;
     QString parameter_type;
-    QString contract;
     QString item;
     std::vector<QString> l_json;
     Data *data;
@@ -66,7 +65,7 @@ private:
 
 public:
     Resource();
-    Resource(QString url, std::vector<QString> _l_json, QString _contract, QString n, Data* _data, QString _type, uint _id, uint* state, uint _max_gas, unsigned long long _fee, QString _request_data, QString _url_data, QString _parameter_type, NonceManager* _nonce_manager);
+    Resource(QString url, std::vector<QString> _l_json, QString n, Data* _data, QString _type, uint _id, uint* state, uint _max_gas, unsigned long long _fee, QString _request_data, QString _url_data, QString _parameter_type, NonceManager* _nonce_manager);
     ~Resource();
 
     QString error;

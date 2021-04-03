@@ -21,6 +21,7 @@ EthBasedChain::EthBasedChain(QWidget *parent, QString _type, Data* _data, Proces
 };
 
 EthBasedChain::~EthBasedChain(){
+    qDebug() << "end91";
     delete node;
     delete tasks;
     delete cinfo;

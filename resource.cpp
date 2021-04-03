@@ -21,7 +21,6 @@ Resource::Resource()
     this->s_value = "";
     this->d_value = 0;
     this->url = "";
-    this->contract = "";
 
     manager = new QNetworkAccessManager();
 
@@ -44,11 +43,10 @@ Resource::Resource()
     connect(is_deployed_timer, SIGNAL(timeout()), this, SLOT(is_deployed()));
 }
 
-Resource::Resource(QString _url, std::vector<QString> _l_json, QString _contract, QString n, Data* _data, QString _type, uint _id, uint* state, uint _max_gas, unsigned long long _fee, QString _request_data, QString _url_data, QString _parameter_type, NonceManager* _nonce_manager) : Resource()
+Resource::Resource(QString _url, std::vector<QString> _l_json, QString n, Data* _data, QString _type, uint _id, uint* state, uint _max_gas, unsigned long long _fee, QString _request_data, QString _url_data, QString _parameter_type, NonceManager* _nonce_manager) : Resource()
 {
     this->url = _url;
     this->l_json = _l_json;
-    this->contract = _contract;
     this->item = n;
     this->data = _data;
     this->type = _type;

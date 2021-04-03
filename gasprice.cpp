@@ -14,7 +14,6 @@ GasPrice::GasPrice(Data *_data, QString _type)
 
 GasPrice::~GasPrice(){
     delete manager;
-    delete manager;
 }
 
 void GasPrice::update_gas_price(){
@@ -44,11 +43,7 @@ void GasPrice::managerFinished(QNetworkReply *reply) {
 
     if(res.length() > 2){
         qDebug() << "gas price " << res.toULongLong(NULL,16);
-
-        if(this->type == "ethereum")
-            this->data->transaction_fee_geth = res.toULongLong(NULL,16);
-        else if(this->type == "binance")
-            this->data->transaction_fee_binance = res.toULongLong(NULL,16);
+        this->data->chain_data[this->type].transaction_fee = res.toULongLong(NULL,16);
     }
 
 }

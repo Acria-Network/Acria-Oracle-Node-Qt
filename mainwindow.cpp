@@ -31,68 +31,6 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     qDebug() << "started";
-/*
-    Transaction tx;
-    tx.nonce=SignTransaction::fixHexValue("0x1D");
-    tx.gasPrice=SignTransaction::fixHexValue("0x4A817C800");
-    tx.gasLimit=SignTransaction::fixHexValue("0x076C00");
-    tx.to=SignTransaction::fixHexValue("0x7F94430FeEeE2bc4AE6dBB507288Ac952d6a2B45");
-    tx.value=SignTransaction::fixHexValue("");
-    tx.data=SignTransaction::fixHexValue("0x09468b4c5553442F47425000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000108088265e6ac0000000000000000000000000000000000000000000000000000000000000000005");
-    tx.chainId = 6432;
-    tx.v=SignTransaction::fixHexValue(RLP::intToHex(tx.chainId));//as per EIP 155
-    //tx.r="0x0";
-    //tx.s="0x0";
-*/
-    /*
-        Transaction tx;
-        tx.nonce=SignTransaction::fixHexValue("0x19");
-        tx.gasPrice=SignTransaction::fixHexValue("0x4A817C800");
-        tx.gasLimit=SignTransaction::fixHexValue("0x076C00");
-        tx.to=SignTransaction::fixHexValue("0x7F94430FeEeE2bc4AE6dBB507288Ac952d6a2B45");
-        tx.value=SignTransaction::fixHexValue("");
-        tx.data=SignTransaction::fixHexValue("0x09468b4c5553442F47425000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000108088265e6ac0000000000000000000000000000000000000000000000000000000000000000001");
-        tx.chainId = 6432;
-        tx.v=SignTransaction::fixHexValue(RLP::intToHex(tx.chainId));//as per EIP 155
-        //tx.r="0x0";
-        //tx.s="0x0";
-       */
-
-    /*
-    Transaction tx;
-    tx.nonce=SignTransaction::fixHexValue("0x9");
-    tx.gasPrice=SignTransaction::fixHexValue("0x4A817C800");
-    tx.gasLimit=SignTransaction::fixHexValue("0x5208");
-    tx.to=SignTransaction::fixHexValue("0x3535353535353535353535353535353535353535");
-    tx.value=SignTransaction::fixHexValue("DE0B6B3A7640000");
-    tx.data=SignTransaction::fixHexValue("");
-    tx.chainId = 1;
-    tx.v=SignTransaction::fixHexValue(RLP::intToHex(tx.chainId));//as per EIP 155
-    //tx.r="0x0";
-    //tx.s="0x0";*/
-/*
-      std::string privkey = "1c28847b1ae871f0b4f9758a8129e4c7c09a2005ece548ca3a29382a59de6fbf";
-    //std::string privkey = "4646464646464646464646464646464646464646464646464646464646464646";
-
-        qDebug() << QString::fromStdString(SignTransaction::sign_transaction(tx, privkey));
-*/
-
-
-
-
-    /*
-    QJSEngine engine;
-
-    QJSValue m = engine.importModule("js/js.js");
-
-    QJSValue sumFunction = m.property("addTwice");
-
-    QJSValueList args;
-    args << "{version: 3,id: '04e9bcbb-96fa-497b-94d1-14df4cd20af6',address: '2c7536e3605d9c16a7a3d7b1898e529396a65c23',crypto: {ciphertext: 'a1c25da3ecde4e6a24f3697251dd15d6208520efc84ad97397e906e6df24d251',cipherparams: { iv: '2885df2b63f7ef247d753c82fa20038a' },cipher: 'aes-128-ctr',kdf: 'scrypt',kdfparams: {dklen: 32,salt: '4531b3c174cc3ff32a6a7a85d6761b410db674807b2d216d022318ceee50be10',n: 262144,r: 8,p: 1},mac: 'b8b010fff37f9ae5559a352a185e86f9b9c1d7f7a9f1bd4e82a5dd35468fc7f6'}}" << "test!";
-
-    qDebug() << sumFunction.call(args).toString();
-*/
-
 
     this->data = new Data();
 
@@ -162,6 +100,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(timer_update_gas_price, SIGNAL(timeout()), this, SLOT(update_gas_price()));
     timer_update_gas_price->start(INTERVAL_RUN);
 
+    timer_update_status = new QTimer(this);
+    connect(timer_update_status, SIGNAL(timeout()), this, SLOT(update_status()));
+    timer_update_status->start(INTERVAL_UPDATE_STATUS);
+
     this->pi = new QProgressIndicator();
     this->ui->horizontalLayout->layout()->addWidget(pi);
 
@@ -178,26 +120,24 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 void MainWindow::update_settings(){
-    this->ui->lineEdit_geth_url->setText(this->data->geth_url);
-    this->ui->lineEdit_eth_account->setText(this->data->eth_account);
-    this->ui->lineEdit_eth_contract->setText(this->data->eth_contract);
-    this->ui->checkBox_eth->setChecked(this->data->eth_enabled);
+    this->ui->lineEdit_geth_url->setText(this->data->chain_data["ethereum"].url);
+    this->ui->lineEdit_eth_account->setText(this->data->chain_data["ethereum"].account);
+    this->ui->lineEdit_eth_contract->setText(this->data->chain_data["ethereum"].contract);
+    this->ui->checkBox_eth->setChecked(this->data->chain_data["ethereum"].enabled);
 
-    this->ui->lineEdit_polkadot_url->setText(this->data->polkadot_url);
-    this->ui->lineEdit_polkadot_account->setText(this->data->polkadot_account);
-    this->ui->lineEdit_polkadot_contract->setText(this->data->polkadot_contract);
-    this->ui->checkBox_polkadot->setChecked(this->data->polkadot_enabled);
+    this->ui->lineEdit_polkadot_url->setText(this->data->chain_data["polkadot"].url);
+    this->ui->lineEdit_polkadot_account->setText(this->data->chain_data["polkadot"].account);
+    this->ui->lineEdit_polkadot_contract->setText(this->data->chain_data["polkadot"].contract);
+    this->ui->checkBox_polkadot->setChecked(this->data->chain_data["polkadot"].enabled);
 
-    this->ui->lineEdit_binance_url->setText(this->data->binance_url);
-    this->ui->lineEdit_binance_account->setText(this->data->binance_account);
-    this->ui->lineEdit_binance_contract->setText(this->data->binance_contract);
-    this->ui->checkBox_binance->setChecked(this->data->binance_enabled);
+    this->ui->lineEdit_binance_url->setText(this->data->chain_data["binance"].url);
+    this->ui->lineEdit_binance_account->setText(this->data->chain_data["binance"].account);
+    this->ui->lineEdit_binance_contract->setText(this->data->chain_data["binance"].contract);
+    this->ui->checkBox_binance->setChecked(this->data->chain_data["binance"].enabled);
 }
 
 void MainWindow::get_status_geth(){
-    QThread::msleep(INTERVAL_RUN_CONNECTION);
-
-    if(this->data->eth_private_key != "")
+    if(this->data->chain_data["ethereum"].private_key != "")
         this->ui->label_keystore_unlocked_eth->setPixmap(QPixmap("./resources/success.svg"));
     else
         this->ui->label_keystore_unlocked_eth->setPixmap(QPixmap("./resources/error.svg"));
@@ -207,7 +147,7 @@ void MainWindow::get_status_geth(){
     else
         this->ui->label_node_reachable_eth->setPixmap(QPixmap("./resources/error.svg"));
 
-    if(this->data->eth_enabled)
+    if(this->data->chain_data["ethereum"].enabled)
         this->ui->label_enabled_eth->setPixmap(QPixmap("./resources/success.svg"));
     else
         this->ui->label_enabled_eth->setPixmap(QPixmap("./resources/error.svg"));
@@ -219,17 +159,10 @@ void MainWindow::get_status_geth(){
 }
 
 void MainWindow::get_status_polkadot(){
-    QThread::msleep(INTERVAL_RUN_CONNECTION);
-
-    if(true){
-        //ui->status_polkadot->setText("Ok");
-    }
 }
 
 void MainWindow::get_status_binance(){
-    QThread::msleep(INTERVAL_RUN_CONNECTION);
-
-    if(this->data->binance_private_key != "")
+    if(this->data->chain_data["binance"].private_key != "")
         this->ui->label_keystore_unlocked_binance->setPixmap(QPixmap("./resources/success.svg"));
     else
         this->ui->label_keystore_unlocked_binance->setPixmap(QPixmap("./resources/error.svg"));
@@ -239,7 +172,7 @@ void MainWindow::get_status_binance(){
     else
         this->ui->label_node_reachable_binance->setPixmap(QPixmap("./resources/error.svg"));
 
-    if(this->data->binance_enabled)
+    if(this->data->chain_data["binance"].enabled)
         this->ui->label_enabled_binance->setPixmap(QPixmap("./resources/success.svg"));
     else
         this->ui->label_enabled_binance->setPixmap(QPixmap("./resources/error.svg"));
@@ -251,17 +184,15 @@ void MainWindow::get_status_binance(){
 }
 
 void MainWindow::get_status_acria(){
-    QThread::msleep(INTERVAL_RUN_CONNECTION);
-
-    if(true){
-        //ui->status_acria->setText("Ok");
-    }
 }
 
 void MainWindow::get_status_config(){
-    if(true){
-        //ui->status_config->setText("Ok");
-    }
+}
+
+void MainWindow::update_status(){
+    get_status_geth();
+    get_status_binance();
+    get_status_polkadot();
 }
 
 QString MainWindow::get_state_string(uint state){
@@ -277,15 +208,22 @@ QString MainWindow::get_state_string(uint state){
     }
 }
 
+bool MainWindow::node_ready(QString type){
+    if(this->data->chain_data[type].transaction_fee != 0 && this->data->chain_data[type].enabled != false && this->eth_based_chain[type]->nonce_manager->is_ready())
+        return true;
+    else
+        return false;
+}
+
 void MainWindow::update_requests(){
     if(this->data->changed == true){
         this->update_settings();
         this->data->changed = false;
     }
 
-    if(this->data->transaction_fee_geth != 0 && this->data->eth_enabled != false && this->eth_based_chain["ethereum"]->nonce_manager->is_ready())
+    if(this->node_ready("ethereum"))
         this->eth_based_chain["ethereum"]->tasks->update_requests();
-    if(this->data->transaction_fee_binance != 0 && this->data->binance_enabled != false && this->eth_based_chain["binance"]->nonce_manager->is_ready())
+    if(this->node_ready("binance"))
         this->eth_based_chain["binance"]->tasks->update_requests();
 
     std::vector<req> r;
@@ -340,7 +278,7 @@ void MainWindow::update_requests(){
                         }
 
                         this->eth_based_chain[r[d].chain]->state[r[d].id] = 0;
-                        Resource* rr = new Resource(QString::fromStdString(conf1[i]["url"]), l_json, this->data->eth_contract, QString::fromStdString(conf1[i]["rname"]), this->data, r[d].chain, r[d].id, &this->eth_based_chain[r[d].chain]->state[r[d].id], r[d].max_gas, r[d].fee, r[d].data, QString::fromStdString(conf1[i]["url_data"]), QString::fromStdString(conf1[i]["parameter_type"]), this->eth_based_chain[r[d].chain]->nonce_manager);
+                        Resource* rr = new Resource(QString::fromStdString(conf1[i]["url"]), l_json, QString::fromStdString(conf1[i]["rname"]), this->data, r[d].chain, r[d].id, &this->eth_based_chain[r[d].chain]->state[r[d].id], r[d].max_gas, r[d].fee, r[d].data, QString::fromStdString(conf1[i]["url_data"]), QString::fromStdString(conf1[i]["parameter_type"]), this->eth_based_chain[r[d].chain]->nonce_manager);
                         rr->update_resource();
 
                         this->tm_resources.push_back(rr);
@@ -499,15 +437,14 @@ MainWindow::~MainWindow()
     delete acria_config;
     delete processing_window;
     delete account_manager;
-
     delete pi;
     delete pi2;
     delete data;
-
     delete timer_update_requests;
     delete timer_update_events;
     delete timer_update_balances;
     delete timer_update_gas_price;
+    delete timer_update_status;
 
     for(uint i=0; i<this->tm_resources.size();i++){
         delete this->tm_resources[i];
@@ -551,7 +488,7 @@ void MainWindow::on_pushButton_export_json_clicked()
 
         qDebug() << filename;
 
-        if(!file.exists()){
+        if(file.exists()){
             qDebug() << "File exists: "<<filename;
         }else{
             qDebug() << filename<<" does not exist";
@@ -602,7 +539,7 @@ void MainWindow::on_pushButton_export_csv_clicked()
         QString filename=dir + "/transactions.csv";
         QFile file(filename);
 
-        if(!file.exists()){
+        if(file.exists()){
             qDebug() << "File exists: "<<filename;
         }else{
             qDebug() << filename<<" does not exist";
@@ -678,25 +615,25 @@ void MainWindow::on_pushButton_setting_save_clicked()
     bool reset_b = false;
     bool reset_e = false;
 
-    if(this->data->binance_url != this->ui->lineEdit_binance_url->text() || this->data->binance_account != this->ui->lineEdit_binance_account->text())
+    if(this->data->chain_data["binance"].url != this->ui->lineEdit_binance_url->text() || this->data->chain_data["binance"].account != this->ui->lineEdit_binance_account->text())
         reset_b = true;
-    if(this->data->geth_url != this->ui->lineEdit_geth_url->text() || this->data->eth_account != this->ui->lineEdit_eth_account->text())
+    if(this->data->chain_data["ethereum"].url != this->ui->lineEdit_geth_url->text() || this->data->chain_data["ethereum"].account != this->ui->lineEdit_eth_account->text())
         reset_e = true;
 
-    this->data->binance_url = this->ui->lineEdit_binance_url->text();
-    this->data->binance_account = this->ui->lineEdit_binance_account->text();
-    this->data->binance_contract = this->ui->lineEdit_binance_contract->text();
-    this->data->binance_enabled = this->ui->checkBox_binance->isChecked();
+    this->data->chain_data["binance"].url = this->ui->lineEdit_binance_url->text();
+    this->data->chain_data["binance"].account = this->ui->lineEdit_binance_account->text();
+    this->data->chain_data["binance"].contract = this->ui->lineEdit_binance_contract->text();
+    this->data->chain_data["binance"].enabled = this->ui->checkBox_binance->isChecked();
 
-    this->data->geth_url = this->ui->lineEdit_geth_url->text();
-    this->data->eth_account = this->ui->lineEdit_eth_account->text();
-    this->data->eth_contract = this->ui->lineEdit_eth_contract->text();
-    this->data->eth_enabled = this->ui->checkBox_eth->isChecked();
+    this->data->chain_data["ethereum"].url = this->ui->lineEdit_geth_url->text();
+    this->data->chain_data["ethereum"].account = this->ui->lineEdit_eth_account->text();
+    this->data->chain_data["ethereum"].contract = this->ui->lineEdit_eth_contract->text();
+    this->data->chain_data["ethereum"].enabled = this->ui->checkBox_eth->isChecked();
 
-    this->data->polkadot_url = this->ui->lineEdit_polkadot_url->text();
-    this->data->polkadot_account = this->ui->lineEdit_polkadot_account->text();
-    this->data->polkadot_contract = this->ui->lineEdit_polkadot_contract->text();
-    this->data->polkadot_enabled = this->ui->checkBox_polkadot->isChecked();
+    this->data->chain_data["polkadot"].url = this->ui->lineEdit_polkadot_url->text();
+    this->data->chain_data["polkadot"].account = this->ui->lineEdit_polkadot_account->text();
+    this->data->chain_data["polkadot"].contract = this->ui->lineEdit_polkadot_contract->text();
+    this->data->chain_data["polkadot"].enabled = this->ui->checkBox_polkadot->isChecked();
 
     this->data->save_settings();
 

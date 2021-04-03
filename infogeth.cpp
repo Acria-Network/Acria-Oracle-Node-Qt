@@ -26,15 +26,8 @@ void InfoGeth::update_info(){
     std::vector<QString> items;
 
     version1 = node->get_geth_version();
-
-    if(this->type == "ethereum"){
-        url1 = this->data->geth_url;
-        items = data->items;
-    }
-    else if(this->type == "binance"){
-        url1 = this->data->binance_url;
-        items = data->binance_items;
-    }
+    url1 = this->data->chain_data[this->type].url;
+    items = this->data->chain_data[this->type].items;
 
     this->ui->label_version->setText(version1);
     this->ui->label_url->setText(url1);

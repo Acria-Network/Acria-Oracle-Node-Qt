@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>474</width>
-    <height>213</height>
+    <height>224</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -404,7 +404,7 @@ padding-left:13px;
                   <string notr="true"/>
                  </property>
                  <property name="text">
-                  <string>Contract deployed:</string>
+                  <string>Contract available:</string>
                  </property>
                 </widget>
                </item>
@@ -662,7 +662,7 @@ padding:5px;
                   <string notr="true"/>
                  </property>
                  <property name="text">
-                  <string>Contract deployed:</string>
+                  <string>Contract available:</string>
                  </property>
                 </widget>
                </item>
@@ -908,7 +908,7 @@ padding:5px;
                   <string notr="true"/>
                  </property>
                  <property name="text">
-                  <string>Contract deployed:</string>
+                  <string>Contract available:</string>
                  </property>
                 </widget>
                </item>

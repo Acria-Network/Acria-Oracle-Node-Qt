@@ -28,11 +28,11 @@ AccountManager::AccountManager(QWidget *parent, Data* _data) :
     this->ui->webEngineView->setZoomFactor(0.4);
 
     delay();
-    if(this->data->binance_wallet_path.length() > 4)
-    this->ui->webEngineView->page()->runJavaScript("binWalletPath = " + this->data->binance_wallet_path + ";document.getElementById(\"selectWalletBin\").innerHTML = \"...\" + binWalletPath.substr(binWalletPath.length - 20);");
-    qDebug() << this->data->eth_wallet_path;
-    if(this->data->eth_wallet_path.length() > 4)
-    this->ui->webEngineView->page()->runJavaScript("ethWalletPath = '" + this->data->eth_wallet_path + "';document.getElementById('selectWalletEth').innerHTML = '...' + ethWalletPath.substr(ethWalletPath.length - 20);");
+    if(this->data->chain_data["binance"].wallet_path.length() > 4)
+    this->ui->webEngineView->page()->runJavaScript("binWalletPath = " + this->data->chain_data["binance"].wallet_path + ";document.getElementById(\"selectWalletBin\").innerHTML = \"...\" + binWalletPath.substr(binWalletPath.length - 20);");
+    qDebug() << this->data->chain_data["ethereum"].wallet_path;
+    if(this->data->chain_data["ethereum"].wallet_path.length() > 4)
+    this->ui->webEngineView->page()->runJavaScript("ethWalletPath = '" + this->data->chain_data["ethereum"].wallet_path + "';document.getElementById('selectWalletEth').innerHTML = '...' + ethWalletPath.substr(ethWalletPath.length - 20);");
 
     /*
     QFile apiFile(":/qtwebchannel/qwebchannel.js"); //load the API from the resources
@@ -62,13 +62,13 @@ AccountManager::~AccountManager()
 
 void AccountManager::on_buttonBox_accepted()
 {
-    this->ui->webEngineView->page()->runJavaScript("ethPrivateKey", [this](const QVariant &v) { qDebug() << v.toString(); this->data->eth_private_key = v.toString();this->data->changed = true;});
-    this->ui->webEngineView->page()->runJavaScript("ethAddress", [this](const QVariant &v) { qDebug() << v.toString(); this->data->eth_account = v.toString();this->data->changed = true;});
-    this->ui->webEngineView->page()->runJavaScript("ethWalletPath", [this](const QVariant &v) { qDebug() << v.toString(); this->data->eth_wallet_path = v.toString();this->data->changed = true;});
+    this->ui->webEngineView->page()->runJavaScript("ethPrivateKey", [this](const QVariant &v) { qDebug() << v.toString(); this->data->chain_data["ethereum"].private_key = v.toString();this->data->changed = true;});
+    this->ui->webEngineView->page()->runJavaScript("ethAddress", [this](const QVariant &v) { qDebug() << v.toString(); this->data->chain_data["ethereum"].account = v.toString();this->data->changed = true;});
+    this->ui->webEngineView->page()->runJavaScript("ethWalletPath", [this](const QVariant &v) { qDebug() << v.toString(); this->data->chain_data["ethereum"].wallet_path = v.toString();this->data->changed = true;});
 
-    this->ui->webEngineView->page()->runJavaScript("binPrivateKey", [this](const QVariant &v) { qDebug() << v.toString(); this->data->binance_private_key = v.toString();this->data->changed = true;});
-    this->ui->webEngineView->page()->runJavaScript("binAddress", [this](const QVariant &v) { qDebug() << v.toString(); this->data->binance_account = v.toString();this->data->changed = true;});
-    this->ui->webEngineView->page()->runJavaScript("binWalletPath", [this](const QVariant &v) { qDebug() << v.toString(); this->data->binance_wallet_path = v.toString();this->data->changed = true;});
+    this->ui->webEngineView->page()->runJavaScript("binPrivateKey", [this](const QVariant &v) { qDebug() << v.toString(); this->data->chain_data["binance"].private_key = v.toString();this->data->changed = true;});
+    this->ui->webEngineView->page()->runJavaScript("binAddress", [this](const QVariant &v) { qDebug() << v.toString(); this->data->chain_data["binance"].account = v.toString();this->data->changed = true;});
+    this->ui->webEngineView->page()->runJavaScript("binWalletPath", [this](const QVariant &v) { qDebug() << v.toString(); this->data->chain_data["binance"].wallet_path = v.toString();this->data->changed = true;});
 
     delay();
 }

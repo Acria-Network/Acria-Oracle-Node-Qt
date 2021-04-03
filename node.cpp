@@ -110,10 +110,7 @@ void Node::chain_idManagerFinished(QNetworkReply *reply) {
         status_geth_chain_id = false;
 
     this->chain_id = obj["result"].toString().toUInt(NULL, 16);
-    if(this->type == "ethereum")
-        this->data->eth_chain_id = this->chain_id;
-    else if(this->type == "binance")
-        this->data->binance_chain_id = this->chain_id;
+    this->data->chain_data[this->type].chain_id = this->chain_id;
 }
 
 bool Node::get_status_geth(){
