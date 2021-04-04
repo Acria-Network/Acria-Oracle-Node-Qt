@@ -75,10 +75,10 @@ void DeployWindow::deploy(){
         this->state = 0;
         QUrl url1;
         QString contract1, account1, privkey;
-        unsigned long long transaction_fee = 0;
+        unsigned long long transaction_fee = 0; unsigned chain_id;
         unsigned nonce = this->nonce_manager->get_nonce();
 
-        this->data->get_chain_info(this->type, &url1, &account1, &contract1, &transaction_fee, &privkey);
+        this->data->get_chain_info(this->type, &url1, &account1, &contract1, &transaction_fee, &privkey, &chain_id);
 
         privkey.remove(0, 2);
         qDebug() << "priv key " << privkey;
@@ -96,12 +96,13 @@ void DeployWindow::deploy(){
         if(nonce == 0)
             nonce_ = "";
         tx.nonce=SignTransaction::fixHexValue(nonce_);
-        tx.gasPrice=SignTransaction::fixHexValue(RLP::intToHex(transaction_fee));
-        tx.gasLimit=SignTransaction::fixHexValue(RLP::intToHex(1901264));
+        tx.gasPrice=RLP::intToHex(transaction_fee);
+        tx.gasLimit=RLP::intToHex(1901264);
         tx.to=SignTransaction::fixHexValue(this->ui->lineEdit_main_contract->text().trimmed().toStdString());
         tx.value=SignTransaction::fixHexValue("");
         tx.data=SignTransaction::fixHexValue(data1.toStdString());
-        tx.chainId = 6432;
+        //tx.chainId = 6432;
+        tx.chainId = chain_id;
         tx.v=SignTransaction::fixHexValue(RLP::intToHex(tx.chainId));//as per EIP 155
 
         qDebug() << QString::fromStdString(tx.nonce);

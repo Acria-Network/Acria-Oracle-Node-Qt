@@ -50,12 +50,12 @@ void AvailableDataContracts::update_data_contracts(){
 
     request.setUrl(url1);
     request.setRawHeader("Content-Type", "application/json");
-    manager->post(request, Util::generate_rpc_call("eth_call", account, this->acria_main, data1, transaction_fee, 0, 58, -1));
+    manager->post(request, Util::generate_rpc_call("eth_call", account, this->acria_main, data1, 0, 0, 58, -1));
 }
 
 void AvailableDataContracts::managerFinished(QNetworkReply *reply) {
     if (reply->error()) {
-        qDebug() << reply->errorString();
+        qDebug() << "error available contracts: " << reply->errorString();
         return;
     }
 
@@ -63,7 +63,7 @@ void AvailableDataContracts::managerFinished(QNetworkReply *reply) {
     QJsonObject obj = Util::ObjectFromString(answer);
     QString res = obj["result"].toString().remove(0, 2);
 
-    qDebug() << res;
+    qDebug() << answer;
 
     if(res.length() > 2){
         std::vector<QString> inf;

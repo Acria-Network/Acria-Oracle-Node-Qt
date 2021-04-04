@@ -26,7 +26,7 @@ Node::Node(Data* _data, QString _type)
 
     this->status_geth = false;
 
-    update_geth_status();
+    //update_geth_status();
 };
 
 void Node::update_geth_status(){
@@ -40,7 +40,7 @@ void Node::update_geth_status(){
     QJsonObject obj;
     obj["jsonrpc"] = "2.0";
     obj["method"] = "web3_clientVersion";
-    obj["params"] = "";
+    //obj["params"] = "";
     obj["id"] = 67;
     QJsonDocument doc(obj);
     QByteArray data = doc.toJson();
@@ -53,7 +53,7 @@ void Node::update_geth_status(){
     QJsonObject obj2;
     obj2["jsonrpc"] = "2.0";
     obj2["method"] = "eth_chainId";
-    obj2["params"] = "";
+    //obj2["params"] = "";
     obj2["id"] = 69;
     QJsonDocument doc2(obj2);
     QByteArray data2 = doc2.toJson();
@@ -70,7 +70,8 @@ Node::~Node()
 
 void Node::statusManagerFinished(QNetworkReply *reply) {
     if (reply->error()) {
-        qDebug() << "error " << reply->errorString();
+        qDebug() << "error (geth status): " << reply->errorString();
+        status_geth = false;
         return;
     }
 
@@ -92,7 +93,8 @@ void Node::statusManagerFinished(QNetworkReply *reply) {
 
 void Node::chain_idManagerFinished(QNetworkReply *reply) {
     if (reply->error()) {
-        qDebug() << "error " << reply->errorString();
+        qDebug() << "error (chain id):" << reply->errorString();
+        status_geth_chain_id = false;
         return;
     }
 

@@ -69,7 +69,8 @@ void NonceManager::update_nonce(){
 
 void NonceManager::managerFinished(QNetworkReply *reply) {
     if (reply->error()) {
-        qDebug() << "error " << reply->errorString();
+        qDebug() << "error (nonce manager): " << reply->errorString();
+        this->ready = false;
         return;
     }
 
@@ -77,6 +78,11 @@ void NonceManager::managerFinished(QNetworkReply *reply) {
     QJsonObject obj = Util::ObjectFromString(answer);
 
     qDebug() << "nonce: " << obj["result"].toString().toUInt(NULL, 16);
+
+    if(obj["result"].toString() != "" && obj["result"].toString() != nullptr)
+        this->ready = true;
+    else
+        this->ready = false;
 
     this->nonce = obj["result"].toString().toUInt(NULL, 16) - 1;
     this->ready = true;

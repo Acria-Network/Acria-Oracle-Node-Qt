@@ -184,8 +184,8 @@ void Resource::send_resource(){
     tx.value=SignTransaction::fixHexValue("");
     //tx.data=SignTransaction::fixHexValue("0xa9059cbb");
     tx.data=SignTransaction::fixHexValue(data1.toStdString());
-    //tx.chainId = chain_id;
-    tx.chainId = 6432;
+    tx.chainId = chain_id;
+    //tx.chainId = 6432;
     tx.v=SignTransaction::fixHexValue(RLP::intToHex(tx.chainId));//as per EIP 155
 
     //std::string privkey = "1c28847b1ae871f0b4f9758a8129e4c7c09a2005ece548ca3a29382a59de6fbf";

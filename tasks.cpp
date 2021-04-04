@@ -83,7 +83,7 @@ void Tasks::managerFinished(QNetworkReply *reply) {
 
 void Tasks::r_managerFinished(QNetworkReply *reply) {
     if (reply->error()) {
-        qDebug() << reply->errorString();
+        qDebug() << "error tasks: " << reply->errorString();
         return;
     }
 
@@ -91,7 +91,7 @@ void Tasks::r_managerFinished(QNetworkReply *reply) {
     QJsonObject obj = Util::ObjectFromString(answer);
     QString res = obj["result"].toString().remove(0, 2);
 
-    //qDebug() << answer;
+    qDebug() << answer;
 
     if(res.length() > 2){
         std::vector<QString> inf;
@@ -184,5 +184,5 @@ void Tasks::update_requests(){
 
     r_request.setUrl(url1);
     r_request.setRawHeader("Content-Type", "application/json");
-    r_manager->post(r_request, Util::generate_rpc_call("eth_call", account, contract, data1, transaction_fee, 0, 78, -1));
+    r_manager->post(r_request, Util::generate_rpc_call("eth_call", account, contract, data1, 0, 0, 78, -1));
 }

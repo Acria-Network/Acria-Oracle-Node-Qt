@@ -109,6 +109,7 @@ public:
 
         QJsonArray obj3;
         obj3.push_back(obj1);
+        obj3.push_back("latest");
 
         QJsonObject obj;
         obj["jsonrpc"] = "2.0";

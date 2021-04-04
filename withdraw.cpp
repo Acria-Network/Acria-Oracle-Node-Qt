@@ -49,10 +49,10 @@ void Withdraw::withdraw(ProcessingWindow* _processing_window){
 
     QUrl url1;
     QString contract1, account1, privkey;
-    unsigned long long transaction_fee = 0;
+    unsigned long long transaction_fee = 0; unsigned chain_id;
     unsigned nonce = this->nonce_manager->get_nonce();
 
-    this->data->get_chain_info(this->type, &url1, &account1, &contract1, &transaction_fee, &privkey);
+    this->data->get_chain_info(this->type, &url1, &account1, &contract1, &transaction_fee, &privkey, &chain_id);
     privkey.remove(0, 2);
 
     QString d1 = "0x3ccfd60b";
@@ -69,7 +69,8 @@ void Withdraw::withdraw(ProcessingWindow* _processing_window){
     tx.to=SignTransaction::fixHexValue(contract1.toStdString());
     tx.value=SignTransaction::fixHexValue("");
     tx.data=SignTransaction::fixHexValue(d1.toStdString());
-    tx.chainId = 6432;
+    //tx.chainId = 6432;
+    tx.chainId = chain_id;
     tx.v=SignTransaction::fixHexValue(RLP::intToHex(tx.chainId));//as per EIP 155
 
     qDebug() << QString::fromStdString(tx.nonce);

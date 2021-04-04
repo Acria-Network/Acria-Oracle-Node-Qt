@@ -90,7 +90,7 @@ std::string RLP::intToHex(int n){
     stream << std::hex << n;
     std::string result( stream.str() );
     if(result.size() % 2)
-        result = "0"+result;
+        result = result;
     return result;
 }
 

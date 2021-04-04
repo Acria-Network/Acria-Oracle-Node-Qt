@@ -30,7 +30,7 @@ void GasPrice::update_gas_price(){
 
 void GasPrice::managerFinished(QNetworkReply *reply) {
     if (reply->error()) {
-        qDebug() << reply->errorString();
+        qDebug() << "error (gas price " << this->type <<"): " << reply->errorString();
         return;
     }
 
@@ -43,7 +43,7 @@ void GasPrice::managerFinished(QNetworkReply *reply) {
 
     if(res.length() > 2){
         qDebug() << "gas price " << res.toULongLong(NULL,16);
-        this->data->chain_data[this->type].transaction_fee = res.toULongLong(NULL,16);
+        this->data->chain_data[this->type].transaction_fee = res.toULongLong(NULL,16)*1.1;
     }
 
 }

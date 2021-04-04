@@ -13,6 +13,7 @@
 #include <QtConcurrent/QtConcurrent>
 #include <QtCore>
 #include <QLineEdit>
+#include <cmath>
 //#include <QJSEngine>
 //#include <QJSValue>
 
@@ -156,6 +157,12 @@ void MainWindow::get_status_geth(){
         this->ui->label_contract_deployed_eth->setPixmap(QPixmap("./resources/success.svg"));
     else
         this->ui->label_contract_deployed_eth->setPixmap(QPixmap("./resources/error.svg"));
+
+    if(this->data->chain_data["ethereum"].transaction_fee != 0)
+        this->ui->label_gas_price_img_eth->setPixmap(QPixmap("./resources/success.svg"));
+    else
+        this->ui->label_gas_price_img_eth->setPixmap(QPixmap("./resources/error.svg"));
+    this->ui->label_gas_price_eth->setText("Gas Price (" + QString::number(double(this->data->chain_data["ethereum"].transaction_fee)/pow(10,9)) +"):");
 }
 
 void MainWindow::get_status_polkadot(){
@@ -181,6 +188,12 @@ void MainWindow::get_status_binance(){
         this->ui->label_contract_deployed_binance->setPixmap(QPixmap("./resources/success.svg"));
     else
         this->ui->label_contract_deployed_binance->setPixmap(QPixmap("./resources/error.svg"));
+
+    if(this->data->chain_data["binance"].transaction_fee != 0)
+        this->ui->label_gas_price_img_binance->setPixmap(QPixmap("./resources/success.svg"));
+    else
+        this->ui->label_gas_price_img_binance->setPixmap(QPixmap("./resources/error.svg"));
+    this->ui->label_gas_price_binance->setText("Gas Price (" + QString::number(this->data->chain_data["binance"].transaction_fee) +"):");
 }
 
 void MainWindow::get_status_acria(){
@@ -190,6 +203,12 @@ void MainWindow::get_status_config(){
 }
 
 void MainWindow::update_status(){
+    for (auto const& x : eth_based_chain)
+    {
+        if(this->data->chain_data[x.first].enabled != false)
+            x.second->node->update_geth_status();
+    }
+
     get_status_geth();
     get_status_binance();
     get_status_polkadot();
@@ -313,14 +332,16 @@ void MainWindow::update_requests(){
 void MainWindow::update_gas_price(){
     for (auto const& x : eth_based_chain)
     {
-        x.second->gas_price->update_gas_price();
+        if(this->data->chain_data[x.first].enabled != false)
+            x.second->gas_price->update_gas_price();
     }
 }
 
 void MainWindow::update_events(){
     for (auto const& x : eth_based_chain)
     {
-        x.second->cinfo->update_events();
+        if(this->node_ready(x.first))
+            x.second->cinfo->update_events();
     }
 
     std::vector<comp> r;
@@ -374,7 +395,8 @@ void MainWindow::update_events(){
 void MainWindow::update_balances(){
     for (auto const& x : eth_based_chain)
     {
-        x.second->balances->update_withdrawable();
+        if(this->node_ready(x.first))
+            x.second->balances->update_withdrawable();
     }
 
     this->ui->tableWidget_balances->clear();
@@ -707,12 +729,18 @@ void MainWindow::on_pushButton_binance_info_clicked()
 
 void MainWindow::on_pushButton_deploy_contract_binance_clicked()
 {
-     this->eth_based_chain["binance"]->deploy_window->exec();
+    if(this->node_ready("binance"))
+        this->eth_based_chain["binance"]->deploy_window->exec();
+    else
+        show_msgBox("Please wait until the ethereum node is ready!");
 }
 
 void MainWindow::on_pushButton_deploy_contract_eth_clicked()
 {
-    this->eth_based_chain["ethereum"]->deploy_window->exec();
+    if(this->node_ready("ethereum"))
+        this->eth_based_chain["ethereum"]->deploy_window->exec();
+    else
+        show_msgBox("Please wait until the ethereum node is ready!");
 }
 
 void MainWindow::on_pushButton_accounts_binance_clicked()
