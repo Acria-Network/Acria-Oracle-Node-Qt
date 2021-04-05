@@ -35,6 +35,9 @@ private:
     QNetworkAccessManager *chain_id_manager;
     QNetworkRequest chain_id_request;
 
+    QNetworkAccessManager *balance_manager;
+    QNetworkRequest balance_request;
+
     Data* data;
 
     QString type;
@@ -44,6 +47,7 @@ private:
 private slots:
     void statusManagerFinished(QNetworkReply *reply);
     void chain_idManagerFinished(QNetworkReply *reply);
+    void balanceManagerFinished(QNetworkReply *reply);
 };
 
 #endif // NODE_H

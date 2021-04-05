@@ -16,6 +16,7 @@ struct ChainData{
     bool enabled;
     unsigned long long transaction_fee;
     std::vector<QString> items;
+    __uint128_t balance;
 };
 
 

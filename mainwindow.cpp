@@ -163,6 +163,14 @@ void MainWindow::get_status_geth(){
     else
         this->ui->label_gas_price_img_eth->setPixmap(QPixmap("./resources/error.svg"));
     this->ui->label_gas_price_eth->setText("Gas Price (" + QString::number(double(this->data->chain_data["ethereum"].transaction_fee)/pow(10,9)) +"):");
+
+    if(this->data->chain_data["ethereum"].balance != 0)
+        this->ui->label_balance_img_eth->setPixmap(QPixmap("./resources/success.svg"));
+    else
+        this->ui->label_balance_img_eth->setPixmap(QPixmap("./resources/error.svg"));
+    __uint128_t bal = this->data->chain_data["ethereum"].balance/static_cast<__uint128_t>(pow(10,14));
+    double bal_d = double(bal)/pow(10,4);
+    this->ui->label_balance_eth->setText("Balance (" + QString::number(bal_d) +"):");
 }
 
 void MainWindow::get_status_polkadot(){

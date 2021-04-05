@@ -15,6 +15,7 @@ Data::Data()
         c.transaction_fee = 0;
         c.chain_id = 0;
         c.enabled = 0;
+        c.balance = 0;
         chain_data[chains[i]] = c;
     }
 }

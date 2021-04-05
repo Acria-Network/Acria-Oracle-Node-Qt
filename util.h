@@ -48,6 +48,23 @@ public:
         return tmp;
     }
 
+    static __uint128_t toUint128(QString s){
+        s.remove(0,2);
+        unsigned ctr = 0;
+        __uint128_t out = 0;
+        for(int i = s.length()-1; i>=0; i--){
+            __uint128_t add = QString(s.at(i)).toUInt(NULL, 16);
+            qDebug() << QString(s.at(i)).toUInt(NULL, 16);
+            for(unsigned i=0;i<ctr;i++){
+                add*=16;
+            }
+            out+=add;
+            ctr++;
+        }
+
+        return out;
+    }
+
     template <typename I> static std::string n2hexstr(I w, size_t hex_len = sizeof(I)<<1) {
         static const char* digits = "0123456789ABCDEF";
         std::string rc(hex_len,'0');

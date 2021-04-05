@@ -24,6 +24,11 @@ Node::Node(Data* _data, QString _type)
     QObject::connect(chain_id_manager, SIGNAL(finished(QNetworkReply*)),
         this, SLOT(chain_idManagerFinished(QNetworkReply*)));
 
+    balance_manager = new QNetworkAccessManager();
+
+    QObject::connect(balance_manager, SIGNAL(finished(QNetworkReply*)),
+        this, SLOT(balanceManagerFinished(QNetworkReply*)));
+
     this->status_geth = false;
 
     //update_geth_status();
@@ -61,6 +66,23 @@ void Node::update_geth_status(){
     chain_id_request.setUrl(url1);
     chain_id_request.setRawHeader("Content-Type", "application/json");
     chain_id_manager->post(chain_id_request, data2);
+
+    QJsonArray obj99;
+    obj99.push_back(account1);
+    obj99.push_back("latest");
+
+    qDebug() << "answer";
+    QJsonObject obj3;
+    obj3["jsonrpc"] = "2.0";
+    obj3["method"] = "eth_getBalance";
+    obj3["params"] = obj99;
+    obj3["id"] = 63;
+    QJsonDocument doc3(obj3);
+    QByteArray data3 = doc3.toJson();
+
+    balance_request.setUrl(url1);
+    balance_request.setRawHeader("Content-Type", "application/json");
+    balance_manager->post(balance_request, data3);
 }
 
 Node::~Node()
@@ -113,6 +135,27 @@ void Node::chain_idManagerFinished(QNetworkReply *reply) {
 
     this->chain_id = obj["result"].toString().toUInt(NULL, 16);
     this->data->chain_data[this->type].chain_id = this->chain_id;
+}
+
+void Node::balanceManagerFinished(QNetworkReply *reply) {
+    if (reply->error()) {
+        qDebug() << "error (balance account):" << reply->errorString();
+        this->data->chain_data[this->type].balance = 0;
+        return;
+    }
+
+    QString answer = reply->readAll();
+
+    qDebug() << "answer " <<answer;
+
+    QJsonObject obj = Util::ObjectFromString(answer);
+
+    qDebug() << obj["result"].toString();
+
+    if(obj["result"].toString() != "" && obj["result"].toString() != nullptr)
+        this->data->chain_data[this->type].balance = Util::toUint128(obj["result"].toString());
+    else
+        this->data->chain_data[this->type].balance = 0;
 }
 
 bool Node::get_status_geth(){
