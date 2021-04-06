@@ -128,7 +128,7 @@ background-color:#333333;
        <enum>QTabWidget::West</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>4</number>
       </property>
       <property name="iconSize">
        <size>
@@ -2259,6 +2259,9 @@ border:none;
           <property name="elideMode">
            <enum>Qt::ElideNone</enum>
           </property>
+          <property name="usesScrollButtons">
+           <bool>true</bool>
+          </property>
           <widget class="QWidget" name="tab_5">
            <property name="styleSheet">
             <string notr="true">border:none;</string>
@@ -2274,7 +2277,7 @@ border:none;
             <property name="geometry">
              <rect>
               <x>10</x>
-              <y>134</y>
+              <y>171</y>
               <width>171</width>
               <height>18</height>
              </rect>
@@ -2290,7 +2293,7 @@ border:none;
             <property name="geometry">
              <rect>
               <x>10</x>
-              <y>48</y>
+              <y>87</y>
               <width>71</width>
               <height>16</height>
              </rect>
@@ -2303,7 +2306,7 @@ border:none;
             <property name="geometry">
              <rect>
               <x>10</x>
-              <y>106</y>
+              <y>145</y>
               <width>271</width>
               <height>20</height>
              </rect>
@@ -2343,7 +2346,7 @@ border:none;
             <property name="geometry">
              <rect>
               <x>10</x>
-              <y>90</y>
+              <y>129</y>
               <width>91</width>
               <height>16</height>
              </rect>
@@ -2356,7 +2359,7 @@ border:none;
             <property name="geometry">
              <rect>
               <x>10</x>
-              <y>64</y>
+              <y>103</y>
               <width>271</width>
               <height>20</height>
              </rect>
@@ -2370,7 +2373,7 @@ border:none;
             <property name="geometry">
              <rect>
               <x>288</x>
-              <y>108</y>
+              <y>147</y>
               <width>91</width>
               <height>17</height>
              </rect>
@@ -2396,7 +2399,7 @@ background-color:orange;</string>
             <property name="geometry">
              <rect>
               <x>288</x>
-              <y>66</y>
+              <y>105</y>
               <width>91</width>
               <height>17</height>
              </rect>
@@ -2416,6 +2419,70 @@ background-color:orange;</string>
             </property>
             <property name="flat">
              <bool>true</bool>
+            </property>
+           </widget>
+           <widget class="QSpinBox" name="spinBox_custom_chain_id_eth">
+            <property name="geometry">
+             <rect>
+              <x>70</x>
+              <y>61</y>
+              <width>91</width>
+              <height>22</height>
+             </rect>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color:white;
+color:black;
+border: none;
+/*padding:30px;*/
+width:80px;
+padding-top:2px;
+padding-bottom:2px;
+background-color:orange;</string>
+            </property>
+            <property name="wrapping">
+             <bool>false</bool>
+            </property>
+            <property name="buttonSymbols">
+             <enum>QAbstractSpinBox::UpDownArrows</enum>
+            </property>
+            <property name="accelerated">
+             <bool>false</bool>
+            </property>
+            <property name="keyboardTracking">
+             <bool>false</bool>
+            </property>
+            <property name="maximum">
+             <number>99999</number>
+            </property>
+           </widget>
+           <widget class="QLabel" name="label_39">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>45</y>
+              <width>91</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Custom Chain ID:</string>
+            </property>
+           </widget>
+           <widget class="QCheckBox" name="checkBox_custom_chain_id_eth">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>65</y>
+              <width>51</width>
+              <height>18</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Enabled</string>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
             </property>
            </widget>
           </widget>
@@ -2542,7 +2609,7 @@ background-color:orange;</string>
             <property name="geometry">
              <rect>
               <x>10</x>
-              <y>90</y>
+              <y>129</y>
               <width>71</width>
               <height>16</height>
              </rect>
@@ -2555,7 +2622,7 @@ background-color:orange;</string>
             <property name="geometry">
              <rect>
               <x>10</x>
-              <y>134</y>
+              <y>171</y>
               <width>171</width>
               <height>18</height>
              </rect>
@@ -2571,7 +2638,7 @@ background-color:orange;</string>
             <property name="geometry">
              <rect>
               <x>10</x>
-              <y>106</y>
+              <y>145</y>
               <width>271</width>
               <height>20</height>
              </rect>
@@ -2598,7 +2665,7 @@ background-color:orange;</string>
             <property name="geometry">
              <rect>
               <x>10</x>
-              <y>48</y>
+              <y>87</y>
               <width>71</width>
               <height>16</height>
              </rect>
@@ -2611,7 +2678,7 @@ background-color:orange;</string>
             <property name="geometry">
              <rect>
               <x>10</x>
-              <y>64</y>
+              <y>103</y>
               <width>271</width>
               <height>20</height>
              </rect>
@@ -2638,7 +2705,7 @@ background-color:orange;</string>
             <property name="geometry">
              <rect>
               <x>288</x>
-              <y>108</y>
+              <y>147</y>
               <width>91</width>
               <height>17</height>
              </rect>
@@ -2664,7 +2731,7 @@ background-color:orange;</string>
             <property name="geometry">
              <rect>
               <x>288</x>
-              <y>66</y>
+              <y>105</y>
               <width>91</width>
               <height>17</height>
              </rect>
@@ -2684,6 +2751,70 @@ background-color:orange;</string>
             </property>
             <property name="flat">
              <bool>true</bool>
+            </property>
+           </widget>
+           <widget class="QLabel" name="label_44">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>45</y>
+              <width>91</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Custom Chain ID:</string>
+            </property>
+           </widget>
+           <widget class="QCheckBox" name="checkBox_custom_chain_id_binance">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>65</y>
+              <width>51</width>
+              <height>18</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Enabled</string>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
+           </widget>
+           <widget class="QSpinBox" name="spinBox_custom_chain_id_binance">
+            <property name="geometry">
+             <rect>
+              <x>70</x>
+              <y>61</y>
+              <width>91</width>
+              <height>22</height>
+             </rect>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color:white;
+color:black;
+border: none;
+/*padding:30px;*/
+width:80px;
+padding-top:2px;
+padding-bottom:2px;
+background-color:orange;</string>
+            </property>
+            <property name="wrapping">
+             <bool>false</bool>
+            </property>
+            <property name="buttonSymbols">
+             <enum>QAbstractSpinBox::UpDownArrows</enum>
+            </property>
+            <property name="accelerated">
+             <bool>false</bool>
+            </property>
+            <property name="keyboardTracking">
+             <bool>false</bool>
+            </property>
+            <property name="maximum">
+             <number>99999</number>
             </property>
            </widget>
           </widget>

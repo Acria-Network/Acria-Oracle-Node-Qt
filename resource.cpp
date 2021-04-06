@@ -59,6 +59,14 @@ Resource::Resource(QString _url, std::vector<QString> _l_json, QString n, Data* 
     this->url_data = _url_data;
     this->parameter_type = _parameter_type;
 
+    for(int i = l_json.size()-1; i>=0; i--){
+        if(l_json[i] == ""){
+            l_json.erase(l_json.begin() + i);
+        }
+        else
+            break;
+    }
+
     //this->nonce = this->nonce_manager->get_nonce();
 }
 
@@ -247,34 +255,55 @@ void Resource::send_resource(){
 */
 
 void Resource::managerFinished(QNetworkReply *reply) {
-    if (reply->error()) {
-        qDebug() << reply->errorString();
-        this->error = reply->errorString();
+    try{
+        if (reply->error()) {
+            qDebug() << reply->errorString();
+            throw;
+        }
+
+        QString answer = reply->readAll();
+        nlohmann::json tmp1 = nlohmann::json::parse(answer.toStdString());
+        qDebug() << answer;
+
+        int i = 0;
+        for(;i<static_cast<int>(l_json.size())-1; i++){
+            if(l_json[i] != ""){
+                if(tmp1.contains(l_json[i].toStdString())){
+                    tmp1 = tmp1[l_json[i].toStdString()];
+                }
+                else{
+                    throw;
+                }
+            }
+            else{
+                throw;
+            }
+        }
+
+        //double ans = static_cast<double>(tmp1[l_json[0].toStdString()][l_json[1].toStdString()]);
+        double ans = static_cast<double>(tmp1[l_json[i].toStdString()]);
+
+        d_value=ans;
+
+        QString tmp2 = QString::number(d_value);
+        int point = tmp2.indexOf('.');
+
+        qDebug() << "point" << point;
+        tmp2 = tmp2.replace(".", "");
+
+        for(uint i=tmp2.length()-point;i<18;i++){
+            tmp2 += "0";
+        }
+
+        value256 = uint256S(tohex(tmp2.toStdString()));
+
+        qDebug() << QString::fromStdString(value256.ToString());
+    }
+    catch(...){
+        qDebug() << "error json";
         *this->state=8;
         return;
     }
-
-    QString answer = reply->readAll();
-    nlohmann::json tmp1 = nlohmann::json::parse(answer.toStdString());
-
-    double ans = static_cast<double>(tmp1[l_json[0].toStdString()][l_json[1].toStdString()]);
-
-    d_value=ans;
-
-    QString tmp2 = QString::number(d_value);
-    int point = tmp2.indexOf('.');
-
-    qDebug() << "point" << point;
-    tmp2 = tmp2.replace(".", "");
-
-    for(uint i=tmp2.length()-point;i<18;i++){
-        tmp2 += "0";
-    }
-
-    value256 = uint256S(tohex(tmp2.toStdString()));
-
-    qDebug() << QString::fromStdString(value256.ToString());
-
 
     send_resource();
 }

@@ -13,6 +13,8 @@ struct ChainData{
     QString contract;
     QString wallet_path;
     unsigned chain_id;
+    unsigned chain_id_given;
+    bool custom_chain_id_enabled;
     bool enabled;
     unsigned long long transaction_fee;
     std::vector<QString> items;

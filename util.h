@@ -54,7 +54,6 @@ public:
         __uint128_t out = 0;
         for(int i = s.length()-1; i>=0; i--){
             __uint128_t add = QString(s.at(i)).toUInt(NULL, 16);
-            qDebug() << QString(s.at(i)).toUInt(NULL, 16);
             for(unsigned i=0;i<ctr;i++){
                 add*=16;
             }

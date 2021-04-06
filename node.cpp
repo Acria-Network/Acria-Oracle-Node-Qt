@@ -41,6 +41,8 @@ void Node::update_geth_status(){
 
     this->data->get_chain_info(this->type, &url1, &account1, &contract1, &transaction_fee);
 
+    qDebug() << url1;
+
     qDebug() << "answer";
     QJsonObject obj;
     obj["jsonrpc"] = "2.0";

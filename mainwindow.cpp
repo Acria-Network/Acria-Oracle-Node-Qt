@@ -125,6 +125,8 @@ void MainWindow::update_settings(){
     this->ui->lineEdit_eth_account->setText(this->data->chain_data["ethereum"].account);
     this->ui->lineEdit_eth_contract->setText(this->data->chain_data["ethereum"].contract);
     this->ui->checkBox_eth->setChecked(this->data->chain_data["ethereum"].enabled);
+    this->ui->checkBox_custom_chain_id_eth->setChecked(this->data->chain_data["ethereum"].custom_chain_id_enabled);
+    this->ui->spinBox_custom_chain_id_eth->setValue(this->data->chain_data["ethereum"].chain_id_given);
 
     this->ui->lineEdit_polkadot_url->setText(this->data->chain_data["polkadot"].url);
     this->ui->lineEdit_polkadot_account->setText(this->data->chain_data["polkadot"].account);
@@ -135,6 +137,8 @@ void MainWindow::update_settings(){
     this->ui->lineEdit_binance_account->setText(this->data->chain_data["binance"].account);
     this->ui->lineEdit_binance_contract->setText(this->data->chain_data["binance"].contract);
     this->ui->checkBox_binance->setChecked(this->data->chain_data["binance"].enabled);
+    this->ui->checkBox_custom_chain_id_binance->setChecked(this->data->chain_data["binance"].custom_chain_id_enabled);
+    this->ui->spinBox_custom_chain_id_binance->setValue(this->data->chain_data["binance"].chain_id_given);
 }
 
 void MainWindow::get_status_geth(){
@@ -201,7 +205,15 @@ void MainWindow::get_status_binance(){
         this->ui->label_gas_price_img_binance->setPixmap(QPixmap("./resources/success.svg"));
     else
         this->ui->label_gas_price_img_binance->setPixmap(QPixmap("./resources/error.svg"));
-    this->ui->label_gas_price_binance->setText("Gas Price (" + QString::number(this->data->chain_data["binance"].transaction_fee) +"):");
+    this->ui->label_gas_price_binance->setText("Gas Price (" + QString::number(double(this->data->chain_data["binance"].transaction_fee)/pow(10,9)) +"):");
+
+    if(this->data->chain_data["binance"].balance != 0)
+        this->ui->label_balance_img_binance->setPixmap(QPixmap("./resources/success.svg"));
+    else
+        this->ui->label_balance_img_binance->setPixmap(QPixmap("./resources/error.svg"));
+    __uint128_t bal = this->data->chain_data["binance"].balance/static_cast<__uint128_t>(pow(10,14));
+    double bal_d = double(bal)/pow(10,4);
+    this->ui->label_balance_binance->setText("Balance (" + QString::number(bal_d) +"):");
 }
 
 void MainWindow::get_status_acria(){
@@ -236,7 +248,7 @@ QString MainWindow::get_state_string(uint state){
 }
 
 bool MainWindow::node_ready(QString type){
-    if(this->data->chain_data[type].transaction_fee != 0 && this->data->chain_data[type].enabled != false && this->eth_based_chain[type]->nonce_manager->is_ready())
+    if(this->data->chain_data[type].transaction_fee != 0 && this->data->chain_data[type].enabled != false && this->eth_based_chain[type]->nonce_manager->is_ready() && this->data->chain_data[type].private_key != "")
         return true;
     else
         return false;
@@ -654,11 +666,19 @@ void MainWindow::on_pushButton_setting_save_clicked()
     this->data->chain_data["binance"].account = this->ui->lineEdit_binance_account->text();
     this->data->chain_data["binance"].contract = this->ui->lineEdit_binance_contract->text();
     this->data->chain_data["binance"].enabled = this->ui->checkBox_binance->isChecked();
+    this->data->chain_data["binance"].custom_chain_id_enabled = this->ui->checkBox_custom_chain_id_binance->isChecked();
+    if(this->data->chain_data["binance"].custom_chain_id_enabled){
+        this->data->chain_data["binance"].chain_id_given = this->ui->spinBox_custom_chain_id_binance->value();
+    }
 
     this->data->chain_data["ethereum"].url = this->ui->lineEdit_geth_url->text();
     this->data->chain_data["ethereum"].account = this->ui->lineEdit_eth_account->text();
     this->data->chain_data["ethereum"].contract = this->ui->lineEdit_eth_contract->text();
     this->data->chain_data["ethereum"].enabled = this->ui->checkBox_eth->isChecked();
+    this->data->chain_data["ethereum"].custom_chain_id_enabled = this->ui->checkBox_custom_chain_id_eth->isChecked();
+    if(this->data->chain_data["ethereum"].custom_chain_id_enabled){
+        this->data->chain_data["ethereum"].chain_id_given = this->ui->spinBox_custom_chain_id_eth->value();
+    }
 
     this->data->chain_data["polkadot"].url = this->ui->lineEdit_polkadot_url->text();
     this->data->chain_data["polkadot"].account = this->ui->lineEdit_polkadot_account->text();
@@ -740,7 +760,7 @@ void MainWindow::on_pushButton_deploy_contract_binance_clicked()
     if(this->node_ready("binance"))
         this->eth_based_chain["binance"]->deploy_window->exec();
     else
-        show_msgBox("Please wait until the ethereum node is ready!");
+        show_msgBox("Please wait until the binance node is ready!");
 }
 
 void MainWindow::on_pushButton_deploy_contract_eth_clicked()

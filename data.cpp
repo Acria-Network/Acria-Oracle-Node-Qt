@@ -16,6 +16,8 @@ Data::Data()
         c.chain_id = 0;
         c.enabled = 0;
         c.balance = 0;
+        c.chain_id_given = 0;
+        c.custom_chain_id_enabled = false;
         chain_data[chains[i]] = c;
     }
 }
@@ -29,6 +31,8 @@ void Data::save_settings(){
         tmp[chains[i].toStdString() + "_contract"] = chain_data[chains[i]].contract.toStdString();
         tmp[chains[i].toStdString() + "_enabled"] = chain_data[chains[i]].enabled;
         tmp[chains[i].toStdString() + "_wallet_path"] = chain_data[chains[i]].wallet_path.toStdString();
+        tmp[chains[i].toStdString() + "_chain_id_given"] = chain_data[chains[i]].chain_id_given;
+        tmp[chains[i].toStdString() + "_custom_chain_id_enabled"] = chain_data[chains[i]].custom_chain_id_enabled;
     }
 
     QString filename="settings.conf";
@@ -77,6 +81,8 @@ void Data::load_settings(){
             chain_data[chains[i]].contract = QString::fromStdString(tmp[chains[i].toStdString() + "_contract"]);
             chain_data[chains[i]].enabled = tmp[chains[i].toStdString() + "_enabled"];
             chain_data[chains[i]].wallet_path = QString::fromStdString(tmp[chains[i].toStdString() + "_wallet_path"]);
+            chain_data[chains[i]].chain_id_given = tmp[chains[i].toStdString() + "_chain_id_given"];
+            chain_data[chains[i]].custom_chain_id_enabled = tmp[chains[i].toStdString() + "_custom_chain_id_enabled"];
         }
         catch(...){
             qDebug() << "Error settings " + chains[i];
@@ -85,14 +91,16 @@ void Data::load_settings(){
 }
 
 void Data::get_chain_info(QString chain, QUrl* url, QString* account, QString* contract, unsigned long long* transaction_fee, QString* privkey, unsigned* chain_id){
-    if(chain == "ethereum"){
-        *url = QUrl(this->chain_data[chain].url);
-        *contract = this->chain_data[chain].contract;
-        *account = this->chain_data[chain].account;
-        *transaction_fee = this->chain_data[chain].transaction_fee;
-        if(privkey != NULL)
-            *privkey = this->chain_data[chain].private_key;
-        if(chain_id != NULL)
+    *url = QUrl(this->chain_data[chain].url);
+    *contract = this->chain_data[chain].contract;
+    *account = this->chain_data[chain].account;
+    *transaction_fee = this->chain_data[chain].transaction_fee;
+    if(privkey != NULL)
+        *privkey = this->chain_data[chain].private_key;
+    if(chain_id != NULL){
+        if(this->chain_data[chain].custom_chain_id_enabled)
+            *chain_id = this->chain_data[chain].chain_id_given;
+        else
             *chain_id = this->chain_data[chain].chain_id;
     }
 }

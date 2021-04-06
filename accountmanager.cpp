@@ -29,10 +29,19 @@ AccountManager::AccountManager(QWidget *parent, Data* _data) :
 
     delay();
     if(this->data->chain_data["binance"].wallet_path.length() > 4)
-    this->ui->webEngineView->page()->runJavaScript("binWalletPath = " + this->data->chain_data["binance"].wallet_path + ";document.getElementById(\"selectWalletBin\").innerHTML = \"...\" + binWalletPath.substr(binWalletPath.length - 20);");
+    this->ui->webEngineView->page()->runJavaScript("binWalletPath = '" + this->data->chain_data["binance"].wallet_path + "';"
+                                                   "if(binWalletPath.length > 0){"
+                                                   "document.getElementById(\"selectWalletBin\").innerHTML = \"...\" + binWalletPath.substr(binWalletPath.length - 20);"
+                                                   "document.getElementById(\"keystore_b\").className += ' keystore_available';"
+                                                   "}");
     qDebug() << this->data->chain_data["ethereum"].wallet_path;
     if(this->data->chain_data["ethereum"].wallet_path.length() > 4)
-    this->ui->webEngineView->page()->runJavaScript("ethWalletPath = '" + this->data->chain_data["ethereum"].wallet_path + "';document.getElementById('selectWalletEth').innerHTML = '...' + ethWalletPath.substr(ethWalletPath.length - 20);");
+    this->ui->webEngineView->page()->runJavaScript("ethWalletPath = '" + this->data->chain_data["ethereum"].wallet_path + "';"
+                                                   "if(ethWalletPath.length > 0){"
+                                                   "document.getElementById('selectWalletEth').innerHTML = '...' + ethWalletPath.substr(ethWalletPath.length - 20);"
+                                                   "document.getElementById(\"keystore_e\").className += ' keystore_available';"
+                                                   "}");
+
 
     /*
     QFile apiFile(":/qtwebchannel/qwebchannel.js"); //load the API from the resources

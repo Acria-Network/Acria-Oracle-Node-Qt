@@ -102,6 +102,7 @@ void DeployWindow::deploy(){
         tx.value=SignTransaction::fixHexValue("");
         tx.data=SignTransaction::fixHexValue(data1.toStdString());
         //tx.chainId = 6432;
+        qDebug() << chain_id;
         tx.chainId = chain_id;
         tx.v=SignTransaction::fixHexValue(RLP::intToHex(tx.chainId));//as per EIP 155
 
