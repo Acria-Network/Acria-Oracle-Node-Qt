@@ -21,6 +21,7 @@ Resource::Resource()
     this->s_value = "";
     this->d_value = 0;
     this->url = "";
+    this->regex = "";
 
     manager = new QNetworkAccessManager();
 
@@ -43,7 +44,7 @@ Resource::Resource()
     connect(is_deployed_timer, SIGNAL(timeout()), this, SLOT(is_deployed()));
 }
 
-Resource::Resource(QString _url, std::vector<QString> _l_json, QString n, Data* _data, QString _type, uint _id, uint* state, uint _max_gas, unsigned long long _fee, QString _request_data, QString _url_data, QString _parameter_type, NonceManager* _nonce_manager) : Resource()
+Resource::Resource(QString _url, std::vector<QString> _l_json, QString _regex, QString n, Data* _data, QString _type, uint _id, uint* state, uint _max_gas, unsigned long long _fee, QString _request_data, QString _url_data, QString _parameter_type, NonceManager* _nonce_manager) : Resource()
 {
     this->url = _url;
     this->l_json = _l_json;
@@ -58,6 +59,7 @@ Resource::Resource(QString _url, std::vector<QString> _l_json, QString n, Data* 
     this->request_data = _request_data;
     this->url_data = _url_data;
     this->parameter_type = _parameter_type;
+    this->regex = _regex;
 
     for(int i = l_json.size()-1; i>=0; i--){
         if(l_json[i] == ""){
@@ -77,10 +79,9 @@ Resource::~Resource()
     delete is_deployed_timer;
 }
 
-QString Resource::convert_parameter(){
-    qDebug() << "parameter type: " << this->parameter_type;
-    QStringList data = this->parameter_type.split(" => ");
-    QString str = this->request_data;
+QString Resource::convert_parameter(QString _parameter_type, QString _request_data){
+    QStringList data = _parameter_type.split(" => ");
+    QString str = _request_data;
 
     for(int i = 0; i<data.size(); i++){
         if(data.at(i) == "timestamp" || data.at(i) == "number"){
@@ -109,7 +110,7 @@ void Resource::update_resource(){
     if(this->get_minimum_transaction_fee() < this->fee){
         qDebug() << "request_data: " << this->request_data;
         if(this->request_data != "")
-            request.setUrl(QUrl(url_data.replace("%data%", this->convert_parameter())));
+            request.setUrl(QUrl(url_data.replace("%data%", this->convert_parameter(this->parameter_type, this->request_data))));
         else
             request.setUrl(QUrl(url));
 
@@ -119,33 +120,6 @@ void Resource::update_resource(){
         QThread::msleep(30000);
         this->update_resource();
     }
-}
-
-std::string digits = "0123456789abcdef";
-std::string tohex(std::string number) {                        // Decimal to Hexadecimal function
-    long length = number.length();
-    std::string result = "";
-    std::vector<long> nibbles;
-    for ( long i = 0; i < length; i++ ) {
-        nibbles.push_back(digits.find(number[i]));
-    }
-    long newlen = 0;
-    do {
-        long value = 0;
-        newlen = 0;
-        for ( long i = 0; i < length; i++ ) {
-            value = (value * 10) + nibbles[i];
-            if (value >= 16) {
-                nibbles[newlen++] = value / 16;
-                value %= 16;
-            } else if (newlen > 0) {
-                nibbles[newlen++] = 0;
-            };
-        };
-        length = newlen;
-        result = digits[value] + result;
-    } while (newlen != 0);
-    return result;
 }
 
 void Resource::send_resource(){
@@ -262,42 +236,68 @@ void Resource::managerFinished(QNetworkReply *reply) {
         }
 
         QString answer = reply->readAll();
-        nlohmann::json tmp1 = nlohmann::json::parse(answer.toStdString());
-        qDebug() << answer;
 
-        int i = 0;
-        for(;i<static_cast<int>(l_json.size())-1; i++){
-            if(l_json[i] != ""){
-                if(tmp1.contains(l_json[i].toStdString())){
-                    tmp1 = tmp1[l_json[i].toStdString()];
+        if(l_json.size() > 0){
+            nlohmann::json tmp1 = nlohmann::json::parse(answer.toStdString());
+            qDebug() << answer;
+
+            int i = 0;
+            for(;i<static_cast<int>(l_json.size())-1; i++){
+                if(l_json[i] != ""){
+                    if(tmp1.contains(l_json[i].toStdString())){
+                        tmp1 = tmp1[l_json[i].toStdString()];
+                    }
+                    else{
+                        throw;
+                    }
                 }
                 else{
                     throw;
                 }
             }
+
+            double ans = static_cast<double>(tmp1[l_json[i].toStdString()]);
+
+            d_value=ans;
+
+            QString tmp2 = QString::number(d_value);
+            int point = tmp2.indexOf('.');
+
+            qDebug() << "point" << point;
+            tmp2 = tmp2.replace(".", "");
+
+            for(uint i=tmp2.length()-point;i<18;i++){
+                tmp2 += "0";
+            }
+
+            value256 = uint256S(Util::tohex(tmp2.toStdString()));
+
+            qDebug() << QString::fromStdString(value256.ToString());
+        }
+        else if(regex != ""){
+            QRegularExpression re(this->regex);
+            QRegularExpressionMatch match = re.match(answer);
+            if (match.hasMatch()) {
+                QString matched = match.captured(1);
+                if(matched == ""){
+                    throw;
+                }
+                double ans = matched.toDouble();
+
+                QString tmp2 = QString::number(ans);
+                int point = tmp2.indexOf('.');
+                tmp2 = tmp2.replace(".", "");
+
+                for(uint i=tmp2.length()-point;i<18;i++){
+                    tmp2 += "0";
+                }
+
+                value256 = uint256S(Util::tohex(tmp2.toStdString()));
+            }
             else{
                 throw;
             }
         }
-
-        //double ans = static_cast<double>(tmp1[l_json[0].toStdString()][l_json[1].toStdString()]);
-        double ans = static_cast<double>(tmp1[l_json[i].toStdString()]);
-
-        d_value=ans;
-
-        QString tmp2 = QString::number(d_value);
-        int point = tmp2.indexOf('.');
-
-        qDebug() << "point" << point;
-        tmp2 = tmp2.replace(".", "");
-
-        for(uint i=tmp2.length()-point;i<18;i++){
-            tmp2 += "0";
-        }
-
-        value256 = uint256S(tohex(tmp2.toStdString()));
-
-        qDebug() << QString::fromStdString(value256.ToString());
     }
     catch(...){
         qDebug() << "error json";

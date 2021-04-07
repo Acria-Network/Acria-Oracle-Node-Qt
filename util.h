@@ -8,6 +8,8 @@
 #include <QJsonArray>
 #include <QByteArray>
 
+const std::string digits = "0123456789abcdef";
+
 class Util{
 public:
     static QJsonObject ObjectFromString(const QString& in)
@@ -46,6 +48,32 @@ public:
         }
 
         return tmp;
+    }
+
+    static std::string tohex(std::string number) {                        // Decimal to Hexadecimal function
+        long length = number.length();
+        std::string result = "";
+        std::vector<long> nibbles;
+        for ( long i = 0; i < length; i++ ) {
+            nibbles.push_back(digits.find(number[i]));
+        }
+        long newlen = 0;
+        do {
+            long value = 0;
+            newlen = 0;
+            for ( long i = 0; i < length; i++ ) {
+                value = (value * 10) + nibbles[i];
+                if (value >= 16) {
+                    nibbles[newlen++] = value / 16;
+                    value %= 16;
+                } else if (newlen > 0) {
+                    nibbles[newlen++] = 0;
+                };
+            };
+            length = newlen;
+            result = digits[value] + result;
+        } while (newlen != 0);
+        return result;
     }
 
     static __uint128_t toUint128(QString s){

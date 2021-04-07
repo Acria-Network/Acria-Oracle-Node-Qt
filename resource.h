@@ -52,6 +52,7 @@ private:
     uint max_gas;
     QString hash;
     QString request_data;
+    QString regex;
 
     unsigned nonce;
 
@@ -61,11 +62,9 @@ private:
 
     unsigned long long get_minimum_transaction_fee();
 
-    QString convert_parameter();
-
 public:
     Resource();
-    Resource(QString url, std::vector<QString> _l_json, QString n, Data* _data, QString _type, uint _id, uint* state, uint _max_gas, unsigned long long _fee, QString _request_data, QString _url_data, QString _parameter_type, NonceManager* _nonce_manager);
+    Resource(QString url, std::vector<QString> _l_json, QString _regex, QString n, Data* _data, QString _type, uint _id, uint* state, uint _max_gas, unsigned long long _fee, QString _request_data, QString _url_data, QString _parameter_type, NonceManager* _nonce_manager);
     ~Resource();
 
     QString error;
@@ -74,6 +73,7 @@ public:
     void send_resource();
     void add_unsent_id(uint i){unsent_id.push_back(i);}
     uint get_state(){return *state;}
+    static QString convert_parameter(QString _parameter_type, QString _request_data);
 
 private slots:
     void managerFinished(QNetworkReply *reply);

@@ -311,13 +311,19 @@ void MainWindow::update_requests(){
                 for(uint i = 0; i<conf1.size();i++){
                     if(QString::fromStdString(conf1[i]["rname"]) == r[d].requestID){
                         std::vector<QString> l_json;
+                        QString regex;
 
-                        for(uint f = 0; f<conf1[i]["json"].size();f++){
-                            l_json.push_back(QString::fromStdString(conf1[i]["json"][f]));
+                        if(conf1[i].contains("json")){
+                            for(uint f = 0; f<conf1[i]["json"].size();f++){
+                                l_json.push_back(QString::fromStdString(conf1[i]["json"][f]));
+                            }
+                        }
+                        else if(conf1[i].contains("regex")){
+                            regex = QString::fromStdString(conf1[i]["regex"]);
                         }
 
                         this->eth_based_chain[r[d].chain]->state[r[d].id] = 0;
-                        Resource* rr = new Resource(QString::fromStdString(conf1[i]["url"]), l_json, QString::fromStdString(conf1[i]["rname"]), this->data, r[d].chain, r[d].id, &this->eth_based_chain[r[d].chain]->state[r[d].id], r[d].max_gas, r[d].fee, r[d].data, QString::fromStdString(conf1[i]["url_data"]), QString::fromStdString(conf1[i]["parameter_type"]), this->eth_based_chain[r[d].chain]->nonce_manager);
+                        Resource* rr = new Resource(QString::fromStdString(conf1[i]["url"]), l_json, regex, QString::fromStdString(conf1[i]["rname"]), this->data, r[d].chain, r[d].id, &this->eth_based_chain[r[d].chain]->state[r[d].id], r[d].max_gas, r[d].fee, r[d].data, QString::fromStdString(conf1[i]["url_data"]), QString::fromStdString(conf1[i]["parameter_type"]), this->eth_based_chain[r[d].chain]->nonce_manager);
                         rr->update_resource();
 
                         this->tm_resources.push_back(rr);
