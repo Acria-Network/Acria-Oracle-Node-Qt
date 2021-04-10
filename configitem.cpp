@@ -51,6 +51,14 @@ void ConfigItem::managerFinished(QNetworkReply *reply) {
     this->ui->label_example_request->setText(answer);
 }
 
+bool ConfigItem::check_input_valid(){
+    if(this->ui->lineEdit_2_api_url->text() != "" && this->ui->lineEdit_resource_name->text() != "")
+        if((this->t1[0]->text() != "" && this->ui->comboBox->currentIndex() == 0) || (this->ui->lineEdit_regex_text->text() != "" && this->ui->comboBox->currentIndex() == 1))
+            if((this->ui->lineEdit_2_api_url_2->text() != "" && this->ui->lineEdit_2_parameter_type->text() != "") || (this->ui->lineEdit_2_api_url_2->text() == "" && this->ui->lineEdit_2_parameter_type->text() == ""))
+                return true;
+    return false;
+}
+
 void ConfigItem::on_buttonBox_1_accepted()
 {
     nlohmann::json tmp;
@@ -68,6 +76,8 @@ void ConfigItem::on_buttonBox_1_accepted()
     else if(this->ui->comboBox->currentIndex() == 1){
         tmp["regex"] = this->ui->lineEdit_regex_text->text().toStdString();
     }
+
+
     ijson = tmp;
 
     this->clear();

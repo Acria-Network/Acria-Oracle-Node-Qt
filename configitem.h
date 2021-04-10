@@ -50,6 +50,7 @@ private:
     QNetworkRequest request;
 
     void clear();
+    bool check_input_valid();
 };
 
 #endif // CONFIGITEM_H
