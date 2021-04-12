@@ -75,14 +75,11 @@ std::string SignTransaction::sign_transaction(Transaction tx, std::string privke
     reverse(s, 32);
     char* rCharArr = uintToCharArr(r,32);
     char* sCharArr = uintToCharArr(s,32);
-    qDebug() << recId;
     int vInt = EIP_155_OFFSET + (int) recId + 2 * tx.chainId;
-    qDebug() << vInt;
     char *vChar = (char *) calloc(50,1);
     snprintf(vChar,50,"%x",vInt);
 
     tx.v = std::string(vChar);
-    qDebug() << QString::fromStdString(tx.v);
     tx.r = RLP::bytesToHex(std::string(rCharArr,32));
     tx.s = RLP::bytesToHex(std::string(sCharArr,32));
     free(rCharArr);

@@ -45,7 +45,6 @@ void AvailableAccounts::managerFinished(QNetworkReply *reply) {
     QJsonObject obj = Util::ObjectFromString(answer);
     QJsonArray res = obj["result"].toArray();
 
-    qDebug() << res;
     qDebug() << answer;
 
     this->ui->tableWidget_accounts->clear();

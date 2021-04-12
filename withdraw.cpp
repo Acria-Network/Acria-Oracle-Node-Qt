@@ -56,7 +56,6 @@ void Withdraw::withdraw(ProcessingWindow* _processing_window){
     privkey.remove(0, 2);
 
     QString d1 = "0x3ccfd60b";
-    qDebug() << d1;
 
     Transaction tx;
 
@@ -73,6 +72,7 @@ void Withdraw::withdraw(ProcessingWindow* _processing_window){
     tx.chainId = chain_id;
     tx.v=SignTransaction::fixHexValue(RLP::intToHex(tx.chainId));//as per EIP 155
 
+    /*
     qDebug() << QString::fromStdString(tx.nonce);
     qDebug() << QString::fromStdString(tx.gasPrice);
     qDebug() << QString::fromStdString(tx.gasLimit);
@@ -80,9 +80,9 @@ void Withdraw::withdraw(ProcessingWindow* _processing_window){
     qDebug() << QString::fromStdString(tx.value);
     qDebug() << QString::fromStdString(tx.data);
     qDebug() << QString::fromStdString(tx.v);
+    */
 
     QString transaction = QString::fromStdString(SignTransaction::sign_transaction(tx, privkey.toStdString()));
-    qDebug() << transaction;
 
     QJsonArray obj3;
     obj3.push_back("0x" + transaction);

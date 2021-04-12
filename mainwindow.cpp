@@ -260,10 +260,17 @@ void MainWindow::update_requests(){
         this->data->changed = false;
     }
 
+    for (auto const& x : eth_based_chain)
+    {
+        if(this->node_ready(x.first) && this->data->chain_data[x.first].contract != "")
+            x.second->tasks->update_requests();
+    }
+    /*
     if(this->node_ready("ethereum"))
         this->eth_based_chain["ethereum"]->tasks->update_requests();
     if(this->node_ready("binance"))
         this->eth_based_chain["binance"]->tasks->update_requests();
+    */
 
     std::vector<req> r;
     for (auto const& x : eth_based_chain)
@@ -366,7 +373,7 @@ void MainWindow::update_gas_price(){
 void MainWindow::update_events(){
     for (auto const& x : eth_based_chain)
     {
-        if(this->node_ready(x.first))
+        if(this->node_ready(x.first) && this->data->chain_data[x.first].contract != "")
             x.second->cinfo->update_events();
     }
 
@@ -421,7 +428,7 @@ void MainWindow::update_events(){
 void MainWindow::update_balances(){
     for (auto const& x : eth_based_chain)
     {
-        if(this->node_ready(x.first))
+        if(this->node_ready(x.first) && this->data->chain_data[x.first].contract != "")
             x.second->balances->update_withdrawable();
     }
 

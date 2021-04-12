@@ -79,14 +79,14 @@ void AboutTransactionWindow::get_transaction_details(){
 
 void AboutTransactionWindow::managerFinished(QNetworkReply *reply) {
     if (reply->error()) {
-        qDebug() << reply->errorString();
+        qDebug() << "Error AboutTransactionWindow (" << this->type << "): " << reply->errorString();
         return;
     }
 
     QString answer = reply->readAll();
     nlohmann::json tmp1 = nlohmann::json::parse(answer.toStdString());
 
-    qDebug() << answer;
+    qDebug() << "AboutTransactionWindow: " << answer;
 
     if(tmp1["result"]["blockNumber"] != nullptr || tmp1["result"]["hash"] != nullptr){
         if(this->pos == 0){

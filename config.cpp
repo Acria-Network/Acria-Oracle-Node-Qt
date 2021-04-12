@@ -45,7 +45,6 @@ QString Config::loadConfig(){
         QTextStream stream(&file);
         while (!stream.atEnd()){
             line += stream.readLine();
-            qDebug() << "line: "<<line;
         }
     }
     file.close();

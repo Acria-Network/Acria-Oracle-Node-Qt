@@ -38,7 +38,7 @@ void Data::save_settings(){
     QString filename="settings.conf";
     QFile file(filename);
 
-    if(!file.exists()){
+    if(file.exists()){
         qDebug() << "Settings File exists: "<<filename;
     }else{
         qDebug() << filename<<" does not exist";
@@ -55,10 +55,11 @@ void Data::load_settings(){
     QString filename="settings.conf";
     QFile file(filename);
 
-    if(!file.exists()){
+    if(file.exists()){
         qDebug() << "Settings File exists: "<<filename;
     }else{
         qDebug() << filename<<" does not exist";
+        return;
     }
 
     QString line;
@@ -72,21 +73,26 @@ void Data::load_settings(){
     }
     file.close();
 
-    nlohmann::json tmp = nlohmann::json::parse(line.toStdString());
+    try{
+        nlohmann::json tmp = nlohmann::json::parse(line.toStdString());
 
-    for(unsigned i = 0; i < this->chains.size(); i++){
-        try{
-            chain_data[chains[i]].url = QString::fromStdString(tmp[chains[i].toStdString() + "_url"]);
-            chain_data[chains[i]].account = QString::fromStdString(tmp[chains[i].toStdString() + "_account"]);
-            chain_data[chains[i]].contract = QString::fromStdString(tmp[chains[i].toStdString() + "_contract"]);
-            chain_data[chains[i]].enabled = tmp[chains[i].toStdString() + "_enabled"];
-            chain_data[chains[i]].wallet_path = QString::fromStdString(tmp[chains[i].toStdString() + "_wallet_path"]);
-            chain_data[chains[i]].chain_id_given = tmp[chains[i].toStdString() + "_chain_id_given"];
-            chain_data[chains[i]].custom_chain_id_enabled = tmp[chains[i].toStdString() + "_custom_chain_id_enabled"];
+        for(unsigned i = 0; i < this->chains.size(); i++){
+            try{
+                chain_data[chains[i]].url = QString::fromStdString(tmp[chains[i].toStdString() + "_url"]);
+                chain_data[chains[i]].account = QString::fromStdString(tmp[chains[i].toStdString() + "_account"]);
+                chain_data[chains[i]].contract = QString::fromStdString(tmp[chains[i].toStdString() + "_contract"]);
+                chain_data[chains[i]].enabled = tmp[chains[i].toStdString() + "_enabled"];
+                chain_data[chains[i]].wallet_path = QString::fromStdString(tmp[chains[i].toStdString() + "_wallet_path"]);
+                chain_data[chains[i]].chain_id_given = tmp[chains[i].toStdString() + "_chain_id_given"];
+                chain_data[chains[i]].custom_chain_id_enabled = tmp[chains[i].toStdString() + "_custom_chain_id_enabled"];
+            }
+            catch(...){
+                qDebug() << "Error settings " + chains[i];
+            }
         }
-        catch(...){
-            qDebug() << "Error settings " + chains[i];
-        }
+    }
+    catch(...){
+        qDebug() << "Error parsing settings file";
     }
 }
 

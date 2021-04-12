@@ -48,5 +48,5 @@ void AcriaConfig::on_pushButton_add_item_clicked()
         this->ui->plainTextEdit->setPlainText(QString::fromStdString(this->cjson.dump()));
     }
 
-    qDebug() << "added item";
+    qDebug() << "Added Config Item";
 }

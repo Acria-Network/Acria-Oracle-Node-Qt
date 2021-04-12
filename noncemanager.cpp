@@ -21,6 +21,10 @@ NonceManager::NonceManager(Data* _data, QString _type)
         this, SLOT(managerFinished(QNetworkReply*)));
 
     this->update_nonce();
+
+    QSslConfiguration conf = request.sslConfiguration();
+    conf.setPeerVerifyMode(QSslSocket::VerifyNone);
+    request.setSslConfiguration(conf);
 }
 
 NonceManager::~NonceManager(){
@@ -37,7 +41,7 @@ void NonceManager::reset(){
 unsigned NonceManager::get_nonce(){
     QMutexLocker ml(&mutex);
 
-    qDebug() << "nonce incremented: " << this->nonce;
+    qDebug() << "Nonce incremented: " << this->nonce;
     this->nonce+=1;
     return this->nonce;
 }
@@ -53,7 +57,6 @@ void NonceManager::update_nonce(){
     obj3.push_back(account1);
     obj3.push_back("latest");
 
-    qDebug() << "answer";
     QJsonObject obj;
     obj["jsonrpc"] = "2.0";
     obj["method"] = "eth_getTransactionCount";
@@ -77,7 +80,7 @@ void NonceManager::managerFinished(QNetworkReply *reply) {
     QString answer = reply->readAll();
     QJsonObject obj = Util::ObjectFromString(answer);
 
-    qDebug() << "nonce: " << obj["result"].toString().toUInt(NULL, 16);
+    qDebug() << "Nonce: " << obj["result"].toString().toUInt(NULL, 16);
 
     if(obj["result"].toString() != "" && obj["result"].toString() != nullptr)
         this->ready = true;

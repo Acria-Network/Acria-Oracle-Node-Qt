@@ -10,6 +10,10 @@ GasPrice::GasPrice(Data *_data, QString _type)
 
     this->data = _data;
     this->type = _type;
+
+    QSslConfiguration conf = request.sslConfiguration();
+    conf.setPeerVerifyMode(QSslSocket::VerifyNone);
+    request.setSslConfiguration(conf);
 }
 
 GasPrice::~GasPrice(){
@@ -38,11 +42,10 @@ void GasPrice::managerFinished(QNetworkReply *reply) {
     QJsonObject obj = Util::ObjectFromString(answer);
     QString res = obj["result"].toString().remove(0, 2);
 
-    qDebug() << res;
     qDebug() << answer;
 
     if(res.length() > 2){
-        qDebug() << "gas price " << res.toULongLong(NULL,16);
+        qDebug() << "Gas Price: " << res.toULongLong(NULL,16);
         this->data->chain_data[this->type].transaction_fee = res.toULongLong(NULL,16)*1.1;
     }
 

@@ -53,8 +53,6 @@ void Balances::managerFinished(QNetworkReply *reply) {
     qDebug() << answer;
 
     if(res.length() > 2){
-        qDebug() << "withdrawable " << res;
-
         this->withdrawable = res.toULongLong(NULL,16);
     }
 

@@ -81,8 +81,6 @@ void DeployWindow::deploy(){
         this->data->get_chain_info(this->type, &url1, &account1, &contract1, &transaction_fee, &privkey, &chain_id);
 
         privkey.remove(0, 2);
-        qDebug() << "priv key " << privkey;
-        qDebug() << privkey;
 
         Keccak keccak;
 
@@ -102,17 +100,16 @@ void DeployWindow::deploy(){
         tx.value=SignTransaction::fixHexValue("");
         tx.data=SignTransaction::fixHexValue(data1.toStdString());
         //tx.chainId = 6432;
-        qDebug() << chain_id;
         tx.chainId = chain_id;
         tx.v=SignTransaction::fixHexValue(RLP::intToHex(tx.chainId));//as per EIP 155
 
-        qDebug() << QString::fromStdString(tx.nonce);
-        qDebug() << QString::fromStdString(tx.gasPrice);
-        qDebug() << QString::fromStdString(tx.gasLimit);
-        qDebug() << QString::fromStdString(tx.to);
-        qDebug() << QString::fromStdString(tx.value);
-        qDebug() << QString::fromStdString(tx.data);
-        qDebug() << QString::fromStdString(tx.v);
+        qDebug() << "Deploy Transaction: " << QString::fromStdString(tx.nonce) << " "
+        << QString::fromStdString(tx.gasPrice) << " "
+        << QString::fromStdString(tx.gasLimit) << " "
+        << QString::fromStdString(tx.to) << " "
+        << QString::fromStdString(tx.value) << " "
+        << QString::fromStdString(tx.data) << " "
+        << QString::fromStdString(tx.v);
 
         QString transaction = QString::fromStdString(SignTransaction::sign_transaction(tx, privkey.toStdString()));
         qDebug() << transaction;
@@ -200,7 +197,6 @@ void DeployWindow::deployed_managerFinished(QNetworkReply *reply) {
     }
     QString res = obj["result"].toString();
 
-    qDebug() << res;
     if(res == "0x"){
         qDebug() << "error deploy 0x";
         this->handle_error("Error: potentially wrong contract address");

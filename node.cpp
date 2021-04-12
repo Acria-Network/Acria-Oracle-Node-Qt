@@ -32,6 +32,12 @@ Node::Node(Data* _data, QString _type)
     this->status_geth = false;
 
     //update_geth_status();
+
+    QSslConfiguration conf = status_request.sslConfiguration();
+    conf.setPeerVerifyMode(QSslSocket::VerifyNone);
+    status_request.setSslConfiguration(conf);
+    chain_id_request.setSslConfiguration(conf);
+    balance_request.setSslConfiguration(conf);
 };
 
 void Node::update_geth_status(){
@@ -41,9 +47,6 @@ void Node::update_geth_status(){
 
     this->data->get_chain_info(this->type, &url1, &account1, &contract1, &transaction_fee);
 
-    qDebug() << url1;
-
-    qDebug() << "answer";
     QJsonObject obj;
     obj["jsonrpc"] = "2.0";
     obj["method"] = "web3_clientVersion";
@@ -56,7 +59,6 @@ void Node::update_geth_status(){
     status_request.setRawHeader("Content-Type", "application/json");
     status_manager->post(status_request, data);
 
-    qDebug() << "answer";
     QJsonObject obj2;
     obj2["jsonrpc"] = "2.0";
     obj2["method"] = "eth_chainId";
@@ -73,7 +75,6 @@ void Node::update_geth_status(){
     obj99.push_back(account1);
     obj99.push_back("latest");
 
-    qDebug() << "answer";
     QJsonObject obj3;
     obj3["jsonrpc"] = "2.0";
     obj3["method"] = "eth_getBalance";
@@ -105,8 +106,6 @@ void Node::statusManagerFinished(QNetworkReply *reply) {
 
     QJsonObject obj = Util::ObjectFromString(answer);
 
-    qDebug() << obj["result"].toString();
-
     this->geth_version = obj["result"].toString();
 
     if(this->geth_version != "" && this->geth_version != nullptr)
@@ -127,8 +126,6 @@ void Node::chain_idManagerFinished(QNetworkReply *reply) {
     qDebug() << "answer " <<answer;
 
     QJsonObject obj = Util::ObjectFromString(answer);
-
-    qDebug() << obj["result"].toString();
 
     if(obj["result"].toString() != "" && obj["result"].toString() != nullptr)
         status_geth_chain_id = true;
@@ -151,8 +148,6 @@ void Node::balanceManagerFinished(QNetworkReply *reply) {
     qDebug() << "answer " <<answer;
 
     QJsonObject obj = Util::ObjectFromString(answer);
-
-    qDebug() << obj["result"].toString();
 
     if(obj["result"].toString() != "" && obj["result"].toString() != nullptr)
         this->data->chain_data[this->type].balance = Util::toUint128(obj["result"].toString());

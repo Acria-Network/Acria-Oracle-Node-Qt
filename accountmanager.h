@@ -44,13 +44,13 @@ public:
             qDebug() << "Unable to save wallet";
         }
 
-        qDebug() << wallet;
+        qDebug() << "Saved Wallet: " << type << ": " << wallet;
 
         return QString::fromStdString(location);
     }
     //Q_PROPERTY(QString stringValue READ save_wallet)
     Q_INVOKABLE QString read_keystore(QString path){
-        qDebug() << path;
+        qDebug() << "Read Keystore: " << path;
         std::ifstream t(path.toStdString());
         if(!t){
             return "";

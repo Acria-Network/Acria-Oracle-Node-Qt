@@ -17,8 +17,6 @@ std::string RLP::encode(Transaction tx, bool toSign)
 
     if(!toSign)
           serialized += hexToRlpEncode(tx.v)+hexToRlpEncode(tx.r)+hexToRlpEncode(tx.s);
-    qDebug() <<QString::fromStdString(bytesToHex(encodeLength(serialized.length(),192)));
-    qDebug() << QString::fromStdString(bytesToHex(encodeLength(serialized.length(),192)+serialized));
     //return hexToBytes(encodeLength(serialized.length(),192))+serialized;
     return encodeLength(serialized.length(),192)+serialized;
 }
@@ -79,8 +77,6 @@ std::string RLP::encodeLength(int len, int offset)
         std::string hexLength = intToHex(len);
         int	lLength = hexLength.length()/2;
         std::string fByte = intToHex(offset+55+lLength);
-        qDebug() << QString::fromStdString(fByte);
-        qDebug() << QString::fromStdString(hexLength);
         return hexToBytes(fByte+hexLength);
     }
 }

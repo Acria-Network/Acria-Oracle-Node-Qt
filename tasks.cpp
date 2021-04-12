@@ -38,7 +38,7 @@ void Tasks::managerFinished(QNetworkReply *reply) {
     QJsonObject obj = Util::ObjectFromString(answer);
     QString res = obj["result"].toString().remove(0, 2);
 
-    qDebug() << res;
+    qDebug() << answer;
 
     if(res.length() > 2){
         std::vector<QString> inf;
@@ -58,10 +58,6 @@ void Tasks::managerFinished(QNetworkReply *reply) {
         }
         inf.push_back(res1);
 
-        for(uint i = 0; i<inf.size(); i++){
-            qDebug() << inf[i];
-        }
-
         uint nHex = inf[1].toUInt(NULL,16);
 
         this->data->items_clear(this->type);
@@ -72,8 +68,6 @@ void Tasks::managerFinished(QNetworkReply *reply) {
             for(int f = 1; f< inf[i].length(); f+=2){
                 tmp += QString(static_cast<char>((QString(inf[i].at(f-1)) + QString(inf[i].at(f))).toUInt(NULL,16)));
             }
-
-            qDebug() << tmp.trimmed();
 
             this->data->item_push_back(this->type, tmp.trimmed());
         }
@@ -141,6 +135,7 @@ void Tasks::r_managerFinished(QNetworkReply *reply) {
                         r.data = QString(inf[i+6]);
                     }
 
+                    /*
                     qDebug() << "requestid " << r.requestID;
                     qDebug() << "fee " << r.fee;
                     qDebug() << "expiration " << r.expiration;
@@ -148,6 +143,7 @@ void Tasks::r_managerFinished(QNetworkReply *reply) {
                     qDebug() << "chain " << r.chain;
                     qDebug() << "id " << r.id;
                     qDebug() << "max_gas " << QString(inf[i+4]) << " " << r.max_gas;
+                    */
 
                     this->requests.push_back(r);
                 }

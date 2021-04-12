@@ -86,14 +86,12 @@ QString Resource::convert_parameter(QString _parameter_type, QString _request_da
     for(int i = 0; i<data.size(); i++){
         if(data.at(i) == "timestamp" || data.at(i) == "number"){
             str = QString::number(str.toULongLong(NULL, 16));
-            qDebug() << "timestamp " << str;
         }
         else if(data.at(i).indexOf("from_timestamp ") != -1){
             QString format = QString(data.at(i)).replace("from_timestamp ", "");
             QDateTime timestamp;
             timestamp.setTime_t(str.toULongLong());
             str = timestamp.toString(format);
-            qDebug() << "timestamp2 " << str;
         }
         else if(data.at(i) == "string"){
             str = Util::hex2str(str).trimmed();
@@ -143,16 +141,7 @@ void Resource::send_resource(){
         d4 = "0" + d4;
     }
 
-    qDebug() << d1;
-    qDebug() << d2;
-    qDebug() << d4;
-    qDebug() << d3;
-
     QString data1 = d1+d2+d3+d4;
-
-    qDebug() << data1;
-
-    qDebug() << "chain_id " <<chain_id;
 
     Transaction tx;
     std::string nonce_ = RLP::intToHex(nonce);
@@ -340,8 +329,6 @@ void Resource::send_managerFinished(QNetworkReply *reply) {
 
     QJsonObject obj = Util::ObjectFromString(answer);
     QString res = obj["result"].toString();
-
-    qDebug() << answer;
 
     this->hash = res;
     //this->is_deployed();

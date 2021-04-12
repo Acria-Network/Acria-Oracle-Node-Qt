@@ -31,12 +31,10 @@ AvailableDataContracts::~AvailableDataContracts()
 }
 
 void AvailableDataContracts::set_acria_main(QString _acria_main){
-    qDebug() << "Available Contracts";
     this->ui->horizontalWidget->show();
     this->ui->label_progress_2->show();
     this->acria_main = _acria_main.trimmed();
     this->update_data_contracts();
-    qDebug() << this->acria_main;
 }
 
 void AvailableDataContracts::update_data_contracts(){
@@ -84,8 +82,6 @@ void AvailableDataContracts::managerFinished(QNetworkReply *reply) {
         inf.push_back(res1);
 
         uint nHex = inf[1].toUInt(NULL,16);
-
-        qDebug() << "nHex " << nHex;
 
         if(nHex != 0){
             uint arr_size = (inf.size()-2)/nHex;
