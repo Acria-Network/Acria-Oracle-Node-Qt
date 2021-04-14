@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
     QLoggingCategory::defaultCategory()->setEnabled(QtDebugMsg, true);
     QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
 
-    qInstallMessageHandler(customMessageHandler);
+    //qInstallMessageHandler(customMessageHandler);
 
     QApplication a(argc, argv);
     MainWindow w;

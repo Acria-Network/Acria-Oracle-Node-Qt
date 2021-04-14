@@ -226,7 +226,7 @@ void MainWindow::update_status(){
     for (auto const& x : eth_based_chain)
     {
         if(this->data->chain_data[x.first].enabled != false)
-            x.second->node->update_geth_status();
+            x.second->node->update_user_balance();
     }
 
     get_status_geth();
@@ -257,6 +257,11 @@ bool MainWindow::node_ready(QString type){
 void MainWindow::update_requests(){
     if(this->data->changed == true){
         this->update_settings();
+        for (auto const& x : eth_based_chain)
+        {
+            if(this->data->chain_data[x.first].enabled != false)
+                x.second->node->update_geth_status();
+        }
         this->data->changed = false;
     }
 
@@ -670,9 +675,9 @@ void MainWindow::on_pushButton_setting_save_clicked()
     bool reset_b = false;
     bool reset_e = false;
 
-    if(this->data->chain_data["binance"].url != this->ui->lineEdit_binance_url->text() || this->data->chain_data["binance"].account != this->ui->lineEdit_binance_account->text())
+    if(this->data->chain_data["binance"].url != this->ui->lineEdit_binance_url->text() || this->data->chain_data["binance"].account != this->ui->lineEdit_binance_account->text() || this->data->chain_data["binance"].enabled != this->ui->checkBox_binance->isChecked())
         reset_b = true;
-    if(this->data->chain_data["ethereum"].url != this->ui->lineEdit_geth_url->text() || this->data->chain_data["ethereum"].account != this->ui->lineEdit_eth_account->text())
+    if(this->data->chain_data["ethereum"].url != this->ui->lineEdit_geth_url->text() || this->data->chain_data["ethereum"].account != this->ui->lineEdit_eth_account->text() || this->data->chain_data["ethereum"].enabled != this->ui->checkBox_eth->isChecked())
         reset_e = true;
 
     this->data->chain_data["binance"].url = this->ui->lineEdit_binance_url->text();
@@ -705,10 +710,14 @@ void MainWindow::on_pushButton_setting_save_clicked()
         x.second->cinfo->create_filter_events();
     }
 
-    if(reset_e)
+    if(reset_e){
         this->eth_based_chain["ethereum"]->nonce_manager->reset();
-    if(reset_b)
+        this->eth_based_chain["ethereum"]->node->update_geth_status();
+    }
+    if(reset_b){
         this->eth_based_chain["binance"]->nonce_manager->reset();
+        this->eth_based_chain["binance"]->node->update_geth_status();
+    }
 
     show_msgBox("Successfully saved the settings!");
 }

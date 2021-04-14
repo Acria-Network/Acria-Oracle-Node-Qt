@@ -40,6 +40,30 @@ Node::Node(Data* _data, QString _type)
     balance_request.setSslConfiguration(conf);
 };
 
+void Node::update_user_balance(){
+    QUrl url1;
+    QString contract1, account1;
+    unsigned long long transaction_fee = 0;
+
+    this->data->get_chain_info(this->type, &url1, &account1, &contract1, &transaction_fee);
+
+    QJsonArray obj99;
+    obj99.push_back(account1);
+    obj99.push_back("latest");
+
+    QJsonObject obj3;
+    obj3["jsonrpc"] = "2.0";
+    obj3["method"] = "eth_getBalance";
+    obj3["params"] = obj99;
+    obj3["id"] = 63;
+    QJsonDocument doc3(obj3);
+    QByteArray data3 = doc3.toJson();
+
+    balance_request.setUrl(url1);
+    balance_request.setRawHeader("Content-Type", "application/json");
+    balance_manager->post(balance_request, data3);
+}
+
 void Node::update_geth_status(){
     QUrl url1;
     QString contract1, account1;

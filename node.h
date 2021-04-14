@@ -20,6 +20,7 @@ public:
     bool get_status_geth();
 
     void update_geth_status();
+    void update_user_balance();
 
     QString get_geth_version(){return geth_version;}
 
