@@ -41,6 +41,13 @@ AccountManager::AccountManager(QWidget *parent, Data* _data) :
                                                    "document.getElementById('selectWalletEth').innerHTML = '...' + ethWalletPath.substr(ethWalletPath.length - 20);"
                                                    "document.getElementById(\"keystore_e\").className += ' keystore_available';"
                                                    "}");
+
+    if(this->data->chain_data["cardano"].wallet_path.length() > 4)
+    this->ui->webEngineView->page()->runJavaScript("carWalletPath = '" + this->data->chain_data["cardano"].wallet_path + "';"
+                                                   "if(carWalletPath.length > 0){"
+                                                   "document.getElementById('selectWalletCar').innerHTML = '...' + carWalletPath.substr(carWalletPath.length - 20);"
+                                                   "document.getElementById(\"keystore_c\").className += ' keystore_available';"
+                                                   "}");
 }
 
 AccountManager::~AccountManager()
@@ -57,6 +64,10 @@ void AccountManager::on_buttonBox_accepted()
     this->ui->webEngineView->page()->runJavaScript("binPrivateKey", [this](const QVariant &v) { this->data->chain_data["binance"].private_key = v.toString();this->data->changed = true;});
     this->ui->webEngineView->page()->runJavaScript("binAddress", [this](const QVariant &v) { this->data->chain_data["binance"].account = v.toString();this->data->changed = true;});
     this->ui->webEngineView->page()->runJavaScript("binWalletPath", [this](const QVariant &v) { this->data->chain_data["binance"].wallet_path = v.toString();this->data->changed = true;});
+
+    this->ui->webEngineView->page()->runJavaScript("carPrivateKey", [this](const QVariant &v) { this->data->chain_data["cardano"].private_key = v.toString();this->data->changed = true;});
+    this->ui->webEngineView->page()->runJavaScript("carAddress", [this](const QVariant &v) { this->data->chain_data["cardano"].account = v.toString();this->data->changed = true;});
+    this->ui->webEngineView->page()->runJavaScript("carWalletPath", [this](const QVariant &v) { this->data->chain_data["cardano"].wallet_path = v.toString();this->data->changed = true;});
 
     delay();
 }

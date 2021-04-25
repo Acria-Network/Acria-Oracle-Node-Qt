@@ -76,6 +76,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     this->eth_based_chain["ethereum"] = new EthBasedChain(this, "ethereum", this->data, this->processing_window);
     this->eth_based_chain["binance"] = new EthBasedChain(this, "binance", this->data, this->processing_window);
+    this->eth_based_chain["cardano"] = new EthBasedChain(this, "cardano", this->data, this->processing_window);
 
     ui->setupUi(this);
 

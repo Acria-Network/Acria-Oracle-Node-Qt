@@ -8,7 +8,7 @@
 
 Data::Data()
 {
-    this->chains = {"ethereum", "binance", "polkadot"};
+    this->chains = {"ethereum", "binance", "polkadot", "cardano"};
 
     for(unsigned i = 0; i < this->chains.size(); i++){
         ChainData c;
