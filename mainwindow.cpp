@@ -140,6 +140,13 @@ void MainWindow::update_settings(){
     this->ui->checkBox_binance->setChecked(this->data->chain_data["binance"].enabled);
     this->ui->checkBox_custom_chain_id_binance->setChecked(this->data->chain_data["binance"].custom_chain_id_enabled);
     this->ui->spinBox_custom_chain_id_binance->setValue(this->data->chain_data["binance"].chain_id_given);
+
+    this->ui->lineEdit_cardano_url->setText(this->data->chain_data["cardano"].url);
+    this->ui->lineEdit_cardano_account->setText(this->data->chain_data["cardano"].account);
+    this->ui->lineEdit_cardano_contract->setText(this->data->chain_data["cardano"].contract);
+    this->ui->checkBox_cardano->setChecked(this->data->chain_data["cardano"].enabled);
+    this->ui->checkBox_custom_chain_id_cardano->setChecked(this->data->chain_data["cardano"].custom_chain_id_enabled);
+    this->ui->spinBox_custom_chain_id_cardano->setValue(this->data->chain_data["cardano"].chain_id_given);
 }
 
 void MainWindow::get_status_geth(){
@@ -217,6 +224,42 @@ void MainWindow::get_status_binance(){
     this->ui->label_balance_binance->setText("Balance (" + QString::number(bal_d) +"):");
 }
 
+void MainWindow::get_status_cardano(){
+    if(this->data->chain_data["cardano"].private_key != "")
+        this->ui->label_keystore_unlocked_cardano->setPixmap(QPixmap("./resources/success.svg"));
+    else
+        this->ui->label_keystore_unlocked_cardano->setPixmap(QPixmap("./resources/error.svg"));
+
+    if(this->eth_based_chain["cardano"]->node->get_status_geth())
+        this->ui->label_node_reachable_cardano->setPixmap(QPixmap("./resources/success.svg"));
+    else
+        this->ui->label_node_reachable_cardano->setPixmap(QPixmap("./resources/error.svg"));
+
+    if(this->data->chain_data["cardano"].enabled)
+        this->ui->label_enabled_cardano->setPixmap(QPixmap("./resources/success.svg"));
+    else
+        this->ui->label_enabled_cardano->setPixmap(QPixmap("./resources/error.svg"));
+
+    if(this->ui->lineEdit_cardano_contract->text().trimmed() != "")
+        this->ui->label_contract_deployed_cardano->setPixmap(QPixmap("./resources/success.svg"));
+    else
+        this->ui->label_contract_deployed_cardano->setPixmap(QPixmap("./resources/error.svg"));
+
+    if(this->data->chain_data["cardano"].transaction_fee != 0)
+        this->ui->label_gas_price_img_cardano->setPixmap(QPixmap("./resources/success.svg"));
+    else
+        this->ui->label_gas_price_img_cardano->setPixmap(QPixmap("./resources/error.svg"));
+    this->ui->label_gas_price_cardano->setText("Gas Price (" + QString::number(double(this->data->chain_data["cardano"].transaction_fee)/pow(10,9)) +"):");
+
+    if(this->data->chain_data["cardano"].balance != 0)
+        this->ui->label_balance_img_cardano->setPixmap(QPixmap("./resources/success.svg"));
+    else
+        this->ui->label_balance_img_cardano->setPixmap(QPixmap("./resources/error.svg"));
+    __uint128_t bal = this->data->chain_data["cardano"].balance/static_cast<__uint128_t>(pow(10,14));
+    double bal_d = double(bal)/pow(10,4);
+    this->ui->label_balance_cardano->setText("Balance (" + QString::number(bal_d) +"):");
+}
+
 void MainWindow::get_status_acria(){
 }
 
@@ -232,6 +275,7 @@ void MainWindow::update_status(){
 
     get_status_geth();
     get_status_binance();
+    get_status_cardano();
     get_status_polkadot();
 }
 
@@ -444,7 +488,7 @@ void MainWindow::update_balances(){
         ui->tableWidget_balances->removeRow(0);
     }
 
-    this->ui->tableWidget_balances->setRowCount(4);
+    this->ui->tableWidget_balances->setRowCount(5);
     this->ui->tableWidget_balances->setColumnCount(4);
 
     this->ui->tableWidget_balances->setColumnWidth(1, 128);
@@ -460,29 +504,36 @@ void MainWindow::update_balances(){
     this->ui->tableWidget_balances->setItem( 0, 0, new QTableWidgetItem("Ethereum"));
     this->ui->tableWidget_balances->setItem( 1, 0, new QTableWidgetItem("Polkadot"));
     this->ui->tableWidget_balances->setItem( 2, 0, new QTableWidgetItem("Binance"));
-    this->ui->tableWidget_balances->setItem( 3, 0, new QTableWidgetItem("Total"));
+    this->ui->tableWidget_balances->setItem( 3, 0, new QTableWidgetItem("Cardano"));
+    this->ui->tableWidget_balances->setItem( 4, 0, new QTableWidgetItem("Total"));
 
     uint eth_completed = this->eth_based_chain["ethereum"]->cinfo->get_completed().size();
     uint binance_completed = this->eth_based_chain["binance"]->cinfo->get_completed().size();
+    uint cardano_completed = this->eth_based_chain["cardano"]->cinfo->get_completed().size();
     uint polkadot_completed = 0;
 
     double binance_total_fees = this->eth_based_chain["binance"]->cinfo->get_total_fees();
+    double cardano_total_fees = this->eth_based_chain["cardano"]->cinfo->get_total_fees();
     double eth_total_fees = this->eth_based_chain["ethereum"]->cinfo->get_total_fees();
     double polkadot_total_fees = 0;
 
     double binance_withdrawable = this->eth_based_chain["binance"]->balances->get_withdrawable();
+    double cardano_withdrawable = this->eth_based_chain["cardano"]->balances->get_withdrawable();
     double eth_withdrawable = this->eth_based_chain["ethereum"]->balances->get_withdrawable();
     double polkadot_withdrawable = 0;
 
     this->ui->tableWidget_balances->setItem( 0, 3, new QTableWidgetItem(QString::number(eth_completed)));
     this->ui->tableWidget_balances->setItem( 1, 3, new QTableWidgetItem(QString::number(polkadot_completed)));
     this->ui->tableWidget_balances->setItem( 2, 3, new QTableWidgetItem(QString::number(binance_completed)));
-    this->ui->tableWidget_balances->setItem( 3, 3, new QTableWidgetItem(QString::number(binance_completed + polkadot_completed + eth_completed)));
+    this->ui->tableWidget_balances->setItem( 3, 3, new QTableWidgetItem(QString::number(cardano_completed)));
+    this->ui->tableWidget_balances->setItem( 4, 3, new QTableWidgetItem(QString::number(binance_completed + polkadot_completed + eth_completed + cardano_completed)));
 
+    this->ui->tableWidget_balances->setItem( 3, 1, new QTableWidgetItem(QString::number(cardano_total_fees)));
     this->ui->tableWidget_balances->setItem( 2, 1, new QTableWidgetItem(QString::number(binance_total_fees)));
     this->ui->tableWidget_balances->setItem( 1, 1, new QTableWidgetItem(QString::number(polkadot_total_fees)));
     this->ui->tableWidget_balances->setItem( 0, 1, new QTableWidgetItem(QString::number(eth_total_fees)));
 
+    this->ui->tableWidget_balances->setItem( 3, 2, new QTableWidgetItem(QString::number(cardano_withdrawable)));
     this->ui->tableWidget_balances->setItem( 2, 2, new QTableWidgetItem(QString::number(binance_withdrawable)));
     this->ui->tableWidget_balances->setItem( 1, 2, new QTableWidgetItem(QString::number(polkadot_withdrawable)));
     this->ui->tableWidget_balances->setItem( 0, 2, new QTableWidgetItem(QString::number(eth_withdrawable)));
@@ -675,11 +726,14 @@ void MainWindow::on_pushButton_setting_save_clicked()
 {
     bool reset_b = false;
     bool reset_e = false;
+    bool reset_c = false;
 
     if(this->data->chain_data["binance"].url != this->ui->lineEdit_binance_url->text() || this->data->chain_data["binance"].account != this->ui->lineEdit_binance_account->text() || this->data->chain_data["binance"].enabled != this->ui->checkBox_binance->isChecked())
         reset_b = true;
     if(this->data->chain_data["ethereum"].url != this->ui->lineEdit_geth_url->text() || this->data->chain_data["ethereum"].account != this->ui->lineEdit_eth_account->text() || this->data->chain_data["ethereum"].enabled != this->ui->checkBox_eth->isChecked())
         reset_e = true;
+    if(this->data->chain_data["cardano"].url != this->ui->lineEdit_cardano_url->text() || this->data->chain_data["cardano"].account != this->ui->lineEdit_cardano_account->text() || this->data->chain_data["cardano"].enabled != this->ui->checkBox_cardano->isChecked())
+        reset_c = true;
 
     this->data->chain_data["binance"].url = this->ui->lineEdit_binance_url->text();
     this->data->chain_data["binance"].account = this->ui->lineEdit_binance_account->text();
@@ -697,6 +751,15 @@ void MainWindow::on_pushButton_setting_save_clicked()
     this->data->chain_data["ethereum"].custom_chain_id_enabled = this->ui->checkBox_custom_chain_id_eth->isChecked();
     if(this->data->chain_data["ethereum"].custom_chain_id_enabled){
         this->data->chain_data["ethereum"].chain_id_given = this->ui->spinBox_custom_chain_id_eth->value();
+    }
+
+    this->data->chain_data["cardano"].url = this->ui->lineEdit_cardano_url->text();
+    this->data->chain_data["cardano"].account = this->ui->lineEdit_cardano_account->text();
+    this->data->chain_data["cardano"].contract = this->ui->lineEdit_cardano_contract->text();
+    this->data->chain_data["cardano"].enabled = this->ui->checkBox_cardano->isChecked();
+    this->data->chain_data["cardano"].custom_chain_id_enabled = this->ui->checkBox_custom_chain_id_cardano->isChecked();
+    if(this->data->chain_data["cardano"].custom_chain_id_enabled){
+        this->data->chain_data["cardano"].chain_id_given = this->ui->spinBox_custom_chain_id_cardano->value();
     }
 
     this->data->chain_data["polkadot"].url = this->ui->lineEdit_polkadot_url->text();
@@ -718,6 +781,10 @@ void MainWindow::on_pushButton_setting_save_clicked()
     if(reset_b){
         this->eth_based_chain["binance"]->nonce_manager->reset();
         this->eth_based_chain["binance"]->node->update_geth_status();
+    }
+    if(reset_c){
+        this->eth_based_chain["cardano"]->nonce_manager->reset();
+        this->eth_based_chain["cardano"]->node->update_geth_status();
     }
 
     show_msgBox("Successfully saved the settings!");
@@ -849,4 +916,49 @@ void MainWindow::on_tableWidget_comp_cellDoubleClicked(int row, int column)
     QString hash = this->ui->tableWidget_comp->model()->data(this->ui->tableWidget_comp->model()->index(row,5), Qt::DisplayRole).toString();
     this->eth_based_chain[chain]->about_transaction_window->init(hash);
     this->eth_based_chain[chain]->about_transaction_window->exec();
+}
+
+void MainWindow::on_pushButton_accounts_cardano_clicked()
+{
+    this->eth_based_chain["cardano"]->available_accounts->update_accounts();
+
+    if(this->eth_based_chain["cardano"]->available_accounts->exec() == QDialog::Accepted){
+        this->ui->lineEdit_cardano_account->setText(this->eth_based_chain["cardano"]->available_accounts->selected_account);
+    }
+}
+void MainWindow::on_pushButton_deploy_contract_cardano_clicked()
+{
+    if(this->node_ready("cardano"))
+        this->eth_based_chain["cardano"]->deploy_window->exec();
+    else
+        show_msgBox("Please wait until the cardano node is ready!");
+}
+
+void MainWindow::on_pushButton_withdraw_cardano_clicked()
+{
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "Withdraw", "Withdraw everything from the Cardano contract?", QMessageBox::Yes|QMessageBox::No);
+      if (reply == QMessageBox::Yes) {
+          this->processing_window->show();
+        this->eth_based_chain["cardano"]->withdraw->withdraw(processing_window);
+      } else {
+
+      }
+}
+
+void MainWindow::on_pushButton_cardano_info_clicked()
+{
+    this->eth_based_chain["cardano"]->igeth->update_info();
+
+    this->eth_based_chain["cardano"]->igeth->exec();
+}
+
+void MainWindow::on_lineEdit_cardano_account_textChanged(const QString &arg1)
+{
+    this->line_edit_check_eth_address(arg1, sender());
+}
+
+void MainWindow::on_lineEdit_cardano_contract_textChanged(const QString &arg1)
+{
+    this->line_edit_check_eth_address(arg1, sender());
 }

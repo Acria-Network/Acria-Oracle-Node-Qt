@@ -65,6 +65,8 @@ private slots:
 
     void get_status_config();
 
+    void get_status_cardano();
+
     void update_status();
 
     void on_pushButton_setting_save_clicked();
@@ -100,6 +102,18 @@ private slots:
     void on_lineEdit_binance_contract_textChanged(const QString &arg1);
 
     void on_tableWidget_comp_cellDoubleClicked(int row, int column);
+
+    void on_pushButton_accounts_cardano_clicked();
+
+    void on_pushButton_deploy_contract_cardano_clicked();
+
+    void on_pushButton_withdraw_cardano_clicked();
+
+    void on_pushButton_cardano_info_clicked();
+
+    void on_lineEdit_cardano_account_textChanged(const QString &arg1);
+
+    void on_lineEdit_cardano_contract_textChanged(const QString &arg1);
 
 private:
     Ui::MainWindow *ui;

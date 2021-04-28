@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>474</width>
+    <width>552</width>
     <height>253</height>
    </rect>
   </property>
@@ -128,7 +128,7 @@ background-color:#333333;
        <enum>QTabWidget::West</enum>
       </property>
       <property name="currentIndex">
-       <number>4</number>
+       <number>0</number>
       </property>
       <property name="iconSize">
        <size>
@@ -228,6 +228,9 @@ border-radius:5px;</string>
             <height>300</height>
            </size>
           </property>
+          <property name="styleSheet">
+           <string notr="true">/*font-size:8px;*/</string>
+          </property>
           <layout class="QHBoxLayout" name="horizontalLayout_32">
            <item>
             <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -249,26 +252,6 @@ border-radius:5px;</string>
                   <size>
                    <width>10</width>
                    <height>10</height>
-                  </size>
-                 </property>
-                 <property name="flat">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="pushButton_binance_info_2">
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="icon">
-                  <iconset>
-                   <normaloff>resources/info.svg</normaloff>resources/info.svg</iconset>
-                 </property>
-                 <property name="iconSize">
-                  <size>
-                   <width>11</width>
-                   <height>11</height>
                   </size>
                  </property>
                  <property name="flat">
@@ -316,17 +299,24 @@ padding-left:13px;
                 </widget>
                </item>
                <item>
-                <spacer name="horizontalSpacer_18">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
+                <widget class="QPushButton" name="pushButton_binance_info_2">
+                 <property name="text">
+                  <string/>
                  </property>
-                 <property name="sizeHint" stdset="0">
+                 <property name="icon">
+                  <iconset>
+                   <normaloff>resources/info.svg</normaloff>resources/info.svg</iconset>
+                 </property>
+                 <property name="iconSize">
                   <size>
-                   <width>40</width>
-                   <height>20</height>
+                   <width>11</width>
+                   <height>11</height>
                   </size>
                  </property>
-                </spacer>
+                 <property name="flat">
+                  <bool>true</bool>
+                 </property>
+                </widget>
                </item>
               </layout>
              </item>
@@ -335,7 +325,7 @@ padding-left:13px;
                <item>
                 <widget class="QLabel" name="label_18">
                  <property name="styleSheet">
-                  <string notr="true"/>
+                  <string notr="true">margin-right:5px;</string>
                  </property>
                  <property name="text">
                   <string>Keystore unlocked:</string>
@@ -577,32 +567,6 @@ padding-left:13px;
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="pushButton_eth_info">
-                 <property name="maximumSize">
-                  <size>
-                   <width>21</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="icon">
-                  <iconset>
-                   <normaloff>resources/info.svg</normaloff>resources/info.svg</iconset>
-                 </property>
-                 <property name="iconSize">
-                  <size>
-                   <width>11</width>
-                   <height>11</height>
-                  </size>
-                 </property>
-                 <property name="flat">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item>
                 <widget class="QLabel" name="label_3">
                  <property name="minimumSize">
                   <size>
@@ -640,17 +604,30 @@ padding:5px;
                 </widget>
                </item>
                <item>
-                <spacer name="horizontalSpacer_16">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
+                <widget class="QPushButton" name="pushButton_eth_info">
+                 <property name="maximumSize">
                   <size>
-                   <width>40</width>
+                   <width>21</width>
                    <height>20</height>
                   </size>
                  </property>
-                </spacer>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset>
+                   <normaloff>resources/info.svg</normaloff>resources/info.svg</iconset>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>11</width>
+                   <height>11</height>
+                  </size>
+                 </property>
+                 <property name="flat">
+                  <bool>true</bool>
+                 </property>
+                </widget>
                </item>
               </layout>
              </item>
@@ -659,7 +636,7 @@ padding:5px;
                <item>
                 <widget class="QLabel" name="label_7">
                  <property name="styleSheet">
-                  <string notr="true"/>
+                  <string notr="true">margin-right:5px;</string>
                  </property>
                  <property name="text">
                   <string>Keystore unlocked:</string>
@@ -895,26 +872,6 @@ padding:5px;
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="pushButton_binance_info">
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="icon">
-                  <iconset>
-                   <normaloff>resources/info.svg</normaloff>resources/info.svg</iconset>
-                 </property>
-                 <property name="iconSize">
-                  <size>
-                   <width>11</width>
-                   <height>11</height>
-                  </size>
-                 </property>
-                 <property name="flat">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item>
                 <widget class="QLabel" name="label_12">
                  <property name="minimumSize">
                   <size>
@@ -952,17 +909,24 @@ padding:5px;
                 </widget>
                </item>
                <item>
-                <spacer name="horizontalSpacer_17">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
+                <widget class="QPushButton" name="pushButton_binance_info">
+                 <property name="text">
+                  <string/>
                  </property>
-                 <property name="sizeHint" stdset="0">
+                 <property name="icon">
+                  <iconset>
+                   <normaloff>resources/info.svg</normaloff>resources/info.svg</iconset>
+                 </property>
+                 <property name="iconSize">
                   <size>
-                   <width>40</width>
-                   <height>20</height>
+                   <width>11</width>
+                   <height>11</height>
                   </size>
                  </property>
-                </spacer>
+                 <property name="flat">
+                  <bool>true</bool>
+                 </property>
+                </widget>
                </item>
               </layout>
              </item>
@@ -971,7 +935,7 @@ padding:5px;
                <item>
                 <widget class="QLabel" name="label_13">
                  <property name="styleSheet">
-                  <string notr="true"/>
+                  <string notr="true">margin-right:5px;</string>
                  </property>
                  <property name="text">
                   <string>Keystore unlocked:</string>
@@ -1145,6 +1109,305 @@ padding:5px;
                </item>
                <item>
                 <widget class="QLabel" name="label_balance_img_binance">
+                 <property name="maximumSize">
+                  <size>
+                   <width>20</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="pixmap">
+                  <pixmap>resources/error.svg</pixmap>
+                 </property>
+                 <property name="scaledContents">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_16">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_9">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_39">
+               <item>
+                <widget class="QPushButton" name="pushButton_cardano_settings">
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset>
+                   <normaloff>resources/edit.png</normaloff>resources/edit.png</iconset>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>10</width>
+                   <height>10</height>
+                  </size>
+                 </property>
+                 <property name="flat">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_23">
+                 <property name="minimumSize">
+                  <size>
+                   <width>50</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>50</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                 <property name="autoFillBackground">
+                  <bool>false</bool>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color:white;
+border-radius:25px;
+padding:5px;
+</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="pixmap">
+                  <pixmap>resources/cardano_colored.svg</pixmap>
+                 </property>
+                 <property name="scaledContents">
+                  <bool>true</bool>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="pushButton_cardano_info">
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset>
+                   <normaloff>resources/info.svg</normaloff>resources/info.svg</iconset>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>11</width>
+                   <height>11</height>
+                  </size>
+                 </property>
+                 <property name="flat">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_40">
+               <item>
+                <widget class="QLabel" name="label_24">
+                 <property name="styleSheet">
+                  <string notr="true">margin-right:5px;</string>
+                 </property>
+                 <property name="text">
+                  <string>Keystore unlocked:</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_keystore_unlocked_cardano">
+                 <property name="maximumSize">
+                  <size>
+                   <width>20</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="pixmap">
+                  <pixmap>resources/error.svg</pixmap>
+                 </property>
+                 <property name="scaledContents">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_41">
+               <item>
+                <widget class="QLabel" name="label_25">
+                 <property name="styleSheet">
+                  <string notr="true"/>
+                 </property>
+                 <property name="text">
+                  <string>Node ready:</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_node_reachable_cardano">
+                 <property name="maximumSize">
+                  <size>
+                   <width>20</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="pixmap">
+                  <pixmap>resources/error.svg</pixmap>
+                 </property>
+                 <property name="scaledContents">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_42">
+               <item>
+                <widget class="QLabel" name="label_27">
+                 <property name="styleSheet">
+                  <string notr="true"/>
+                 </property>
+                 <property name="text">
+                  <string>Contract available:</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_contract_deployed_cardano">
+                 <property name="maximumSize">
+                  <size>
+                   <width>20</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="pixmap">
+                  <pixmap>resources/error.svg</pixmap>
+                 </property>
+                 <property name="scaledContents">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_43">
+               <item>
+                <widget class="QLabel" name="label_45">
+                 <property name="styleSheet">
+                  <string notr="true"/>
+                 </property>
+                 <property name="text">
+                  <string>Enabled:</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_enabled_cardano">
+                 <property name="maximumSize">
+                  <size>
+                   <width>20</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="pixmap">
+                  <pixmap>resources/error.svg</pixmap>
+                 </property>
+                 <property name="scaledContents">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_44">
+               <item>
+                <widget class="QLabel" name="label_gas_price_cardano">
+                 <property name="styleSheet">
+                  <string notr="true"/>
+                 </property>
+                 <property name="text">
+                  <string>Gas Price (0):</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_gas_price_img_cardano">
+                 <property name="maximumSize">
+                  <size>
+                   <width>20</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="pixmap">
+                  <pixmap>resources/error.svg</pixmap>
+                 </property>
+                 <property name="scaledContents">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_45">
+               <item>
+                <widget class="QLabel" name="label_balance_cardano">
+                 <property name="styleSheet">
+                  <string notr="true"/>
+                 </property>
+                 <property name="text">
+                  <string>Balance (0):</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_balance_img_cardano">
                  <property name="maximumSize">
                   <size>
                    <width>20</width>
@@ -2072,6 +2335,29 @@ QTreeView#settingsTree {
            </spacer>
           </item>
           <item>
+           <widget class="QPushButton" name="pushButton_withdraw_cardano">
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color:white;
+color:black;
+border: none;
+/*padding:30px;*/
+width:80px;
+padding-top:3px;
+padding-bottom:3px;
+background-color:orange;</string>
+            </property>
+            <property name="text">
+             <string>Withdraw Cardano</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QPushButton" name="pushButton_withdraw_binance">
             <property name="minimumSize">
              <size>
@@ -2248,7 +2534,7 @@ border:none;
 }</string>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>3</number>
           </property>
           <property name="iconSize">
            <size>
@@ -2815,6 +3101,230 @@ background-color:orange;</string>
             </property>
             <property name="maximum">
              <number>99999</number>
+            </property>
+           </widget>
+          </widget>
+          <widget class="QWidget" name="tab_9">
+           <property name="styleSheet">
+            <string notr="true">border:none;</string>
+           </property>
+           <attribute name="icon">
+            <iconset>
+             <normaloff>resources/cardano_colored.svg</normaloff>resources/cardano_colored.svg</iconset>
+           </attribute>
+           <attribute name="title">
+            <string>Cardano</string>
+           </attribute>
+           <widget class="QLabel" name="label_46">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>129</y>
+              <width>71</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Contract:</string>
+            </property>
+           </widget>
+           <widget class="QLineEdit" name="lineEdit_cardano_url">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>20</y>
+              <width>271</width>
+              <height>20</height>
+             </rect>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color:#333333;</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="label_47">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>4</y>
+              <width>71</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Cardano Node:</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="label_48">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>45</y>
+              <width>91</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Custom Chain ID:</string>
+            </property>
+           </widget>
+           <widget class="QCheckBox" name="checkBox_custom_chain_id_cardano">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>65</y>
+              <width>51</width>
+              <height>18</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Enabled</string>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
+           </widget>
+           <widget class="QLineEdit" name="lineEdit_cardano_contract">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>145</y>
+              <width>271</width>
+              <height>20</height>
+             </rect>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color:#333333;
+/*font-size: 7px;*/</string>
+            </property>
+           </widget>
+           <widget class="QSpinBox" name="spinBox_custom_chain_id_cardano">
+            <property name="geometry">
+             <rect>
+              <x>70</x>
+              <y>61</y>
+              <width>91</width>
+              <height>22</height>
+             </rect>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color:white;
+color:black;
+border: none;
+/*padding:30px;*/
+width:80px;
+padding-top:2px;
+padding-bottom:2px;
+background-color:orange;</string>
+            </property>
+            <property name="wrapping">
+             <bool>false</bool>
+            </property>
+            <property name="buttonSymbols">
+             <enum>QAbstractSpinBox::UpDownArrows</enum>
+            </property>
+            <property name="accelerated">
+             <bool>false</bool>
+            </property>
+            <property name="keyboardTracking">
+             <bool>false</bool>
+            </property>
+            <property name="maximum">
+             <number>99999</number>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="pushButton_deploy_contract_cardano">
+            <property name="geometry">
+             <rect>
+              <x>288</x>
+              <y>147</y>
+              <width>91</width>
+              <height>17</height>
+             </rect>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color:white;
+color:black;
+border: none;
+/*padding:30px;*/
+width:80px;
+padding-top:3px;
+padding-bottom:3px;
+background-color:orange;</string>
+            </property>
+            <property name="text">
+             <string>Deploy Contract</string>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+           <widget class="QLineEdit" name="lineEdit_cardano_account">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>103</y>
+              <width>271</width>
+              <height>20</height>
+             </rect>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color:#333333;
+/*font-size: 7px;*/</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="label_49">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>87</y>
+              <width>71</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Account:</string>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="pushButton_accounts_cardano">
+            <property name="geometry">
+             <rect>
+              <x>288</x>
+              <y>105</y>
+              <width>91</width>
+              <height>17</height>
+             </rect>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color:white;
+color:black;
+border: none;
+/*padding:30px;*/
+width:80px;
+padding-top:3px;
+padding-bottom:3px;
+background-color:orange;</string>
+            </property>
+            <property name="text">
+             <string>My Accounts</string>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+           <widget class="QCheckBox" name="checkBox_cardano">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>171</y>
+              <width>171</width>
+              <height>18</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Enabled</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
             </property>
            </widget>
           </widget>
