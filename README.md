@@ -37,7 +37,7 @@ This application is intended to be used with [Acria-Substrate](https://github.co
 
 ## Supported Chains
 
-Current the Acria Network can be used on the following chains:
+Currently the Acria Network can be used on the following chains:
 - Polkadot
 - Ethereum
 - Binance Smart Chain
