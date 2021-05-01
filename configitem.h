@@ -23,6 +23,8 @@ public:
 
     nlohmann::json ijson;
 
+    void fill(nlohmann::json _json);
+
 private slots:
     void on_buttonBox_1_accepted();
 

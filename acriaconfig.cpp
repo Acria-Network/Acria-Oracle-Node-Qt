@@ -70,6 +70,7 @@ void AcriaConfig::on_pushButton_add_item_clicked()
         this->cjson.push_back(this->ci->ijson);
 
         this->ui->plainTextEdit->setPlainText(QString::fromStdString(this->cjson.dump()));
+        this->update_table();
     }
 
     qDebug() << "Added Config Item";
@@ -77,5 +78,16 @@ void AcriaConfig::on_pushButton_add_item_clicked()
 
 void AcriaConfig::on_tableWidget_config_cellDoubleClicked(int row, int column)
 {
+    Q_UNUSED(column)
+    ci->fill(this->cjson[row]);
 
+    if(ci->exec() == QDialog::Accepted){
+        //this->cjson.push_back(this->ci->ijson);
+        this->cjson[row] = this->ci->ijson;
+
+        this->ui->plainTextEdit->setPlainText(QString::fromStdString(this->cjson.dump()));
+        this->update_table();
+    }
+
+    qDebug() << "Added Config Item";
 }

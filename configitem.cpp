@@ -31,9 +31,38 @@ ConfigItem::~ConfigItem()
     delete ui;
 }
 
+void ConfigItem::fill(nlohmann::json _json){
+    this->clear();
+
+    if(_json.contains("url"))
+        this->ui->lineEdit_2_api_url->setText(QString::fromStdString(_json["url"]));
+    if(_json.contains("rname"))
+        this->ui->lineEdit_resource_name->setText(QString::fromStdString(_json["rname"]));
+    if(_json.contains("url_data"))
+        this->ui->lineEdit_2_api_url_2->setText(QString::fromStdString(_json["url_data"]));
+    if(_json.contains("regex"))
+        this->ui->lineEdit_regex_text->setText(QString::fromStdString(_json["regex"]));
+    if(_json.contains("parameter_type"))
+        this->ui->lineEdit_2_parameter_type->setText(QString::fromStdString(_json["parameter_type"]));
+
+    if(_json.contains("regex"))
+        this->ui->comboBox->setCurrentIndex(1);
+    else
+        this->ui->comboBox->setCurrentIndex(0);
+
+    if(_json.contains("json"))
+        for(uint i = 0;i<_json["json"].size();i++){
+            t1[i]->setText(QString::fromStdString(_json["json"][i]));
+        }
+}
+
 void ConfigItem::clear(){
     this->ui->lineEdit_2_api_url->setText("");
     this->ui->lineEdit_resource_name->setText("");
+    this->ui->lineEdit_2_api_url_2->setText("");
+    this->ui->lineEdit_regex_text->setText("");
+    this->ui->lineEdit_parameter_input->setText("");
+    this->ui->lineEdit_2_parameter_type->setText("");
 
     for(uint i = 0;i<this->t1.size();i++){
         t1[i]->setText("");
