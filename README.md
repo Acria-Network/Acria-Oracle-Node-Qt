@@ -35,6 +35,14 @@ cp configs/config.conf.example config.conf
 
 This application is intended to be used with [Acria-Substrate](https://github.com/Acria-Network/acria-substrate) and [Acria-Contracts](https://github.com/Acria-Network/Acria-Contracts). Please follow the instructions on the respective repository.
 
+## Supported Chains
+
+Current the Acria Network can be used on the following chains:
+- Polkadot
+- Ethereum
+- Binance Smart Chain
+- Cardano
+
 ## Whitepaper / Technical Specification
 
 <a href="https://acria.network/whitepaper" target="_blank"><img src="img/documents-document.svg" width="100" height="100" /></a>
