@@ -95,6 +95,76 @@ background-color:orange;</string>
     </widget>
    </item>
    <item>
+    <widget class="QTableWidget" name="tableWidget_config">
+     <property name="styleSheet">
+      <string notr="true">QTreeView, QTableView {
+    alternate-background-color: rgba(0,0,0, 64);
+    background-color: #222222;
+    border: 0px;
+/*border: 1px solid #333333;*/
+gridline-color: #333333;
+}
+
+QTableView::item:selected{
+/*background-color: rgba(85, 58, 22, 174);*/
+background-color: #282828;
+color: palette(highlightedText);
+border:1px solid rgba(255, 120, 0, 160);
+}
+
+QHeaderView::section{
+background:#333333;
+border:none;
+gridline-color: #000000;
+}
+
+QTreeView {
+  selection-background-color: transparent;
+}
+
+QTreeView::item:focus {
+  border: none;
+}
+
+QTreeView::item:selected {
+  border: none;
+  border-radius: 3px;
+  color: palette(button-text);
+}
+
+QTreeView::item:hover {
+  border-radius: 3px;
+  background: #000000;
+}
+
+
+QTreeView::item:selected:active{
+  color: palette(button-text);
+  background: #040404;
+}
+
+QTreeView::item:selected:!active {
+  color: palette(button-text);
+  background: #080808;
+}
+
+QTreeView::item { 
+color: #debc85; 
+}
+QTreeView::item:selected { 
+color: #00004b; 
+}
+QTreeView#settingsTree {
+ background: #131313; 
+}
+</string>
+     </property>
+     <property name="selectionBehavior">
+      <enum>QAbstractItemView::SelectRows</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="styleSheet">
       <string notr="true">background-color:white;

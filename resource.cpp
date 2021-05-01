@@ -115,8 +115,9 @@ void Resource::update_resource(){
         manager->get(request);
     }
     else{
-        QThread::msleep(30000);
-        this->update_resource();
+        //QThread::msleep(30000);
+        QTimer::singleShot(30000, this, &Resource::update_resource);
+        //this->update_resource();
     }
 }
 
@@ -291,6 +292,7 @@ void Resource::managerFinished(QNetworkReply *reply) {
     catch(...){
         qDebug() << "error json";
         *this->state=8;
+        QTimer::singleShot(30000, this, &Resource::update_resource);
         return;
     }
 

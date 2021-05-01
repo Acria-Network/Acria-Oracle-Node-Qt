@@ -128,7 +128,7 @@ background-color:#333333;
        <enum>QTabWidget::West</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <property name="iconSize">
        <size>
@@ -240,24 +240,61 @@ border-radius:5px;</string>
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_27">
                <item>
-                <widget class="QPushButton" name="pushButton_polkadot_settings">
-                 <property name="text">
-                  <string/>
+                <spacer name="horizontalSpacer_23">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
                  </property>
-                 <property name="icon">
-                  <iconset>
-                   <normaloff>resources/edit.png</normaloff>resources/edit.png</iconset>
-                 </property>
-                 <property name="iconSize">
+                 <property name="sizeHint" stdset="0">
                   <size>
-                   <width>10</width>
-                   <height>10</height>
+                   <width>0</width>
+                   <height>0</height>
                   </size>
                  </property>
-                 <property name="flat">
-                  <bool>true</bool>
-                 </property>
-                </widget>
+                </spacer>
+               </item>
+               <item>
+                <layout class="QVBoxLayout" name="verticalLayout_10">
+                 <item>
+                  <widget class="QPushButton" name="pushButton_polkadot_settings">
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="icon">
+                    <iconset>
+                     <normaloff>resources/edit.png</normaloff>resources/edit.png</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>10</width>
+                     <height>10</height>
+                    </size>
+                   </property>
+                   <property name="flat">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="pushButton_binance_info_2">
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="icon">
+                    <iconset>
+                     <normaloff>resources/info.svg</normaloff>resources/info.svg</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>11</width>
+                     <height>11</height>
+                    </size>
+                   </property>
+                   <property name="flat">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </item>
                <item>
                 <widget class="QLabel" name="label_17">
@@ -299,24 +336,17 @@ padding-left:13px;
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="pushButton_binance_info_2">
-                 <property name="text">
-                  <string/>
+                <spacer name="horizontalSpacer_17">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
                  </property>
-                 <property name="icon">
-                  <iconset>
-                   <normaloff>resources/info.svg</normaloff>resources/info.svg</iconset>
-                 </property>
-                 <property name="iconSize">
+                 <property name="sizeHint" stdset="0">
                   <size>
-                   <width>11</width>
-                   <height>11</height>
+                   <width>30</width>
+                   <height>0</height>
                   </size>
                  </property>
-                 <property name="flat">
-                  <bool>true</bool>
-                 </property>
-                </widget>
+                </spacer>
                </item>
               </layout>
              </item>
@@ -541,30 +571,73 @@ padding-left:13px;
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_22">
                <item>
-                <widget class="QPushButton" name="pushButton_eth_settings">
-                 <property name="maximumSize">
+                <spacer name="horizontalSpacer_24">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
                   <size>
-                   <width>21</width>
-                   <height>20</height>
+                   <width>0</width>
+                   <height>0</height>
                   </size>
                  </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="icon">
-                  <iconset>
-                   <normaloff>resources/edit.png</normaloff>resources/edit.png</iconset>
-                 </property>
-                 <property name="iconSize">
-                  <size>
-                   <width>10</width>
-                   <height>10</height>
-                  </size>
-                 </property>
-                 <property name="flat">
-                  <bool>true</bool>
-                 </property>
-                </widget>
+                </spacer>
+               </item>
+               <item>
+                <layout class="QVBoxLayout" name="verticalLayout_11">
+                 <item>
+                  <widget class="QPushButton" name="pushButton_eth_settings">
+                   <property name="maximumSize">
+                    <size>
+                     <width>21</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="icon">
+                    <iconset>
+                     <normaloff>resources/edit.png</normaloff>resources/edit.png</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>10</width>
+                     <height>10</height>
+                    </size>
+                   </property>
+                   <property name="flat">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="pushButton_eth_info">
+                   <property name="maximumSize">
+                    <size>
+                     <width>21</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="icon">
+                    <iconset>
+                     <normaloff>resources/info.svg</normaloff>resources/info.svg</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>11</width>
+                     <height>11</height>
+                    </size>
+                   </property>
+                   <property name="flat">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </item>
                <item>
                 <widget class="QLabel" name="label_3">
@@ -604,30 +677,17 @@ padding:5px;
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="pushButton_eth_info">
-                 <property name="maximumSize">
+                <spacer name="horizontalSpacer_18">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
                   <size>
-                   <width>21</width>
-                   <height>20</height>
+                   <width>30</width>
+                   <height>0</height>
                   </size>
                  </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="icon">
-                  <iconset>
-                   <normaloff>resources/info.svg</normaloff>resources/info.svg</iconset>
-                 </property>
-                 <property name="iconSize">
-                  <size>
-                   <width>11</width>
-                   <height>11</height>
-                  </size>
-                 </property>
-                 <property name="flat">
-                  <bool>true</bool>
-                 </property>
-                </widget>
+                </spacer>
                </item>
               </layout>
              </item>
@@ -852,24 +912,61 @@ padding:5px;
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_23">
                <item>
-                <widget class="QPushButton" name="pushButton_binance_settings">
-                 <property name="text">
-                  <string/>
+                <spacer name="horizontalSpacer_25">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
                  </property>
-                 <property name="icon">
-                  <iconset>
-                   <normaloff>resources/edit.png</normaloff>resources/edit.png</iconset>
-                 </property>
-                 <property name="iconSize">
+                 <property name="sizeHint" stdset="0">
                   <size>
-                   <width>10</width>
-                   <height>10</height>
+                   <width>0</width>
+                   <height>0</height>
                   </size>
                  </property>
-                 <property name="flat">
-                  <bool>true</bool>
-                 </property>
-                </widget>
+                </spacer>
+               </item>
+               <item>
+                <layout class="QVBoxLayout" name="verticalLayout_12">
+                 <item>
+                  <widget class="QPushButton" name="pushButton_binance_settings">
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="icon">
+                    <iconset>
+                     <normaloff>resources/edit.png</normaloff>resources/edit.png</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>10</width>
+                     <height>10</height>
+                    </size>
+                   </property>
+                   <property name="flat">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="pushButton_binance_info">
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="icon">
+                    <iconset>
+                     <normaloff>resources/info.svg</normaloff>resources/info.svg</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>11</width>
+                     <height>11</height>
+                    </size>
+                   </property>
+                   <property name="flat">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </item>
                <item>
                 <widget class="QLabel" name="label_12">
@@ -909,24 +1006,17 @@ padding:5px;
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="pushButton_binance_info">
-                 <property name="text">
-                  <string/>
+                <spacer name="horizontalSpacer_21">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
                  </property>
-                 <property name="icon">
-                  <iconset>
-                   <normaloff>resources/info.svg</normaloff>resources/info.svg</iconset>
-                 </property>
-                 <property name="iconSize">
+                 <property name="sizeHint" stdset="0">
                   <size>
-                   <width>11</width>
-                   <height>11</height>
+                   <width>30</width>
+                   <height>0</height>
                   </size>
                  </property>
-                 <property name="flat">
-                  <bool>true</bool>
-                 </property>
-                </widget>
+                </spacer>
                </item>
               </layout>
              </item>
@@ -1151,24 +1241,61 @@ padding:5px;
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_39">
                <item>
-                <widget class="QPushButton" name="pushButton_cardano_settings">
-                 <property name="text">
-                  <string/>
+                <spacer name="horizontalSpacer_26">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
                  </property>
-                 <property name="icon">
-                  <iconset>
-                   <normaloff>resources/edit.png</normaloff>resources/edit.png</iconset>
-                 </property>
-                 <property name="iconSize">
+                 <property name="sizeHint" stdset="0">
                   <size>
-                   <width>10</width>
-                   <height>10</height>
+                   <width>0</width>
+                   <height>0</height>
                   </size>
                  </property>
-                 <property name="flat">
-                  <bool>true</bool>
-                 </property>
-                </widget>
+                </spacer>
+               </item>
+               <item>
+                <layout class="QVBoxLayout" name="verticalLayout_13">
+                 <item>
+                  <widget class="QPushButton" name="pushButton_cardano_settings">
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="icon">
+                    <iconset>
+                     <normaloff>resources/edit.png</normaloff>resources/edit.png</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>10</width>
+                     <height>10</height>
+                    </size>
+                   </property>
+                   <property name="flat">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="pushButton_cardano_info">
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="icon">
+                    <iconset>
+                     <normaloff>resources/info.svg</normaloff>resources/info.svg</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>11</width>
+                     <height>11</height>
+                    </size>
+                   </property>
+                   <property name="flat">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </item>
                <item>
                 <widget class="QLabel" name="label_23">
@@ -1208,24 +1335,17 @@ padding:5px;
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="pushButton_cardano_info">
-                 <property name="text">
-                  <string/>
+                <spacer name="horizontalSpacer_22">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
                  </property>
-                 <property name="icon">
-                  <iconset>
-                   <normaloff>resources/info.svg</normaloff>resources/info.svg</iconset>
-                 </property>
-                 <property name="iconSize">
+                 <property name="sizeHint" stdset="0">
                   <size>
-                   <width>11</width>
-                   <height>11</height>
+                   <width>30</width>
+                   <height>0</height>
                   </size>
                  </property>
-                 <property name="flat">
-                  <bool>true</bool>
-                 </property>
-                </widget>
+                </spacer>
                </item>
               </layout>
              </item>

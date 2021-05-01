@@ -27,12 +27,16 @@ private slots:
 
     void on_pushButton_add_item_clicked();
 
+    void on_tableWidget_config_cellDoubleClicked(int row, int column);
+
 private:
     Ui::AcriaConfig *ui;
     Config* config;
 
     ConfigItem* ci;
     nlohmann::json cjson;
+
+    void update_table();
 };
 
 #endif // ACRIACONFIG_H
