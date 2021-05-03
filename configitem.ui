@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>593</width>
-    <height>354</height>
+    <height>380</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -475,6 +475,20 @@ background-color:orange;</string>
       </layout>
      </item>
     </layout>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_11">
+     <property name="text">
+      <string>Short description:</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPlainTextEdit" name="plainTextEdit_description">
+     <property name="styleSheet">
+      <string notr="true">background-color:#333333;</string>
+     </property>
+    </widget>
    </item>
    <item>
     <spacer name="verticalSpacer">

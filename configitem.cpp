@@ -44,6 +44,10 @@ void ConfigItem::fill(nlohmann::json _json){
         this->ui->lineEdit_regex_text->setText(QString::fromStdString(_json["regex"]));
     if(_json.contains("parameter_type"))
         this->ui->lineEdit_2_parameter_type->setText(QString::fromStdString(_json["parameter_type"]));
+    if(_json.contains("description"))
+        this->ui->plainTextEdit_description->setPlainText(QString::fromStdString(_json["description"]));
+    if(_json.contains("example_value"))
+        this->ui->label_response_parsed->setText(QString::fromStdString(_json["example_value"]));
 
     if(_json.contains("regex"))
         this->ui->comboBox->setCurrentIndex(1);
@@ -63,6 +67,9 @@ void ConfigItem::clear(){
     this->ui->lineEdit_regex_text->setText("");
     this->ui->lineEdit_parameter_input->setText("");
     this->ui->lineEdit_2_parameter_type->setText("");
+    this->ui->plainTextEdit_description->setPlainText("");
+    this->ui->label_response_parsed->setText("");
+    this->ui->label_example_request->setText("");
 
     for(uint i = 0;i<this->t1.size();i++){
         t1[i]->setText("");
@@ -95,6 +102,8 @@ void ConfigItem::on_buttonBox_1_accepted()
     tmp["url_data"] = this->ui->lineEdit_2_api_url_2->text().toStdString();
     tmp["parameter_type"] = this->ui->lineEdit_2_parameter_type->text().toStdString();
     tmp["rname"] = this->ui->lineEdit_resource_name->text().toStdString();
+    tmp["description"] = this->ui->plainTextEdit_description->toPlainText().toStdString();
+    tmp["example_value"] = this->ui->label_response_parsed->text().toStdString();
 
     if(this->ui->comboBox->currentIndex() == 0){
         for(uint i = 0;i<this->t1.size();i++){
