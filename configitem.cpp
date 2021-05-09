@@ -24,6 +24,9 @@ ConfigItem::ConfigItem(QWidget *parent) :
 
     QObject::connect(manager, SIGNAL(finished(QNetworkReply*)),
         this, SLOT(managerFinished(QNetworkReply*)));
+
+    save_as_copy = false;
+    this->show_save_as_copy_button(false);
 }
 
 ConfigItem::~ConfigItem()
@@ -74,6 +77,8 @@ void ConfigItem::clear(){
     for(uint i = 0;i<this->t1.size();i++){
         t1[i]->setText("");
     }
+
+    save_as_copy = false;
 }
 
 void ConfigItem::managerFinished(QNetworkReply *reply) {
@@ -128,8 +133,8 @@ void ConfigItem::on_buttonBox_1_rejected()
 
 void ConfigItem::on_lineEdit_resource_name_textChanged(const QString &arg1)
 {
-    if(arg1.length()>32){
-        static_cast<QLineEdit*>(sender())->setText(arg1.mid(0, 32));
+    if(arg1.length()>8){
+        static_cast<QLineEdit*>(sender())->setText(arg1.mid(0, 8));
     }
 }
 
@@ -237,4 +242,39 @@ void ConfigItem::on_pushButton_make_example_request_with_parameter_clicked()
     request.setUrl(this->ui->lineEdit_2_api_url_2->text().replace("%data%", par));
     request.setRawHeader("Content-Type", "application/json");
     manager->get(request);
+}
+
+void ConfigItem::on_pushButton_save_and_continue_clicked()
+{
+    save_as_copy = true;
+
+    nlohmann::json tmp;
+    tmp["url"] = this->ui->lineEdit_2_api_url->text().toStdString();
+    tmp["url_data"] = this->ui->lineEdit_2_api_url_2->text().toStdString();
+    tmp["parameter_type"] = this->ui->lineEdit_2_parameter_type->text().toStdString();
+    tmp["rname"] = this->ui->lineEdit_resource_name->text().toStdString();
+    tmp["description"] = this->ui->plainTextEdit_description->toPlainText().toStdString();
+    tmp["example_value"] = this->ui->label_response_parsed->text().toStdString();
+
+    if(this->ui->comboBox->currentIndex() == 0){
+        for(uint i = 0;i<this->t1.size();i++){
+            if(this->t1[i]->text().trimmed() != "")
+            tmp["json"][i] = this->t1[i]->text().toStdString();
+        }
+    }
+    else if(this->ui->comboBox->currentIndex() == 1){
+        tmp["regex"] = this->ui->lineEdit_regex_text->text().toStdString();
+    }
+
+
+    ijson = tmp;
+
+    accept();
+}
+
+void ConfigItem::show_save_as_copy_button(bool visible){
+    if(visible)
+        this->ui->pushButton_save_and_continue->show();
+    else
+        this->ui->pushButton_save_and_continue->hide();
 }

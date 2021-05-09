@@ -79,15 +79,20 @@ void AcriaConfig::on_pushButton_add_item_clicked()
 void AcriaConfig::on_tableWidget_config_cellDoubleClicked(int row, int column)
 {
     Q_UNUSED(column)
+    ci->show_save_as_copy_button(true);
     ci->fill(this->cjson[row]);
 
     if(ci->exec() == QDialog::Accepted){
-        //this->cjson.push_back(this->ci->ijson);
-        this->cjson[row] = this->ci->ijson;
-
+        if(ci->save_as_copy == false){
+            this->cjson[row] = this->ci->ijson;
+        }
+        else{
+            this->cjson.push_back(this->ci->ijson);
+        }
         this->ui->plainTextEdit->setPlainText(QString::fromStdString(this->cjson.dump()));
         this->update_table();
     }
+    ci->show_save_as_copy_button(false);
 
     qDebug() << "Added Config Item";
 }

@@ -23,7 +23,11 @@ public:
 
     nlohmann::json ijson;
 
+    bool save_as_copy;
+
     void fill(nlohmann::json _json);
+
+    void show_save_as_copy_button(bool visible);
 
 private slots:
     void on_buttonBox_1_accepted();
@@ -43,6 +47,8 @@ private slots:
     void on_pushButton_response_parse_clicked();
 
     void on_pushButton_make_example_request_with_parameter_clicked();
+
+    void on_pushButton_save_and_continue_clicked();
 
 private:
     Ui::ConfigItem *ui;
