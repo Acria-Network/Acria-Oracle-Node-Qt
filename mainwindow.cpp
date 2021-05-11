@@ -182,7 +182,7 @@ void MainWindow::get_status_geth(){
         this->ui->label_balance_img_eth->setPixmap(QPixmap("./resources/error.svg"));
     __uint128_t bal = this->data->chain_data["ethereum"].balance/static_cast<__uint128_t>(pow(10,14));
     double bal_d = double(bal)/pow(10,4);
-    this->ui->label_balance_eth->setText("Balance (" + QString::number(bal_d) +"):");
+    this->ui->label_balance_eth->setText(tr("Balance (") + QString::number(bal_d) +"):");
 }
 
 void MainWindow::get_status_polkadot(){
@@ -221,7 +221,7 @@ void MainWindow::get_status_binance(){
         this->ui->label_balance_img_binance->setPixmap(QPixmap("./resources/error.svg"));
     __uint128_t bal = this->data->chain_data["binance"].balance/static_cast<__uint128_t>(pow(10,14));
     double bal_d = double(bal)/pow(10,4);
-    this->ui->label_balance_binance->setText("Balance (" + QString::number(bal_d) +"):");
+    this->ui->label_balance_binance->setText(tr("Balance (") + QString::number(bal_d) +"):");
 }
 
 void MainWindow::get_status_cardano(){
@@ -257,7 +257,7 @@ void MainWindow::get_status_cardano(){
         this->ui->label_balance_img_cardano->setPixmap(QPixmap("./resources/error.svg"));
     __uint128_t bal = this->data->chain_data["cardano"].balance/static_cast<__uint128_t>(pow(10,14));
     double bal_d = double(bal)/pow(10,4);
-    this->ui->label_balance_cardano->setText("Balance (" + QString::number(bal_d) +"):");
+    this->ui->label_balance_cardano->setText(tr("Balance (") + QString::number(bal_d) +"):");
 }
 
 void MainWindow::get_status_acria(){
@@ -281,14 +281,14 @@ void MainWindow::update_status(){
 
 QString MainWindow::get_state_string(uint state){
     switch(state){
-        case 0: return "new";break;
-        case 1: return "data updated";break;
-        case 2: return "sent";break;
-        case 3: return "completed";break;
-        case 8: return "error api";break;
-        case 9: return "error geth node";break;
-        case 10: return "error deploy check";break;
-        default: return "unknown state";
+        case 0: return tr("new");break;
+        case 1: return tr("data updated");break;
+        case 2: return tr("sent");break;
+        case 3: return tr("completed");break;
+        case 8: return tr("error api");break;
+        case 9: return tr("error geth node");break;
+        case 10: return tr("error deploy check");break;
+        default: return tr("unknown state");
     }
 }
 
@@ -342,12 +342,12 @@ void MainWindow::update_requests(){
     this->ui->tableWidget_req->setColumnWidth(0, 20);
 
     this->ui->tableWidget_req->setHorizontalHeaderItem(0, new QTableWidgetItem("#"));
-    this->ui->tableWidget_req->setHorizontalHeaderItem(1, new QTableWidgetItem("Item"));
-    this->ui->tableWidget_req->setHorizontalHeaderItem(2, new QTableWidgetItem("Fee"));
-    this->ui->tableWidget_req->setHorizontalHeaderItem(3, new QTableWidgetItem("Expiration"));
-    this->ui->tableWidget_req->setHorizontalHeaderItem(4, new QTableWidgetItem("Chain"));
-    this->ui->tableWidget_req->setHorizontalHeaderItem(5, new QTableWidgetItem("Id"));
-    this->ui->tableWidget_req->setHorizontalHeaderItem(6, new QTableWidgetItem("Status"));
+    this->ui->tableWidget_req->setHorizontalHeaderItem(1, new QTableWidgetItem(tr("Item")));
+    this->ui->tableWidget_req->setHorizontalHeaderItem(2, new QTableWidgetItem(tr("Fee")));
+    this->ui->tableWidget_req->setHorizontalHeaderItem(3, new QTableWidgetItem(tr("Expiration")));
+    this->ui->tableWidget_req->setHorizontalHeaderItem(4, new QTableWidgetItem(tr("Chain")));
+    this->ui->tableWidget_req->setHorizontalHeaderItem(5, new QTableWidgetItem(tr("Id")));
+    this->ui->tableWidget_req->setHorizontalHeaderItem(6, new QTableWidgetItem(tr("Status")));
 
     for (uint d=0; d<r.size(); d++){
         this->ui->tableWidget_req->setItem( d, 0, new QTableWidgetItem(QString::number(d)));
@@ -446,11 +446,11 @@ void MainWindow::update_events(){
     this->ui->tableWidget_comp->setColumnWidth(4, 50);
 
     this->ui->tableWidget_comp->setHorizontalHeaderItem(0, new QTableWidgetItem("#"));
-    this->ui->tableWidget_comp->setHorizontalHeaderItem(1, new QTableWidgetItem("Item"));
-    this->ui->tableWidget_comp->setHorizontalHeaderItem(2, new QTableWidgetItem("Chain"));
-    this->ui->tableWidget_comp->setHorizontalHeaderItem(3, new QTableWidgetItem("Block"));
-    this->ui->tableWidget_comp->setHorizontalHeaderItem(4, new QTableWidgetItem("Fee"));
-    this->ui->tableWidget_comp->setHorizontalHeaderItem(5, new QTableWidgetItem("Hash"));
+    this->ui->tableWidget_comp->setHorizontalHeaderItem(1, new QTableWidgetItem(tr("Item")));
+    this->ui->tableWidget_comp->setHorizontalHeaderItem(2, new QTableWidgetItem(tr("Chain")));
+    this->ui->tableWidget_comp->setHorizontalHeaderItem(3, new QTableWidgetItem(tr("Block")));
+    this->ui->tableWidget_comp->setHorizontalHeaderItem(4, new QTableWidgetItem(tr("Fee")));
+    this->ui->tableWidget_comp->setHorizontalHeaderItem(5, new QTableWidgetItem(tr("Hash")));
 
     if(r.size() != 0){
         this->ui->tableWidget_comp->horizontalHeader()->show();
@@ -495,10 +495,10 @@ void MainWindow::update_balances(){
     this->ui->tableWidget_balances->setColumnWidth(2, 128);
     this->ui->tableWidget_balances->setColumnWidth(3, 128);
 
-    this->ui->tableWidget_balances->setHorizontalHeaderItem(0, new QTableWidgetItem("Chain"));
-    this->ui->tableWidget_balances->setHorizontalHeaderItem(1, new QTableWidgetItem("Fees Earned Total"));
-    this->ui->tableWidget_balances->setHorizontalHeaderItem(2, new QTableWidgetItem("Withdrawable Fees"));
-    this->ui->tableWidget_balances->setHorizontalHeaderItem(3, new QTableWidgetItem("Completed Requests"));
+    this->ui->tableWidget_balances->setHorizontalHeaderItem(0, new QTableWidgetItem(tr("Chain")));
+    this->ui->tableWidget_balances->setHorizontalHeaderItem(1, new QTableWidgetItem(tr("Fees Earned Total")));
+    this->ui->tableWidget_balances->setHorizontalHeaderItem(2, new QTableWidgetItem(tr("Withdrawable Fees")));
+    this->ui->tableWidget_balances->setHorizontalHeaderItem(3, new QTableWidgetItem(tr("Completed Requests")));
     this->ui->tableWidget_balances->horizontalHeader()->show();
 
     this->ui->tableWidget_balances->setItem( 0, 0, new QTableWidgetItem("Ethereum"));
@@ -612,7 +612,7 @@ void MainWindow::on_pushButton_export_json_clicked()
             file.close();
        }
 
-       show_msgBox("Successfully exported as Json!");
+       show_msgBox(tr("Successfully exported as Json!"));
     }
 }
 
@@ -663,7 +663,7 @@ void MainWindow::on_pushButton_export_csv_clicked()
             file.close();
        }
 
-       show_msgBox("Successfully exported as CSV!");
+       show_msgBox(tr("Successfully exported as CSV!"));
     }
 }
 
@@ -676,11 +676,6 @@ void MainWindow::on_pushButton_export_json_3_clicked()
 
 void MainWindow::on_pushButton_refresh_clicked()
 {
-    //ui->status_geth->setText("...");
-    //ui->status_polkadot->setText("...");
-    //ui->status_acria->setText("...");
-    //ui->status_config->setText("...");
-
     for (auto const& x : eth_based_chain)
     {
         x.second->node->update_geth_status();
@@ -787,7 +782,7 @@ void MainWindow::on_pushButton_setting_save_clicked()
         this->eth_based_chain["cardano"]->node->update_geth_status();
     }
 
-    show_msgBox("Successfully saved the settings!");
+    show_msgBox(tr("Successfully saved the settings!"));
 }
 
 void MainWindow::on_pushButton_setting_discard_clicked()
@@ -812,7 +807,7 @@ void MainWindow::on_pushButton_binance_settings_clicked()
 void MainWindow::on_pushButton_withdraw_eth_clicked()
 {
     QMessageBox::StandardButton reply;
-    reply = QMessageBox::question(this, "Withdraw", "Withdraw everything from the Binance contract?", QMessageBox::Yes|QMessageBox::No);
+    reply = QMessageBox::question(this, tr("Withdraw"), tr("Withdraw everything from the Binance contract?"), QMessageBox::Yes|QMessageBox::No);
       if (reply == QMessageBox::Yes) {
           this->processing_window->show();
         this->eth_based_chain["ethereum"]->withdraw->withdraw(processing_window);
@@ -829,7 +824,7 @@ void MainWindow::on_pushButton_withdraw_polkadot_clicked()
 void MainWindow::on_pushButton_withdraw_binance_clicked()
 {
     QMessageBox::StandardButton reply;
-    reply = QMessageBox::question(this, "Withdraw", "Withdraw everything from the Binance contract?", QMessageBox::Yes|QMessageBox::No);
+    reply = QMessageBox::question(this, tr("Withdraw"), tr("Withdraw everything from the Binance contract?"), QMessageBox::Yes|QMessageBox::No);
       if (reply == QMessageBox::Yes) {
           this->processing_window->show();
         this->eth_based_chain["binance"]->withdraw->withdraw(processing_window);
@@ -850,7 +845,7 @@ void MainWindow::on_pushButton_deploy_contract_binance_clicked()
     if(this->node_ready("binance"))
         this->eth_based_chain["binance"]->deploy_window->exec();
     else
-        show_msgBox("Please wait until the binance node is ready!");
+        show_msgBox(tr("Please wait until the binance node is ready!"));
 }
 
 void MainWindow::on_pushButton_deploy_contract_eth_clicked()
@@ -858,7 +853,7 @@ void MainWindow::on_pushButton_deploy_contract_eth_clicked()
     if(this->node_ready("ethereum"))
         this->eth_based_chain["ethereum"]->deploy_window->exec();
     else
-        show_msgBox("Please wait until the ethereum node is ready!");
+        show_msgBox(tr("Please wait until the ethereum node is ready!"));
 }
 
 void MainWindow::on_pushButton_accounts_binance_clicked()
@@ -931,13 +926,13 @@ void MainWindow::on_pushButton_deploy_contract_cardano_clicked()
     if(this->node_ready("cardano"))
         this->eth_based_chain["cardano"]->deploy_window->exec();
     else
-        show_msgBox("Please wait until the cardano node is ready!");
+        show_msgBox(tr("Please wait until the cardano node is ready!"));
 }
 
 void MainWindow::on_pushButton_withdraw_cardano_clicked()
 {
     QMessageBox::StandardButton reply;
-    reply = QMessageBox::question(this, "Withdraw", "Withdraw everything from the Cardano contract?", QMessageBox::Yes|QMessageBox::No);
+    reply = QMessageBox::question(this, tr("Withdraw"), tr("Withdraw everything from the Cardano contract?"), QMessageBox::Yes|QMessageBox::No);
       if (reply == QMessageBox::Yes) {
           this->processing_window->show();
         this->eth_based_chain["cardano"]->withdraw->withdraw(processing_window);

@@ -204,7 +204,7 @@ void ConfigItem::on_pushButton_response_parse_clicked()
             this->ui->label_response_parsed->setText("Value: " + QString::number(ans)+"\nuint256: "+tmp2);
         }
         catch(...){
-            this->ui->label_response_parsed->setText("error");
+            this->ui->label_response_parsed->setText(tr("error"));
         }
     }
     else if(this->ui->comboBox->currentIndex() == 1){
@@ -213,7 +213,7 @@ void ConfigItem::on_pushButton_response_parse_clicked()
         if (match.hasMatch()) {
             QString matched = match.captured(1);
             if(matched == ""){
-                this->ui->label_response_parsed->setText("Nothing captured. Did you forget the brackets ()?");
+                this->ui->label_response_parsed->setText(tr("Nothing captured. Did you forget the brackets ()?"));
                 return;
             }
             double ans = matched.toDouble();
@@ -229,7 +229,7 @@ void ConfigItem::on_pushButton_response_parse_clicked()
             this->ui->label_response_parsed->setText("Value: " + matched+"\nuint256: "+tmp2);
         }
         else{
-            this->ui->label_response_parsed->setText("error");
+            this->ui->label_response_parsed->setText(tr("error"));
         }
     }
 }
