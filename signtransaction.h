@@ -8,6 +8,7 @@
 #include <memory.h>
 #include <stdlib.h>
 #include "ecdsa.h"
+#include <QString>
 
 
 #define EIP_155_OFFSET 35
@@ -23,6 +24,7 @@ private:
 public:
     static std::string fixHexValue(std::string hex);
     static std::string sign_transaction(Transaction tx, std::string privkey);
+    static std::string sign_message(QString message, std::string privkey);
 };
 
 #endif // SIGNTRANSACTION_H

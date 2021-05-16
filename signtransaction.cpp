@@ -1,5 +1,8 @@
 #include "signtransaction.h"
+#include "util.h"
+
 #include <QDebug>
+
 
 char* SignTransaction::uintToCharArr(uint8_t src[], int len){
     char* dest = (char*) calloc(len,1);
@@ -84,6 +87,48 @@ std::string SignTransaction::sign_transaction(Transaction tx, std::string privke
     tx.s = RLP::bytesToHex(std::string(sCharArr,32));
     free(rCharArr);
     free(sCharArr);
+    free(vChar);
 
     return RLP::bytesToHex(RLP::encode(tx,false));
+}
+
+std::string SignTransaction::sign_message(QString message, std::string privkey) {
+    uint8_t *privkeyBytes;
+    hexstrToByteArray(privkey.c_str(), 64, &privkeyBytes);
+    char inp [] = {};
+    memset( inp, 0, privkey.length() );
+    memcpy(inp,privkey.c_str(),privkey.length());
+    char dest [sizeof(inp)/2] = {};
+    RLP::hex2bin(inp,dest);
+
+    message = "Ethereum Signed Message:\n" + QString::number(message.size()) + message;
+    std::string txRLP = RLP::hexToBytes("19" + Util::str2bytes(message).toStdString());
+    Keccak k;
+    std::string myHash  = k(txRLP);
+    uint8_t *hashBytes;
+    hexstrToByteArray(myHash.c_str(), 64, &hashBytes);
+
+    uint8_t r[32];
+    uint8_t s[64];
+    uint8_t recId;
+
+    ecdsaSign((BigNum256)r, (BigNum256)s, (BigNum256)hashBytes, (BigNum256)privkeyBytes, &recId);
+    reverse(r, 32);
+    reverse(s, 32);
+    char* rCharArr = uintToCharArr(r,32);
+    char* sCharArr = uintToCharArr(s,32);
+    int vInt = 25 + (int) recId + 2;
+    char *vChar = (char *) calloc(50,1);
+    snprintf(vChar,50,"%x",vInt);
+
+    Transaction tx;
+    tx.v = std::string(vChar);
+    tx.r = RLP::bytesToHex(std::string(rCharArr,32));
+    tx.s = RLP::bytesToHex(std::string(sCharArr,32));
+
+    free(rCharArr);
+    free(sCharArr);
+    free(vChar);
+
+    return tx.r+tx.s+tx.v;
 }

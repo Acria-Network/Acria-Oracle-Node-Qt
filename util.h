@@ -113,6 +113,15 @@ public:
         return s;
     }
 
+    static QString str2bytes(QString d2){
+        QString s = "";
+        for(int i = 0; i<d2.size(); i++){
+            s += QString::fromStdString(n2hexstr(static_cast<uint>(QString(d2.at(i)).toStdString()[0]), 2));
+        }
+
+        return s;
+    }
+
     static QString str2bytes8(QString d2){
         /*for(uint i = d2.size(); i<8;i++){
             d2 += "\0";
