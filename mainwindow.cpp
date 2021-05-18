@@ -64,7 +64,7 @@ MainWindow::MainWindow(QWidget *parent)
         }
     }
 
-    this->acria_config = new AcriaConfig(this, this->config);
+    this->acria_config = new AcriaConfig(this, this->config, this->data);
 
     this->processing_window = new ProcessingWindow();
 

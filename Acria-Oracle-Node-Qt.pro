@@ -43,6 +43,7 @@ SOURCES += \
     rlp.cpp \
     sha256.cpp \
     sha3.cpp \
+    signconfigwindow.cpp \
     signtransaction.cpp \
     tasks.cpp \
     uint256.cpp \
@@ -80,6 +81,7 @@ HEADERS += \
     rlp.h \
     sha256.h \
     sha3.h \
+    signconfigwindow.h \
     signtransaction.h \
     span.h \
     tasks.h \
@@ -98,7 +100,8 @@ FORMS += \
     deploywindow.ui \
     infogeth.ui \
     mainwindow.ui \
-    processingwindow.ui
+    processingwindow.ui \
+    signconfigwindow.ui
 
 TRANSLATIONS += \
     Acria-Oracle-Node-Qt_de_DE.ts

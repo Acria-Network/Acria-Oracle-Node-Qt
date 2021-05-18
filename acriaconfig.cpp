@@ -5,7 +5,7 @@
 #include <QDebug>
 
 
-AcriaConfig::AcriaConfig(QWidget *parent, Config* _config) :
+AcriaConfig::AcriaConfig(QWidget *parent, Config* _config, Data* data) :
     QDialog(parent),
     ui(new Ui::AcriaConfig)
 {
@@ -20,11 +20,15 @@ AcriaConfig::AcriaConfig(QWidget *parent, Config* _config) :
     this->ui->plainTextEdit->setPlainText(QString::fromStdString(this->cjson.dump()));
 
     this->update_table();
+
+    this->sign_config_window =  new SignConfigWindow(this, data);
 }
 
 AcriaConfig::~AcriaConfig()
 {
     delete ui;
+
+    delete sign_config_window;
 }
 
 void AcriaConfig::update_table()
@@ -95,4 +99,10 @@ void AcriaConfig::on_tableWidget_config_cellDoubleClicked(int row, int column)
     ci->show_save_as_copy_button(false);
 
     qDebug() << "Added Config Item";
+}
+
+void AcriaConfig::on_pushButton_sign_config_clicked()
+{
+    this->sign_config_window->sign_all(QString::fromStdString(this->cjson.dump()));
+    this->sign_config_window->exec();
 }
