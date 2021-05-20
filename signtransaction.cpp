@@ -93,6 +93,8 @@ std::string SignTransaction::sign_transaction(Transaction tx, std::string privke
 }
 
 std::string SignTransaction::sign_message(QString message, std::string privkey) {
+    privkey = RLP::removeHexFormatting(privkey);
+
     uint8_t *privkeyBytes;
     hexstrToByteArray(privkey.c_str(), 64, &privkeyBytes);
     char inp [] = {};
