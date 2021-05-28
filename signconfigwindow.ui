@@ -26,7 +26,11 @@ color:white;</string>
     </widget>
    </item>
    <item>
-    <widget class="QPlainTextEdit" name="plainTextEdit_sign_config"/>
+    <widget class="QPlainTextEdit" name="plainTextEdit_sign_config">
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QLabel" name="label_2">
@@ -36,7 +40,11 @@ color:white;</string>
     </widget>
    </item>
    <item>
-    <widget class="QPlainTextEdit" name="plainTextEdit_signed_ethereum"/>
+    <widget class="QPlainTextEdit" name="plainTextEdit_signed_ethereum">
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QLabel" name="label_3">
@@ -46,7 +54,11 @@ color:white;</string>
     </widget>
    </item>
    <item>
-    <widget class="QPlainTextEdit" name="plainTextEdit_signed_binance"/>
+    <widget class="QPlainTextEdit" name="plainTextEdit_signed_binance">
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QLabel" name="label_4">
@@ -56,7 +68,11 @@ color:white;</string>
     </widget>
    </item>
    <item>
-    <widget class="QPlainTextEdit" name="plainTextEdit_signed_cardano"/>
+    <widget class="QPlainTextEdit" name="plainTextEdit_signed_cardano">
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QLabel" name="label_5">
@@ -66,7 +82,11 @@ color:white;</string>
     </widget>
    </item>
    <item>
-    <widget class="QPlainTextEdit" name="plainTextEdit_signed_polkadot"/>
+    <widget class="QPlainTextEdit" name="plainTextEdit_signed_polkadot">
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">

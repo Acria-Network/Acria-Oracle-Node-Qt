@@ -7,6 +7,10 @@
 #include <QJsonDocument>
 #include <QJsonArray>
 #include <QByteArray>
+#include <QMessageBox>
+#include <QPixmap>
+#include <QIcon>
+
 
 const std::string digits = "0123456789abcdef";
 
@@ -174,6 +178,14 @@ public:
         QByteArray data = doc.toJson();
 
         return data;
+    }
+
+    static void show_msgBox(QString text){
+        QMessageBox msgBox;
+        msgBox.setStyleSheet("QWidget{background-color:#232323;color:white;}QPushButton{background-color:white;color:black;border: none;width:80px;padding-top:3px;padding-bottom:3px;background-color:orange;}");
+        msgBox.setWindowIcon(QPixmap("resources/acria_logo5_colored.svg"));
+        msgBox.setText(text);
+        msgBox.exec();
     }
 };
 

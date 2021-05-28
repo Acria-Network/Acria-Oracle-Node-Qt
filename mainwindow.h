@@ -141,7 +141,6 @@ private:
     QTimer *timer_update_status;
 
     void update_settings();
-    void show_msgBox(QString text);
     void line_edit_check_eth_address(QString address, QObject *senderObj);
 
     QString get_state_string(uint state);

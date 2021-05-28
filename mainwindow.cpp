@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "verifyethaddress.h"
 #include "signtransaction.h"
+#include "util.h"
 
 #include <QFileInfo>
 #include <QApplication>
@@ -612,7 +613,7 @@ void MainWindow::on_pushButton_export_json_clicked()
             file.close();
        }
 
-       show_msgBox(tr("Successfully exported as Json!"));
+       Util::show_msgBox(tr("Successfully exported as Json!"));
     }
 }
 
@@ -663,7 +664,7 @@ void MainWindow::on_pushButton_export_csv_clicked()
             file.close();
        }
 
-       show_msgBox(tr("Successfully exported as CSV!"));
+       Util::show_msgBox(tr("Successfully exported as CSV!"));
     }
 }
 
@@ -707,14 +708,6 @@ void MainWindow::on_pushButton_acria_settings_clicked()
 void MainWindow::on_pushButton_config_settings_clicked()
 {
     this->acria_config->show();
-}
-
-void MainWindow::show_msgBox(QString text){
-    QMessageBox msgBox;
-    msgBox.setStyleSheet("QWidget{background-color:#232323;color:white;}QPushButton{background-color:white;color:black;border: none;width:80px;padding-top:3px;padding-bottom:3px;background-color:orange;}");
-    msgBox.setWindowIcon(QPixmap("resources/acria_logo5_colored.svg"));
-    msgBox.setText(text);
-    msgBox.exec();
 }
 
 void MainWindow::on_pushButton_setting_save_clicked()
@@ -782,7 +775,7 @@ void MainWindow::on_pushButton_setting_save_clicked()
         this->eth_based_chain["cardano"]->node->update_geth_status();
     }
 
-    show_msgBox(tr("Successfully saved the settings!"));
+    Util::show_msgBox(tr("Successfully saved the settings!"));
 }
 
 void MainWindow::on_pushButton_setting_discard_clicked()
@@ -845,7 +838,7 @@ void MainWindow::on_pushButton_deploy_contract_binance_clicked()
     if(this->node_ready("binance"))
         this->eth_based_chain["binance"]->deploy_window->exec();
     else
-        show_msgBox(tr("Please wait until the binance node is ready!"));
+        Util::show_msgBox(tr("Please wait until the binance node is ready!"));
 }
 
 void MainWindow::on_pushButton_deploy_contract_eth_clicked()
@@ -853,7 +846,7 @@ void MainWindow::on_pushButton_deploy_contract_eth_clicked()
     if(this->node_ready("ethereum"))
         this->eth_based_chain["ethereum"]->deploy_window->exec();
     else
-        show_msgBox(tr("Please wait until the ethereum node is ready!"));
+        Util::show_msgBox(tr("Please wait until the ethereum node is ready!"));
 }
 
 void MainWindow::on_pushButton_accounts_binance_clicked()
@@ -926,7 +919,7 @@ void MainWindow::on_pushButton_deploy_contract_cardano_clicked()
     if(this->node_ready("cardano"))
         this->eth_based_chain["cardano"]->deploy_window->exec();
     else
-        show_msgBox(tr("Please wait until the cardano node is ready!"));
+        Util::show_msgBox(tr("Please wait until the cardano node is ready!"));
 }
 
 void MainWindow::on_pushButton_withdraw_cardano_clicked()
