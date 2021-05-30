@@ -288,6 +288,29 @@ html {
                         <button class="button1 button2" id="create_wallet_bin" onclick="create_eth_wallet(document.getElementById('pwdBin').value, 'binance')">Create Wallet</button>
                     </div>
                 </div>
+
+
+                <div class="pricing-plan">
+                  <img src="img/cardano_colored.svg" alt="" class="pricing-img">
+                  <h2 class="pricing-header">Cardano</h2>
+                  <ul class="pricing-features">
+                    <li class="pricing-features-item" id="keystore_c">Keystore available</li>
+                    <li class="pricing-features-item">Address<br/><span id="walletc" style="font-size:10px;">...</span></li>
+                  </ul>
+                  <span class="pricing-price" id="carLocked">Locked</span>
+                  <div style="width:100%;margin-bottom:20px;" onclick="select_wallet('cardano')">
+                    <button class="file-upload button1" id="selectWalletCar">
+                        Select Wallet File
+                    </button>
+                </div>
+                  <label style="color:white;" for="pwd">Password:</label>
+                    <input type="password" id="pwdCar" class="pwd" name="pwd">
+                    <div>
+                        <button class="button1 button2" onclick="decrypt_eth_wallet(document.getElementById('pwdCar').value, carWalletPath,'cardano')">Unlock</button>
+                        <button class="button1 button2" id="create_wallet_car" onclick="create_eth_wallet(document.getElementById('pwdCar').value, 'cardano')">Create Wallet</button>
+                    </div>
+                </div>
+
                 
               </div>
             </div>
@@ -298,7 +321,17 @@ html {
     <script type="text/javascript" src="polkadot.js"></script>
     <script type="text/javascript" src="web3.js"></script>
     <script>
+      /*
+      const randomseed = "";//api.mnemonicGenerate(24);
 
+        const keyring = new api.Keyring({ type: 'sr25519' });
+        alert(keyring);
+        console.log("[Info] generating key ring from secret seed");
+        const username="AON"
+    const keysPair = keyring.addFromUri(randomseed, { name: username });
+    const aonAccountId=`${keysPair.address}`;
+    console.log("[Info] Account Id of this node: "+aonAccountId);
+*/
         function readTextFile(file){
             var rawFile = new XMLHttpRequest();
             rawFile.open("GET", file, false);
@@ -317,35 +350,50 @@ html {
         }
 
         function create_eth_wallet(password, type){
-            let account = web3.eth.accounts.create(web3.utils.randomHex(32));
-            let wallet = web3.eth.accounts.wallet.add(account);
-            let keystore = wallet.encrypt(password);
+          new QWebChannel(qt.webChannelTransport, function (channel) {
+                let JSobject = channel.objects.AccountManager.get_password(function(n) {
+                    if(n == "")
+                      return;
+                    password = n;
+                    let account = web3.eth.accounts.create(web3.utils.randomHex(32));
+                    let wallet = web3.eth.accounts.wallet.add(account);
+                    let keystore = wallet.encrypt(password);
 
-            new QWebChannel(qt.webChannelTransport, function (channel) {
-                let JSobject = channel.objects.AccountManager.save_wallet(JSON.stringify(keystore), type, account["address"], function(n) {
-                    if(type=="ethereum")
-                        document.getElementById("wallet").innerHTML = account["address"];
-                    else if(type=="binance")
-                        document.getElementById("walletb").innerHTML = account["address"];
+                    new QWebChannel(qt.webChannelTransport, function (channel) {
+                        let JSobject = channel.objects.AccountManager.save_wallet(JSON.stringify(keystore), type, account["address"], function(n) {
+                            if(type=="ethereum")
+                                document.getElementById("wallet").innerHTML = account["address"];
+                            else if(type=="binance")
+                                document.getElementById("walletb").innerHTML = account["address"];
+                            else if(type=="cardano")
+                                document.getElementById("walletc").innerHTML = account["address"];
 
-                    nn = "..." + n.substr(n.length - 20)
-                    if(type=="ethereum"){
-                        document.getElementById("selectWalletEth").innerHTML = nn;
-                        ethWalletPath = n
-                        ethPrivateKey = wallet["privateKey"];
-                        ethAddress = wallet["address"];
-                    }
-                    else if(type=="binance"){
-                        document.getElementById("selectWalletBin").innerHTML = nn;
-                        binWalletPath = n
-                        binPrivateKey = wallet["privateKey"];
-                        binAddress = wallet["address"];
-                    }
+                            nn = "..." + n.substr(n.length - 20)
+                            if(type=="ethereum"){
+                                document.getElementById("selectWalletEth").innerHTML = nn;
+                                ethWalletPath = n
+                                ethPrivateKey = wallet["privateKey"];
+                                ethAddress = wallet["address"];
+                            }
+                            else if(type=="binance"){
+                                document.getElementById("selectWalletBin").innerHTML = nn;
+                                binWalletPath = n
+                                binPrivateKey = wallet["privateKey"];
+                                binAddress = wallet["address"];
+                            }
+                            else if(type=="cardano"){
+                                document.getElementById("selectWalletCar").innerHTML = nn;
+                                carWalletPath = n
+                                carPrivateKey = wallet["privateKey"];
+                                carAddress = wallet["address"];
+                            }
 
-                    console.log(keystore);
-                    console.log(JSobject);
+                            console.log(keystore);
+                            console.log(JSobject);
+                        });
+                    });
                 });
-            });
+              });
         }
         
         function create_wallet_polkadot(){
@@ -377,6 +425,13 @@ html {
                             binPrivateKey = wallet["privateKey"];
                             binAddress = wallet["address"];
                         }
+                        else if(type=="cardano"){
+                            document.getElementById("walletc").innerHTML = wallet["address"];
+                            document.getElementById("carLocked").innerHTML = "Unlocked";
+                            document.getElementById("carLocked").className += ' keystore_available';
+                            carPrivateKey = wallet["privateKey"];
+                            carAddress = wallet["address"];
+                        }
                     }
                     catch (e) {
                         alert(e);
@@ -392,6 +447,12 @@ html {
                             binPrivateKey = "";
                             binAddress = "";
                         }
+                        else if(type=="cardano"){
+                            document.getElementById("carLocked").innerHTML = "Locked";
+                            document.getElementById("carLocked").classList.remove('keystore_available');
+                            binPrivateKey = "";
+                            binAddress = "";
+                        }
                     }
                 });
             });
@@ -403,6 +464,10 @@ html {
         var binWalletPath;
         var binPrivateKey;
         var binAddress;
+
+        var carWalletPath;
+        var carPrivateKey;
+        var carAddress;
 
         document.addEventListener('DOMContentLoaded', function() {
             if(ethWalletPath.length > 4){
@@ -417,10 +482,15 @@ html {
                         document.getElementById("selectWalletEth").innerHTML = "..." + n.substr(n.length - 20);
                     else if(type == 'binance')
                         document.getElementById("selectWalletBin").innerHTML = "..." + n.substr(n.length - 20);
+                    else if(type == 'cardano')
+                        document.getElementById("selectWalletCar").innerHTML = "..." + n.substr(n.length - 20);
+
                     if(type=="ethereum")
                         ethWalletPath = n;
                     else if(type=="binance")
                         binWalletPath = n;
+                    else if(type=="cardano")
+                        carWalletPath = n;
                 });
             });
         }
