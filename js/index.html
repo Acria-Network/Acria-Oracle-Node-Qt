@@ -256,14 +256,14 @@ html {
                   </ul>
                   <span class="pricing-price" id="polLocked">Locked</span>
                   <div style="width:100%;margin-bottom:20px;">
-                    <button class="file-upload button1" id="selectWalletEth">
+                    <button class="file-upload button1" id="selectWalletPol">
                         Select Wallet File
                     </button>
                 </div>
                   <label style="color:white;" for="pwd">Password:</label>
                     <input type="password" id="pwdPol" class="pwd" name="pwd">
                     <div>
-                        <button class="button1 button2">Unlock</button>
+                        <button class="button1 button2" onclick="decrypt_polkadot_wallet(document.getElementById('pwdPol').value, polWalletPath)">Unlock</button>
                         <button class="button1 button2" id="create_wallet_pol" onclick="create_wallet_polkadot()">Create Wallet</button>
                     </div>
                 </div>
@@ -321,17 +321,72 @@ html {
     <script type="text/javascript" src="polkadot.js"></script>
     <script type="text/javascript" src="web3.js"></script>
     <script>
-      /*
-      const randomseed = "";//api.mnemonicGenerate(24);
+      async function mainloop(n){
+                    const randomseed = util_crypto.mnemonicGenerate(24);
+                    const keyring = new api.Keyring({ type: 'sr25519' });
+                    const username="AON"
+                    await util_crypto.cryptoWaitReady();
+                    const keysPair = keyring.addFromMnemonic(randomseed, { name: username });
+                    const aonAccountId=`${keysPair.address}`;
+                    const aonAccountPrivKey=n;
+                    json1 = keysPair.toJson(n);
 
-        const keyring = new api.Keyring({ type: 'sr25519' });
-        alert(keyring);
-        console.log("[Info] generating key ring from secret seed");
-        const username="AON"
-    const keysPair = keyring.addFromUri(randomseed, { name: username });
-    const aonAccountId=`${keysPair.address}`;
-    console.log("[Info] Account Id of this node: "+aonAccountId);
-*/
+                    new QWebChannel(qt.webChannelTransport, function (channel) {
+                        let JSobject = channel.objects.AccountManager.save_wallet(JSON.stringify(json1), "polkadot", aonAccountId, function(n) {
+                          document.getElementById("walletp").innerHTML = "..." + aonAccountId.substr(aonAccountId.length - 35);
+
+                          nn = "..." + n.substr(n.length - 20)
+                          document.getElementById("selectWalletPol").innerHTML = nn;
+                                polWalletPath = n
+                                polPrivateKey = aonAccountPrivKey;
+                                polAddress = aonAccountId;
+                        });
+            });  
+
+      }
+      function create_wallet_polkadot(){
+        new QWebChannel(qt.webChannelTransport, function (channel) {
+                  let JSobject = channel.objects.AccountManager.get_password(function(n) {
+                    mainloop(n);
+                  });
+            });
+      }
+
+      async function mainloop_decrypt_polkadot_wallet(json, password){
+                  try {
+                    const keyring = new api.Keyring({ type: 'sr25519' });
+                    const username="AON"
+                    await util_crypto.cryptoWaitReady();
+                    const keysPair = keyring.addFromJson(JSON.parse(json), { name: username });
+                    const aonAccountId=`${keysPair.address}`;
+                    const aonAccountPrivKey=password;
+                    json1 = keysPair.toJson(password);
+
+                    document.getElementById("walletp").innerHTML = "..." + aonAccountId.substr(aonAccountId.length - 35);
+                            document.getElementById("polLocked").innerHTML = "Unlocked";
+                            document.getElementById("polLocked").className += ' keystore_available';
+                            polPrivateKey = aonAccountPrivKey;
+                            polAddress = aonAccountId;
+                  }
+                    catch (e) {
+                        alert(e);
+                            document.getElementById("polLocked").innerHTML = "Locked";
+                            document.getElementById("polLocked").classList.remove('keystore_available');
+                            polPrivateKey = "";
+                            polAddress = "";
+                    }
+      }
+
+      function decrypt_polkadot_wallet(password, path){
+            new QWebChannel(qt.webChannelTransport, function (channel) {
+                let JSobject = channel.objects.AccountManager.read_keystore(path, function(n) {
+                  mainloop_decrypt_polkadot_wallet(n, password);
+                });
+            });
+        }
+      
+
+
         function readTextFile(file){
             var rawFile = new XMLHttpRequest();
             rawFile.open("GET", file, false);
@@ -396,15 +451,6 @@ html {
               });
         }
         
-        function create_wallet_polkadot(){
-          const keyring = new Keyring({ type: 'sr25519' });
-          alert(keyring);
-
-            new QWebChannel(qt.webChannelTransport, function (channel) {
-                let JSobject = channel.objects.AccountManager.save_wallet(JSON.stringify(keystore), "polkadot", account["address"], function(n) {
-                });
-            });
-        }
 
         function decrypt_eth_wallet(password, path, type){
             new QWebChannel(qt.webChannelTransport, function (channel) {
@@ -457,17 +503,21 @@ html {
                 });
             });
         }
-        var ethWalletPath;
-        var ethPrivateKey;
-        var ethAddress;
+        var ethWalletPath = "";
+        var ethPrivateKey = "";
+        var ethAddress = "";
 
-        var binWalletPath;
-        var binPrivateKey;
-        var binAddress;
+        var binWalletPath = "";
+        var binPrivateKey = "";
+        var binAddress = "";
 
-        var carWalletPath;
-        var carPrivateKey;
-        var carAddress;
+        var carWalletPath = "";
+        var carPrivateKey = "";
+        var carAddress = "";
+
+        var polWalletPath = "";
+        var polPrivateKey = "";
+        var polAddress = "";
 
         document.addEventListener('DOMContentLoaded', function() {
             if(ethWalletPath.length > 4){
