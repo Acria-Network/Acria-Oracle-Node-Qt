@@ -2,6 +2,7 @@
 #define ACCOUNTMANAGER_H
 
 #include "data.h"
+#include "enterpassworddialog.h"
 
 #include <QDialog>
 #include <QDebug>
@@ -10,6 +11,7 @@
 #include <QDir>
 #include <QFileDialog>
 #include <QMainWindow>
+#include <QMutex>
 
 
 namespace Ui {
@@ -74,16 +76,31 @@ public:
         return dir;
     }
 
+    Q_INVOKABLE QString get_password(){
+        QString password;
+        if(this->enter_password_dialog->exec() == QDialog::Accepted){
+            password = this->enter_password_dialog->password;
+        }
+
+        return password;
+    }
+
 private:
     Ui::AccountManager *ui;
 
     Data* data;
+    EnterPasswordDialog* enter_password_dialog;
+    void increment_progress();
+    QMutex mutex;
+    unsigned progress;
 
 public slots:
 
 
 private slots:
     void on_buttonBox_accepted();
+    void on_pushButton_continue_clicked();
+    void on_pushButton_skip_clicked();
 };
 
 #endif // ACCOUNTMANAGER_H

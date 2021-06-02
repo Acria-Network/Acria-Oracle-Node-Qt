@@ -51,10 +51,6 @@ private slots:
 
     void on_pushButton_polkadot_settings_clicked();
 
-    void on_pushButton_acria_settings_clicked();
-
-    void on_pushButton_config_settings_clicked();
-
     void get_status_geth();
 
     void get_status_polkadot();

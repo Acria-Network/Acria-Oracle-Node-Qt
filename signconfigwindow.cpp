@@ -25,6 +25,7 @@ SignConfigWindow::SignConfigWindow(QWidget *parent, Data* _data) :
 SignConfigWindow::~SignConfigWindow()
 {
     delete ui;
+    delete manager;
 }
 
 void SignConfigWindow::sign_all(QString config){

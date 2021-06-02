@@ -187,6 +187,15 @@ void MainWindow::get_status_geth(){
 }
 
 void MainWindow::get_status_polkadot(){
+    if(this->data->chain_data["polkadot"].private_key != "")
+        this->ui->label_keystore_unlocked_polkadot->setPixmap(QPixmap("./resources/success.svg"));
+    else
+        this->ui->label_keystore_unlocked_polkadot->setPixmap(QPixmap("./resources/error.svg"));
+
+    if(this->data->chain_data["polkadot"].enabled)
+        this->ui->label_enabled_polkadot->setPixmap(QPixmap("./resources/success.svg"));
+    else
+        this->ui->label_enabled_polkadot->setPixmap(QPixmap("./resources/error.svg"));
 }
 
 void MainWindow::get_status_binance(){
@@ -698,16 +707,6 @@ void MainWindow::on_pushButton_polkadot_settings_clicked()
 {
     this->ui->tabWidget->setCurrentIndex(4);
     this->ui->tabWidget_2->setCurrentIndex(1);
-}
-
-void MainWindow::on_pushButton_acria_settings_clicked()
-{
-    this->ui->tabWidget->setCurrentIndex(4);
-}
-
-void MainWindow::on_pushButton_config_settings_clicked()
-{
-    this->acria_config->show();
 }
 
 void MainWindow::on_pushButton_setting_save_clicked()

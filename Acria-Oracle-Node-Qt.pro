@@ -27,6 +27,7 @@ SOURCES += \
     deploywindow.cpp \
     ecdsa.cpp \
     endian.cpp \
+    enterpassworddialog.cpp \
     ethbasedchain.cpp \
     gasprice.cpp \
     hash.cpp \
@@ -39,6 +40,7 @@ SOURCES += \
     noncemanager.cpp \
     processingwindow.cpp \
     qprogressindicator.cpp \
+    reportactive.cpp \
     resource.cpp \
     rlp.cpp \
     sha256.cpp \
@@ -66,6 +68,7 @@ HEADERS += \
     deploywindow.h \
     ecdsa.h \
     endian.h \
+    enterpassworddialog.h \
     ethbasedchain.h \
     gasprice.h \
     hash.h \
@@ -77,6 +80,7 @@ HEADERS += \
     noncemanager.h \
     processingwindow.h \
     qprogressindicator.h \
+    reportactive.h \
     resource.h \
     rlp.h \
     sha256.h \
@@ -98,6 +102,7 @@ FORMS += \
     availabledatacontracts.ui \
     configitem.ui \
     deploywindow.ui \
+    enterpassworddialog.ui \
     infogeth.ui \
     mainwindow.ui \
     processingwindow.ui \
