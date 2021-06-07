@@ -21,6 +21,7 @@ QT_END_NAMESPACE
 const uint INTERVAL_RUN = 5000;
 const uint INTERVAL_RUN_CONNECTION = 4000;
 const uint INTERVAL_UPDATE_STATUS = 10000;
+const uint INTERVAL_UPDATE_ACTIVE = 20000;
 
 class MainWindow : public QMainWindow
 {
@@ -64,6 +65,8 @@ private slots:
     void get_status_cardano();
 
     void update_status();
+
+    void update_active();
 
     void on_pushButton_setting_save_clicked();
 
@@ -135,6 +138,7 @@ private:
     QTimer *timer_update_balances;
     QTimer *timer_update_gas_price;
     QTimer *timer_update_status;
+    QTimer *timer_update_active;
 
     void update_settings();
     void line_edit_check_eth_address(QString address, QObject *senderObj);

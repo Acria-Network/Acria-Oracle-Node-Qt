@@ -32,6 +32,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+
     qDebug() << "started";
 
     this->data = new Data();
@@ -106,6 +107,10 @@ MainWindow::MainWindow(QWidget *parent)
     timer_update_status = new QTimer(this);
     connect(timer_update_status, SIGNAL(timeout()), this, SLOT(update_status()));
     timer_update_status->start(INTERVAL_UPDATE_STATUS);
+
+    timer_update_active = new QTimer(this);
+    connect(timer_update_active, SIGNAL(timeout()), this, SLOT(update_active()));
+    timer_update_active->start(INTERVAL_UPDATE_ACTIVE);
 
     this->pi = new QProgressIndicator();
     this->ui->horizontalLayout->layout()->addWidget(pi);
@@ -307,6 +312,14 @@ bool MainWindow::node_ready(QString type){
         return true;
     else
         return false;
+}
+
+void MainWindow::update_active(){
+    for (auto const& x : eth_based_chain)
+    {
+        if(this->node_ready(x.first) && this->data->chain_data[x.first].contract != "")
+            x.second->report_active->send();
+    }
 }
 
 void MainWindow::update_requests(){
@@ -567,6 +580,7 @@ MainWindow::~MainWindow()
     delete timer_update_balances;
     delete timer_update_gas_price;
     delete timer_update_status;
+    delete timer_update_active;
 
     for(uint i=0; i<this->tm_resources.size();i++){
         delete this->tm_resources[i];

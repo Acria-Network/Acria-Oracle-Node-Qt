@@ -7,8 +7,10 @@
 #include "data.h"
 
 
-class ReportActive
+class ReportActive : public QObject
 {
+Q_OBJECT
+
 private:
     Data* data;
     QString type;

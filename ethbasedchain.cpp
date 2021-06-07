@@ -18,6 +18,7 @@ EthBasedChain::EthBasedChain(QWidget *parent, QString _type, Data* _data, Proces
     this->deploy_window = new DeployWindow(this->main_window, this->data, this->type, this->processing_window, "", this->nonce_manager);
     this->available_accounts = new AvailableAccounts(this->main_window, this->data, this->type);
     this->about_transaction_window = new AboutTransactionWindow(this->main_window, this->data, this->type);
+    this->report_active = new ReportActive(this->data, this->type);
 };
 
 EthBasedChain::~EthBasedChain(){
@@ -32,4 +33,5 @@ EthBasedChain::~EthBasedChain(){
     delete available_accounts;
     delete nonce_manager;
     delete about_transaction_window;
+    delete report_active;
 };

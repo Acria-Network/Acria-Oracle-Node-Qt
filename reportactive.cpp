@@ -9,6 +9,11 @@
 
 ReportActive::ReportActive(Data* _data, QString _type)
 {
+    manager = new QNetworkAccessManager();
+
+    QObject::connect(manager, SIGNAL(finished(QNetworkReply*)),
+        this, SLOT(managerFinished(QNetworkReply*)));
+
     this->data = _data;
     this->type = _type;
 }
@@ -38,6 +43,8 @@ void ReportActive::send(){
 
     if(data->chain_data[this->type].private_key != "")
         obj["signed_msg"] = QString::fromStdString(SignTransaction::sign_message(msg, data->chain_data[this->type].private_key.toStdString()));
+    else
+        return;
 
     QJsonDocument doc(obj);
     QByteArray data = doc.toJson();
