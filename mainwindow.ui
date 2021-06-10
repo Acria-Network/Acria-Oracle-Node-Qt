@@ -261,12 +261,12 @@ border-radius:5px;</string>
                    </property>
                    <property name="icon">
                     <iconset>
-                     <normaloff>resources/edit.png</normaloff>resources/edit.png</iconset>
+                     <normaloff>resources/settings_colored2.svg</normaloff>resources/settings_colored2.svg</iconset>
                    </property>
                    <property name="iconSize">
                     <size>
-                     <width>10</width>
-                     <height>10</height>
+                     <width>15</width>
+                     <height>15</height>
                     </size>
                    </property>
                    <property name="flat">
@@ -281,12 +281,12 @@ border-radius:5px;</string>
                    </property>
                    <property name="icon">
                     <iconset>
-                     <normaloff>resources/info.svg</normaloff>resources/info.svg</iconset>
+                     <normaloff>resources/info_colored2.svg</normaloff>resources/info_colored2.svg</iconset>
                    </property>
                    <property name="iconSize">
                     <size>
-                     <width>11</width>
-                     <height>11</height>
+                     <width>15</width>
+                     <height>15</height>
                     </size>
                    </property>
                    <property name="flat">
@@ -598,12 +598,12 @@ padding-left:13px;
                    </property>
                    <property name="icon">
                     <iconset>
-                     <normaloff>resources/edit.png</normaloff>resources/edit.png</iconset>
+                     <normaloff>resources/settings_colored2.svg</normaloff>resources/settings_colored2.svg</iconset>
                    </property>
                    <property name="iconSize">
                     <size>
-                     <width>10</width>
-                     <height>10</height>
+                     <width>15</width>
+                     <height>15</height>
                     </size>
                    </property>
                    <property name="flat">
@@ -624,12 +624,12 @@ padding-left:13px;
                    </property>
                    <property name="icon">
                     <iconset>
-                     <normaloff>resources/info.svg</normaloff>resources/info.svg</iconset>
+                     <normaloff>resources/info_colored2.svg</normaloff>resources/info_colored2.svg</iconset>
                    </property>
                    <property name="iconSize">
                     <size>
-                     <width>11</width>
-                     <height>11</height>
+                     <width>15</width>
+                     <height>15</height>
                     </size>
                    </property>
                    <property name="flat">
@@ -933,12 +933,12 @@ padding:5px;
                    </property>
                    <property name="icon">
                     <iconset>
-                     <normaloff>resources/edit.png</normaloff>resources/edit.png</iconset>
+                     <normaloff>resources/settings_colored2.svg</normaloff>resources/settings_colored2.svg</iconset>
                    </property>
                    <property name="iconSize">
                     <size>
-                     <width>10</width>
-                     <height>10</height>
+                     <width>15</width>
+                     <height>15</height>
                     </size>
                    </property>
                    <property name="flat">
@@ -953,12 +953,12 @@ padding:5px;
                    </property>
                    <property name="icon">
                     <iconset>
-                     <normaloff>resources/info.svg</normaloff>resources/info.svg</iconset>
+                     <normaloff>resources/info_colored2.svg</normaloff>resources/info_colored2.svg</iconset>
                    </property>
                    <property name="iconSize">
                     <size>
-                     <width>11</width>
-                     <height>11</height>
+                     <width>15</width>
+                     <height>15</height>
                     </size>
                    </property>
                    <property name="flat">
@@ -1262,12 +1262,12 @@ padding:5px;
                    </property>
                    <property name="icon">
                     <iconset>
-                     <normaloff>resources/edit.png</normaloff>resources/edit.png</iconset>
+                     <normaloff>resources/settings_colored2.svg</normaloff>resources/settings_colored2.svg</iconset>
                    </property>
                    <property name="iconSize">
                     <size>
-                     <width>10</width>
-                     <height>10</height>
+                     <width>15</width>
+                     <height>15</height>
                     </size>
                    </property>
                    <property name="flat">
@@ -1282,12 +1282,12 @@ padding:5px;
                    </property>
                    <property name="icon">
                     <iconset>
-                     <normaloff>resources/info.svg</normaloff>resources/info.svg</iconset>
+                     <normaloff>resources/info_colored2.svg</normaloff>resources/info_colored2.svg</iconset>
                    </property>
                    <property name="iconSize">
                     <size>
-                     <width>11</width>
-                     <height>11</height>
+                     <width>15</width>
+                     <height>15</height>
                     </size>
                    </property>
                    <property name="flat">

@@ -32,7 +32,6 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-
     qDebug() << "started";
 
     this->data = new Data();
@@ -40,22 +39,6 @@ MainWindow::MainWindow(QWidget *parent)
     data->load_settings();
 
     this->config = new Config();
-
-    /*
-    if(!fileExists("config.conf")){
-        QMessageBox::StandardButton reply;
-        reply = QMessageBox::question(this, "Config Missing", "No Configuration File Found. Create one now?", QMessageBox::Yes|QMessageBox::No);
-          if (reply == QMessageBox::Yes) {
-            acria_config->show();
-          } else {
-
-          }
-    }
-    else{
-        if(!this->config->parseConfig()){
-            qDebug() << "Error config";
-        }
-    }*/
 
     if(!fileExists("config.conf")){
     }
@@ -962,4 +945,10 @@ void MainWindow::on_lineEdit_cardano_account_textChanged(const QString &arg1)
 void MainWindow::on_lineEdit_cardano_contract_textChanged(const QString &arg1)
 {
     this->line_edit_check_eth_address(arg1, sender());
+}
+
+void MainWindow::on_pushButton_cardano_settings_clicked()
+{
+    this->ui->tabWidget->setCurrentIndex(4);
+    this->ui->tabWidget_2->setCurrentIndex(3);
 }

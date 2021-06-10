@@ -114,6 +114,8 @@ private slots:
 
     void on_lineEdit_cardano_contract_textChanged(const QString &arg1);
 
+    void on_pushButton_cardano_settings_clicked();
+
 private:
     Ui::MainWindow *ui;
     AcriaConfig* acria_config;
