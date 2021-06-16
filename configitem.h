@@ -24,6 +24,7 @@ public:
     nlohmann::json ijson;
 
     bool save_as_copy;
+    bool delete_item;
 
     void fill(nlohmann::json _json);
 
@@ -49,6 +50,8 @@ private slots:
     void on_pushButton_make_example_request_with_parameter_clicked();
 
     void on_pushButton_save_and_continue_clicked();
+
+    void on_pushButton_delete_item_clicked();
 
 private:
     Ui::ConfigItem *ui;

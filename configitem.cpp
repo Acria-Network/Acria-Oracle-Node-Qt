@@ -27,6 +27,7 @@ ConfigItem::ConfigItem(QWidget *parent) :
 
     save_as_copy = false;
     this->show_save_as_copy_button(false);
+    this->delete_item = false;
 }
 
 ConfigItem::~ConfigItem()
@@ -73,12 +74,14 @@ void ConfigItem::clear(){
     this->ui->plainTextEdit_description->setPlainText("");
     this->ui->label_response_parsed->setText("");
     this->ui->label_example_request->setText("");
+    this->ui->label_data_type_conversion->setText("");
 
     for(uint i = 0;i<this->t1.size();i++){
         t1[i]->setText("");
     }
 
     save_as_copy = false;
+    this->delete_item = false;
 }
 
 void ConfigItem::managerFinished(QNetworkReply *reply) {
@@ -273,8 +276,22 @@ void ConfigItem::on_pushButton_save_and_continue_clicked()
 }
 
 void ConfigItem::show_save_as_copy_button(bool visible){
-    if(visible)
+    if(visible){
         this->ui->pushButton_save_and_continue->show();
-    else
+        this->ui->pushButton_delete_item->show();
+    }
+    else{
         this->ui->pushButton_save_and_continue->hide();
+        this->ui->pushButton_delete_item->hide();
+    }
+}
+
+void ConfigItem::on_pushButton_delete_item_clicked()
+{
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, tr("Delete Item"), tr("Are you sure you want to delete this resource item?"), QMessageBox::Yes|QMessageBox::No);
+      if (reply == QMessageBox::Yes) {
+          this->delete_item = true;
+            accept();
+      }
 }

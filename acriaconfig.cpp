@@ -88,7 +88,12 @@ void AcriaConfig::on_tableWidget_config_cellDoubleClicked(int row, int column)
 
     if(ci->exec() == QDialog::Accepted){
         if(ci->save_as_copy == false){
-            this->cjson[row] = this->ci->ijson;
+            if(ci->delete_item == true){
+                this->cjson.erase(row);
+            }
+            else{
+                this->cjson[row] = this->ci->ijson;
+            }
         }
         else{
             this->cjson.push_back(this->ci->ijson);
