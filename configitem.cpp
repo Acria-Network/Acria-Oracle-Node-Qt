@@ -239,7 +239,22 @@ void ConfigItem::on_pushButton_response_parse_clicked()
 
 void ConfigItem::on_pushButton_make_example_request_with_parameter_clicked()
 {
-    QString hex = QString::fromStdString(Util::tohex(this->ui->lineEdit_parameter_input->text().toStdString()));
+    QString hex;
+    QString input = this->ui->lineEdit_parameter_input->text();
+    QRegExp re("\\d*");
+    QRegExp re_hex("^0x[A-Fa-f0-9]+$");
+
+    if (re.exactMatch(input))
+       hex = QString::fromStdString(Util::tohex(input.toStdString()));
+    else if (re_hex.exactMatch(input)){
+       hex = input.remove(0,2);
+       for(uint i = hex.size(); i<64;i++){
+           hex = "0" + hex;
+       }
+    }
+    else
+       hex = Util::str2bytes32(input);
+
     QString par = Resource::convert_parameter(this->ui->lineEdit_2_parameter_type->text(), hex);
     this->ui->label_data_type_conversion->setText("Parameter Conversion: " + this->ui->lineEdit_parameter_input->text() + " -> 0x"+ hex + " -> " + par);
     request.setUrl(this->ui->lineEdit_2_api_url_2->text().replace("%data%", par));
