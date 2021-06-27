@@ -4,12 +4,19 @@
 #include "util.h"
 #include "resource.h"
 
+#include <QFileDialog>
+#include <QJSEngine>
+#include <QJSValue>
+#include <QJSValueList>
+#include <fstream>
+
 
 ConfigItem::ConfigItem(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ConfigItem)
 {
     ui->setupUi(this);
+    this->script_editor = new ScriptEditor();
     this->setWindowFlags(Qt::Tool);
 
     t1.push_back(this->ui->lineEdit_json1);
@@ -19,6 +26,7 @@ ConfigItem::ConfigItem(QWidget *parent) :
 
     this->ui->verticalWidget_response_regex->hide();
     this->ui->verticalWidget_response_json->show();
+    this->ui->verticalWidget_script->hide();
 
     manager = new QNetworkAccessManager();
 
@@ -33,6 +41,7 @@ ConfigItem::ConfigItem(QWidget *parent) :
 ConfigItem::~ConfigItem()
 {
     delete ui;
+    delete script_editor;
 }
 
 void ConfigItem::fill(nlohmann::json _json){
@@ -151,10 +160,17 @@ void ConfigItem::on_comboBox_currentIndexChanged(int index)
     if(index == 0){
         this->ui->verticalWidget_response_regex->hide();
         this->ui->verticalWidget_response_json->show();
+        this->ui->verticalWidget_script->hide();
     }
     else if(index == 1){
         this->ui->verticalWidget_response_json->hide();
         this->ui->verticalWidget_response_regex->show();
+        this->ui->verticalWidget_script->hide();
+    }
+    else if(index == 2){
+        this->ui->verticalWidget_response_json->hide();
+        this->ui->verticalWidget_response_regex->hide();
+        this->ui->verticalWidget_script->show();
     }
 }
 
@@ -168,6 +184,10 @@ void ConfigItem::on_pushButton_make_example_request_clicked()
 void ConfigItem::on_pushButton_response_parse_clicked()
 {
     QString answer = this->ui->label_example_request->text();
+    if(answer == ""){
+        this->ui->label_response_parsed->setText(tr("Please make an example request first."));
+        return;
+    }
     if(this->ui->comboBox->currentIndex() == 0){
         try{
             nlohmann::json tmp1 = nlohmann::json::parse(answer.toStdString());
@@ -234,6 +254,71 @@ void ConfigItem::on_pushButton_response_parse_clicked()
         else{
             this->ui->label_response_parsed->setText(tr("error"));
         }
+    }
+    else if(this->ui->comboBox->currentIndex() == 2){
+            std::ifstream t(this->ui->lineEdit_script_file->text().toStdString());
+            if(!t){
+                qDebug() << "error file";
+                this->ui->label_response_parsed->setText(tr("Script file not found"));
+                return;
+            }
+            std::string str;
+
+            t.seekg(0, std::ios::end);
+            str.reserve(t.tellg());
+            t.seekg(0, std::ios::beg);
+
+            str.assign((std::istreambuf_iterator<char>(t)),
+                        std::istreambuf_iterator<char>());
+
+            QString script = QString::fromStdString(str);
+
+            QJSEngine engine;
+            QJSValue function_js = engine.evaluate("(function(api_response, arg1) {" + script + "})");
+            QJSValueList args;
+            args << answer << this->ui->lineEdit_script_parameter->text();
+            QJSValue result = function_js.call(args);
+
+            if (result.isError()){
+                this->ui->label_response_parsed->setText(tr("Uncaught exception at line ") + result.property("lineNumber").toString() + ":" + result.toString());
+                return;
+            }
+            else{
+                if(result.isNumber()){
+                    qDebug() << "number";
+                    double d = result.toNumber();
+                    QString tmp2 = QString::number(d);
+                    int point = tmp2.indexOf('.');
+
+                    if(point != -1){
+                        tmp2 = tmp2.replace(".", "");
+
+                        for(uint i=tmp2.length()-point;i<18;i++){
+                            tmp2 += "0";
+                        }
+                    }
+                    else{
+                        for(uint i=0;i<18;i++){
+                            tmp2 += "0";
+                        }
+                    }
+                    this->ui->label_response_parsed->setText("Value: " + result.toString()+"\nuint256: "+tmp2);
+                }
+                else if(result.isString()){
+                    QRegExp re_hex("^0x[A-Fa-f0-9]+$");
+                    QString hex;
+
+                    if (re_hex.exactMatch(result.toString())){
+                       hex = QString::fromStdString(Util::tohex(result.toString().toStdString()));
+                       //hex = input.remove(0,2);
+                    }
+                    else{
+                       hex = Util::str2bytes32(result.toString());
+                    }
+
+                    this->ui->label_response_parsed->setText("Value: " + result.toString()+"\nuint256: "+hex);
+                }
+            }
     }
 }
 
@@ -309,4 +394,17 @@ void ConfigItem::on_pushButton_delete_item_clicked()
           this->delete_item = true;
             accept();
       }
+}
+
+void ConfigItem::on_pushButton_select_script_file_clicked()
+{
+    QString dir = QFileDialog::getOpenFileName(this, tr("Open Script File"),
+                                                 "./scripts");
+
+    this->ui->lineEdit_script_file->setText(dir);
+}
+
+void ConfigItem::on_pushButton_create_script_file_clicked()
+{
+    script_editor->exec();
 }

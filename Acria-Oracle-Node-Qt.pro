@@ -43,6 +43,7 @@ SOURCES += \
     reportactive.cpp \
     resource.cpp \
     rlp.cpp \
+    scripteditor.cpp \
     sha256.cpp \
     sha3.cpp \
     signconfigwindow.cpp \
@@ -83,6 +84,7 @@ HEADERS += \
     reportactive.h \
     resource.h \
     rlp.h \
+    scripteditor.h \
     sha256.h \
     sha3.h \
     signconfigwindow.h \
@@ -106,6 +108,7 @@ FORMS += \
     infogeth.ui \
     mainwindow.ui \
     processingwindow.ui \
+    scripteditor.ui \
     signconfigwindow.ui
 
 TRANSLATIONS += \

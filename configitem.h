@@ -7,6 +7,7 @@
 #include <QtNetwork/QNetworkAccessManager>
 
 #include "json.hpp"
+#include "scripteditor.h"
 
 
 namespace Ui {
@@ -53,12 +54,18 @@ private slots:
 
     void on_pushButton_delete_item_clicked();
 
+    void on_pushButton_select_script_file_clicked();
+
+    void on_pushButton_create_script_file_clicked();
+
 private:
     Ui::ConfigItem *ui;
     std::vector<QLineEdit*> t1;
 
     QNetworkAccessManager *manager;
     QNetworkRequest request;
+
+    ScriptEditor* script_editor;
 
     void clear();
     bool check_input_valid();

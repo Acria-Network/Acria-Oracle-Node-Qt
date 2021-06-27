@@ -15,8 +15,9 @@
 #include <QtCore>
 #include <QLineEdit>
 #include <cmath>
-//#include <QJSEngine>
-//#include <QJSValue>
+#include <QJSEngine>
+#include <QJSValue>
+#include <QJSValueList>
 
 
 bool fileExists(QString path) {
@@ -33,6 +34,13 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     qDebug() << "started";
+
+    QJSEngine engine;
+    QString str1 = "{\"base\":\"USD\",\"rates\":{\"JPY\":110.7015154095},\"date\":\"2021-04-01\"}";
+    QJSValue function_js = engine.evaluate("(function(api_response) { var json = JSON.parse(api_response); return json['rates']['JPY'];})");
+    QJSValueList args;
+    args << str1;
+    qDebug() << function_js.call(args).toString();
 
     this->data = new Data();
 

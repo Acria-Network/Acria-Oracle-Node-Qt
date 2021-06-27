@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>593</width>
-    <height>399</height>
+    <height>439</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -327,6 +327,11 @@ border-bottom: 1px solid white;</string>
            <string>Regular Expression</string>
           </property>
          </item>
+         <item>
+          <property name="text">
+           <string>Script</string>
+          </property>
+         </item>
         </widget>
        </item>
        <item>
@@ -430,6 +435,9 @@ border-bottom: 1px solid white;</string>
             <property name="styleSheet">
              <string notr="true">background-color:#333333;</string>
             </property>
+            <property name="frame">
+             <bool>true</bool>
+            </property>
            </widget>
           </item>
           <item>
@@ -444,6 +452,90 @@ border-bottom: 1px solid white;</string>
              </size>
             </property>
            </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QWidget" name="verticalWidget_script" native="true">
+         <layout class="QVBoxLayout" name="verticalLayout_response_script">
+          <property name="topMargin">
+           <number>1</number>
+          </property>
+          <property name="bottomMargin">
+           <number>10</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="label_12">
+            <property name="text">
+             <string>Script File:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="lineEdit_script_file">
+            <property name="styleSheet">
+             <string notr="true">background-color:#333333;</string>
+            </property>
+            <property name="frame">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QPushButton" name="pushButton_select_script_file">
+              <property name="styleSheet">
+               <string notr="true">background-color:white;
+color:black;
+border: none;
+/*padding:30px;*/
+width:80px;
+padding-top:3px;
+padding-bottom:3px;
+background-color:orange;</string>
+              </property>
+              <property name="text">
+               <string>Select File</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_create_script_file">
+              <property name="styleSheet">
+               <string notr="true">background-color:white;
+color:black;
+border: none;
+/*padding:30px;*/
+width:80px;
+padding-top:3px;
+padding-bottom:3px;
+background-color:orange;</string>
+              </property>
+              <property name="text">
+               <string>Create File</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_13">
+            <property name="text">
+             <string>Script Parameter:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="lineEdit_script_parameter">
+            <property name="styleSheet">
+             <string notr="true">background-color:#333333;</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>

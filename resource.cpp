@@ -68,8 +68,6 @@ Resource::Resource(QString _url, std::vector<QString> _l_json, QString _regex, Q
         else
             break;
     }
-
-    //this->nonce = this->nonce_manager->get_nonce();
 }
 
 Resource::~Resource()
@@ -115,9 +113,7 @@ void Resource::update_resource(){
         manager->get(request);
     }
     else{
-        //QThread::msleep(30000);
         QTimer::singleShot(30000, this, &Resource::update_resource);
-        //this->update_resource();
     }
 }
 
@@ -149,18 +145,13 @@ void Resource::send_resource(){
     if(nonce == 0)
         nonce_ = "";
     tx.nonce=SignTransaction::fixHexValue(nonce_);
-    //tx.gasPrice=SignTransaction::fixHexValue("0x4A817C800");
     tx.gasPrice=SignTransaction::fixHexValue(RLP::intToHex(transaction_fee));
     tx.gasLimit=SignTransaction::fixHexValue("0x076C00");
     tx.to=SignTransaction::fixHexValue(contract1.toStdString());
     tx.value=SignTransaction::fixHexValue("");
-    //tx.data=SignTransaction::fixHexValue("0xa9059cbb");
     tx.data=SignTransaction::fixHexValue(data1.toStdString());
     tx.chainId = chain_id;
-    //tx.chainId = 6432;
     tx.v=SignTransaction::fixHexValue(RLP::intToHex(tx.chainId));//as per EIP 155
-
-    //std::string privkey = "1c28847b1ae871f0b4f9758a8129e4c7c09a2005ece548ca3a29382a59de6fbf";
 
     QString transaction = QString::fromStdString(SignTransaction::sign_transaction(tx, privkey.toStdString()));
     qDebug() << transaction;
