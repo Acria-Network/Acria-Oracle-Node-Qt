@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Acria Script Editor</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -34,6 +34,18 @@ color:white;</string>
    <property name="bottomMargin">
     <number>0</number>
    </property>
+   <item>
+    <widget class="QLineEdit" name="lineEdit_script_file_name">
+     <property name="styleSheet">
+      <string notr="true">border: none;
+color:white;
+background-color:#202020;</string>
+     </property>
+     <property name="placeholderText">
+      <string>Script File Name</string>
+     </property>
+    </widget>
+   </item>
    <item>
     <widget class="QWebEngineView" name="webEngineView">
      <property name="url">
@@ -58,7 +70,20 @@ color:white;</string>
       <number>3</number>
      </property>
      <item>
-      <widget class="QDialogButtonBox" name="buttonBox">
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_discard_script">
        <property name="styleSheet">
         <string notr="true">background-color:white;
 color:black;
@@ -69,11 +94,25 @@ padding-top:3px;
 padding-bottom:3px;
 background-color:orange;</string>
        </property>
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+       <property name="text">
+        <string>Discard</string>
        </property>
-       <property name="standardButtons">
-        <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_save_script">
+       <property name="styleSheet">
+        <string notr="true">background-color:white;
+color:black;
+border: none;
+/*padding:30px;*/
+width:80px;
+padding-top:3px;
+padding-bottom:3px;
+background-color:orange;</string>
+       </property>
+       <property name="text">
+        <string>Save</string>
        </property>
       </widget>
      </item>
@@ -89,38 +128,5 @@ background-color:orange;</string>
   </customwidget>
  </customwidgets>
  <resources/>
- <connections>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>accepted()</signal>
-   <receiver>ScriptEditor</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>157</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>rejected()</signal>
-   <receiver>ScriptEditor</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>286</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

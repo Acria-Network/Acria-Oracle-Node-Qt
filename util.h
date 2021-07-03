@@ -10,6 +10,8 @@
 #include <QMessageBox>
 #include <QPixmap>
 #include <QIcon>
+#include <QFile>
+#include <fstream>
 
 
 const std::string digits = "0123456789abcdef";
@@ -186,6 +188,51 @@ public:
         msgBox.setWindowIcon(QPixmap("resources/acria_logo5_colored.svg"));
         msgBox.setText(text);
         msgBox.exec();
+    }
+
+    static bool fileExists(QString path) {
+        // check if file exists and if yes: Is it really a file and no directory?
+        if (QFile::exists(path)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    static QString read_file(std::string _path){
+        std::ifstream t(_path);
+        if(!t){
+            qDebug() << "error file";
+            return "";
+        }
+        std::string str;
+
+        t.seekg(0, std::ios::end);
+        str.reserve(t.tellg());
+        t.seekg(0, std::ios::beg);
+
+        str.assign((std::istreambuf_iterator<char>(t)),
+                    std::istreambuf_iterator<char>());
+
+        return QString::fromStdString(str);
+    }
+
+    static QString double2uint256(double d){
+        QString tmp2 = QString::number(d, 'f', 10);
+        int point = tmp2.indexOf('.');
+
+        if(point != -1){
+            tmp2 = tmp2.replace(".", "");
+            for(uint i=tmp2.length()-point;i<18;i++){
+                tmp2 += "0";
+            }
+        }
+        else{
+            for(uint i=0;i<18;i++){
+                tmp2 += "0";
+            }
+        }
+        return tmp2;
     }
 };
 

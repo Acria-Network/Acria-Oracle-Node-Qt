@@ -191,7 +191,6 @@ void ConfigItem::on_pushButton_response_parse_clicked()
     if(this->ui->comboBox->currentIndex() == 0){
         try{
             nlohmann::json tmp1 = nlohmann::json::parse(answer.toStdString());
-
             std::vector<QString> l_json;
 
             for(uint i = 0;i<this->t1.size();i++){
@@ -256,67 +255,36 @@ void ConfigItem::on_pushButton_response_parse_clicked()
         }
     }
     else if(this->ui->comboBox->currentIndex() == 2){
-            std::ifstream t(this->ui->lineEdit_script_file->text().toStdString());
-            if(!t){
-                qDebug() << "error file";
-                this->ui->label_response_parsed->setText(tr("Script file not found"));
-                return;
-            }
-            std::string str;
-
-            t.seekg(0, std::ios::end);
-            str.reserve(t.tellg());
-            t.seekg(0, std::ios::beg);
-
-            str.assign((std::istreambuf_iterator<char>(t)),
-                        std::istreambuf_iterator<char>());
-
-            QString script = QString::fromStdString(str);
-
+            QString script = Util::read_file(this->ui->lineEdit_script_file->text().toStdString());
+            QString bn = Util::read_file("scripts/bignumber.min.js");
             QJSEngine engine;
-            QJSValue function_js = engine.evaluate("(function(api_response, arg1) {" + script + "})");
+            QJSValue function_js = engine.evaluate(bn+"(function(api_response, arg1) {" + script + "})");
             QJSValueList args;
             args << answer << this->ui->lineEdit_script_parameter->text();
             QJSValue result = function_js.call(args);
+            qDebug() << "parse Script ";
 
             if (result.isError()){
+                qDebug() << "error Script";
                 this->ui->label_response_parsed->setText(tr("Uncaught exception at line ") + result.property("lineNumber").toString() + ":" + result.toString());
                 return;
             }
             else{
+                QString tmp2;
                 if(result.isNumber()){
-                    qDebug() << "number";
-                    double d = result.toNumber();
-                    QString tmp2 = QString::number(d);
-                    int point = tmp2.indexOf('.');
-
-                    if(point != -1){
-                        tmp2 = tmp2.replace(".", "");
-
-                        for(uint i=tmp2.length()-point;i<18;i++){
-                            tmp2 += "0";
-                        }
-                    }
-                    else{
-                        for(uint i=0;i<18;i++){
-                            tmp2 += "0";
-                        }
-                    }
+                    tmp2 = Util::double2uint256(result.toNumber());
                     this->ui->label_response_parsed->setText("Value: " + result.toString()+"\nuint256: "+tmp2);
                 }
                 else if(result.isString()){
-                    QRegExp re_hex("^0x[A-Fa-f0-9]+$");
-                    QString hex;
+                    if (QRegExp("^0x[A-Fa-f0-9]+$").exactMatch(result.toString()))
+                       tmp2 = result.toString();
+                    else
+                       tmp2 = Util::str2bytes32(result.toString());
 
-                    if (re_hex.exactMatch(result.toString())){
-                       hex = QString::fromStdString(Util::tohex(result.toString().toStdString()));
-                       //hex = input.remove(0,2);
-                    }
-                    else{
-                       hex = Util::str2bytes32(result.toString());
-                    }
-
-                    this->ui->label_response_parsed->setText("Value: " + result.toString()+"\nuint256: "+hex);
+                    this->ui->label_response_parsed->setText("Value: " + result.toString()+"\nuint256: "+tmp2);
+                }
+                else if(result.isUndefined()){
+                    this->ui->label_response_parsed->setText("Undefined Value");
                 }
             }
     }
@@ -406,5 +374,14 @@ void ConfigItem::on_pushButton_select_script_file_clicked()
 
 void ConfigItem::on_pushButton_create_script_file_clicked()
 {
+    this->script_editor->load_script(this->ui->lineEdit_script_file->text());
     script_editor->exec();
+}
+
+void ConfigItem::on_lineEdit_script_file_textChanged(const QString &arg1)
+{
+    if(arg1 != "")
+        this->ui->pushButton_create_script_file->setText(tr("Edit Script"));
+    else
+        this->ui->pushButton_create_script_file->setText(tr("Create Script"));
 }

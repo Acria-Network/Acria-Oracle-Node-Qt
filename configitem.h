@@ -58,6 +58,8 @@ private slots:
 
     void on_pushButton_create_script_file_clicked();
 
+    void on_lineEdit_script_file_textChanged(const QString &arg1);
+
 private:
     Ui::ConfigItem *ui;
     std::vector<QLineEdit*> t1;

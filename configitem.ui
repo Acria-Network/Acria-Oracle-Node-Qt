@@ -517,7 +517,7 @@ padding-bottom:3px;
 background-color:orange;</string>
               </property>
               <property name="text">
-               <string>Create File</string>
+               <string>Create Script</string>
               </property>
              </widget>
             </item>
@@ -526,7 +526,7 @@ background-color:orange;</string>
           <item>
            <widget class="QLabel" name="label_13">
             <property name="text">
-             <string>Script Parameter:</string>
+             <string>Script Parameter (arg1):</string>
             </property>
            </widget>
           </item>
@@ -561,6 +561,9 @@ background-color:orange;</string>
         <widget class="QLabel" name="label_response_parsed">
          <property name="text">
           <string/>
+         </property>
+         <property name="textInteractionFlags">
+          <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
          </property>
         </widget>
        </item>

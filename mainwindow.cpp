@@ -20,15 +20,6 @@
 #include <QJSValueList>
 
 
-bool fileExists(QString path) {
-    // check if file exists and if yes: Is it really a file and no directory?
-    if (QFile::exists(path)) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -48,7 +39,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     this->config = new Config();
 
-    if(!fileExists("config.conf")){
+    if(!Util::fileExists("config.conf")){
     }
     else{
         qDebug() << "reading config";
