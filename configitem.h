@@ -38,8 +38,6 @@ private slots:
 
     void on_lineEdit_resource_name_textChanged(const QString &arg1);
 
-    void on_comboBox_currentTextChanged(const QString &arg1);
-
     void on_comboBox_currentIndexChanged(int index);
 
     void managerFinished(QNetworkReply *reply);
@@ -71,6 +69,7 @@ private:
 
     void clear();
     bool check_input_valid();
+    void save();
 };
 
 #endif // CONFIGITEM_H

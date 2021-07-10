@@ -13,6 +13,7 @@
 #include <keccak256.h>
 #include <QThread>
 #include <QTimer>
+
 #include "signtransaction.h"
 
 
@@ -20,8 +21,6 @@ Resource::Resource()
 {
     this->s_value = "";
     this->d_value = 0;
-    this->url = "";
-    this->regex = "";
 
     manager = new QNetworkAccessManager();
 
@@ -44,23 +43,20 @@ Resource::Resource()
     connect(is_deployed_timer, SIGNAL(timeout()), this, SLOT(is_deployed()));
 }
 
-Resource::Resource(QString _url, std::vector<QString> _l_json, QString _regex, QString n, Data* _data, QString _type, uint _id, uint* state, uint _max_gas, unsigned long long _fee, QString _request_data, QString _url_data, QString _parameter_type, NonceManager* _nonce_manager) : Resource()
+Resource::Resource(nlohmann::json _conf, req _r, Data* _data, uint* state, NonceManager* _nonce_manager) : Resource()
 {
-    this->url = _url;
-    this->l_json = _l_json;
-    this->item = n;
     this->data = _data;
-    this->type = _type;
-    this->id = _id;
     this->state = state;
-    this->max_gas = _max_gas;
-    this->fee = _fee;
     this->nonce_manager = _nonce_manager;
-    this->request_data = _request_data;
-    this->url_data = _url_data;
-    this->parameter_type = _parameter_type;
-    this->regex = _regex;
+    this->conf = _conf;
+    this->r = _r;
 
+
+    if(conf.contains("json")){
+        for(uint f = 0; f<conf["json"].size();f++){
+            l_json.push_back(QString::fromStdString(conf["json"][f]));
+        }
+    }
     for(int i = l_json.size()-1; i>=0; i--){
         if(l_json[i] == ""){
             l_json.erase(l_json.begin() + i);
@@ -103,12 +99,12 @@ QString Resource::convert_parameter(QString _parameter_type, QString _request_da
 }
 
 void Resource::update_resource(){
-    if(this->get_minimum_transaction_fee() < this->fee){
-        qDebug() << "request_data: " << this->request_data;
-        if(this->request_data != "")
-            request.setUrl(QUrl(url_data.replace("%data%", this->convert_parameter(this->parameter_type, this->request_data))));
+    if(this->get_minimum_transaction_fee() < r.fee){
+        qDebug() << "request_data: " << r.data;
+        if(r.data != "")
+            request.setUrl(QUrl(QString::fromStdString(conf["url_data"]).replace("%data%", this->convert_parameter(QString::fromStdString(conf["parameter_type"]), r.data))));
         else
-            request.setUrl(QUrl(url));
+            request.setUrl(QUrl(QString::fromStdString(conf["url"])));
 
         manager->get(request);
     }
@@ -124,16 +120,16 @@ void Resource::send_resource(){
     QString contract1, account1, privkey;
     unsigned long long transaction_fee = 0; unsigned chain_id = 0;
 
-    this->data->get_chain_info(this->type, &url1, &account1, &contract1, &transaction_fee, &privkey, &chain_id);
+    this->data->get_chain_info(r.chain, &url1, &account1, &contract1, &transaction_fee, &privkey, &chain_id);
 
     privkey.remove(0, 2);
 
     Keccak keccak;
 
     QString d1 = "0x" + QString::fromStdString(keccak("fillRequest(bytes8,uint256,uint256)")).mid(0,8);
-    QString d2 = Util::str2bytes8(this->item)+"000000000000000000000000000000000000000000000000";
+    QString d2 = Util::str2bytes8(QString::fromStdString(conf["rname"]))+"000000000000000000000000000000000000000000000000";
     QString d3 = QString::fromStdString(value256.GetHex());
-    QString d4 = QString::fromStdString(Util::n2hexstr(this->id));
+    QString d4 = QString::fromStdString(Util::n2hexstr(r.id));
     for(uint i = d4.size(); i<64;i++){
         d4 = "0" + d4;
     }
@@ -172,42 +168,51 @@ void Resource::send_resource(){
     send_manager->post(send_request, data);
 }
 
-/*
-void Resource::send_resource(){
-    QUrl url1;
-    QString contract1, account1;
-    unsigned long long transaction_fee = 0;
+QString Resource::parse_script(QString file_name, QString script_parameter, QString api_answer, bool& success, QLabel* label){
+    QString script = Util::read_file(file_name.toStdString());
+    QString bn = Util::read_file("scripts/bignumber.min.js");
+    QJSEngine engine;
+    QJSValue function_js = engine.evaluate(bn+"(function(api_response, arg1) {" + script + "})");
+    QJSValueList args;
+    args << api_answer << script_parameter;
+    QJSValue result = function_js.call(args);
+    qDebug() << "parsed Script " + file_name;
 
-    this->data->get_chain_info(this->type, &url1, &account1, &contract1, &transaction_fee);
-
-    Keccak keccak;
-
-    QString d1 = "0x" + QString::fromStdString(keccak("fillRequest(bytes8,uint256,uint256)")).mid(0,8);
-    qDebug()<< "d1 " <<d1;
-    QString d2 = Util::str2bytes8(this->item)+"000000000000000000000000000000000000000000000000";
-
-    qDebug() << d1;
-    qDebug() << d2;
-
-    QString d3 = QString::fromStdString(value256.GetHex());
-
-    QString d4 = QString::fromStdString(Util::n2hexstr(this->id));
-    for(uint i = d4.size(); i<64;i++){
-        d4 = "0" + d4;
+    if (result.isError()){
+        qDebug() << "error Script";
+        if(label != NULL)
+            label->setText(tr("Uncaught exception at line ") + result.property("lineNumber").toString() + ":" + result.toString());
+        success = false;
+        return "";
     }
+    else{
+        QString tmp2;
+        uint256 value256;
+        if(result.isNumber()){
+            tmp2 = Util::double2uint256(result.toNumber());
+            value256 = uint256S(Util::tohex(tmp2.toStdString()));
+        }
+        else if(result.isString()){
+            if (QRegExp("^0x[A-Fa-f0-9]+$").exactMatch(result.toString()))
+               tmp2 = result.toString();
+            else
+               tmp2 = Util::str2bytes32(result.toString());
+            value256 = uint256S(tmp2.toStdString());
+        }
+        else if(result.isUndefined()){
+            if(label != NULL)
+                label->setText("Undefined Value");
+            success = false;
+            return "";
+        }
 
-    qDebug() << d4;
-    qDebug() << d3;
+        success = true;
+        if(label != NULL)
+            label->setText("Value: " + result.toString()+"\nuint256: "+tmp2+"\nuint256(hex): "+QString::fromStdString(value256.GetHex()));
 
-    QString data1 = d1+d2+d3+d4;
-
-    send_request.setUrl(url1);
-    send_request.setRawHeader("Content-Type", "application/json");
-    send_manager->post(send_request, Util::generate_rpc_call("eth_sendTransaction", account1, contract1, data1, transaction_fee, 486400, 72, this->nonce));
-
-    *this->state=1;
+        return QString::fromStdString(value256.GetHex());
+    }
 }
-*/
 
 void Resource::managerFinished(QNetworkReply *reply) {
     try{
@@ -217,67 +222,51 @@ void Resource::managerFinished(QNetworkReply *reply) {
         }
 
         QString answer = reply->readAll();
+        qDebug() << answer;
 
         if(l_json.size() > 0){
             nlohmann::json tmp1 = nlohmann::json::parse(answer.toStdString());
-            qDebug() << answer;
 
             int i = 0;
             for(;i<static_cast<int>(l_json.size())-1; i++){
                 if(l_json[i] != ""){
-                    if(tmp1.contains(l_json[i].toStdString())){
+                    if(tmp1.contains(l_json[i].toStdString()))
                         tmp1 = tmp1[l_json[i].toStdString()];
-                    }
-                    else{
+                    else
                         throw;
-                    }
                 }
-                else{
+                else
                     throw;
-                }
             }
 
-            double ans = static_cast<double>(tmp1[l_json[i].toStdString()]);
-
-            d_value=ans;
-
-            QString tmp2 = QString::number(d_value);
-            int point = tmp2.indexOf('.');
-
-            qDebug() << "point" << point;
-            tmp2 = tmp2.replace(".", "");
-
-            for(uint i=tmp2.length()-point;i<18;i++){
-                tmp2 += "0";
-            }
-
+            d_value = static_cast<double>(tmp1[l_json[i].toStdString()]);
+            QString tmp2 = Util::double2uint256(d_value);
             value256 = uint256S(Util::tohex(tmp2.toStdString()));
 
-            qDebug() << QString::fromStdString(value256.ToString());
+            qDebug() << "Resource to send: " << QString::fromStdString(value256.ToString());
         }
-        else if(regex != ""){
-            QRegularExpression re(this->regex);
+        else if(conf.contains("regex")){
+            QRegularExpression re(QString::fromStdString(conf["regex"]));
             QRegularExpressionMatch match = re.match(answer);
             if (match.hasMatch()) {
                 QString matched = match.captured(1);
-                if(matched == ""){
+                if(matched == "")
                     throw;
-                }
-                double ans = matched.toDouble();
 
-                QString tmp2 = QString::number(ans);
-                int point = tmp2.indexOf('.');
-                tmp2 = tmp2.replace(".", "");
-
-                for(uint i=tmp2.length()-point;i<18;i++){
-                    tmp2 += "0";
-                }
-
+                d_value = matched.toDouble();
+                QString tmp2 = Util::double2uint256(d_value);
                 value256 = uint256S(Util::tohex(tmp2.toStdString()));
+
+                qDebug() << "Resource to send: " << QString::fromStdString(value256.ToString());
             }
-            else{
+            else
                 throw;
-            }
+        }
+        else if(conf.contains("script_file")){
+            bool script_success = false;
+            value256 = uint256S(Resource::parse_script(QString::fromStdString(conf["script_file"]), QString::fromStdString(conf["script_parameter"]), answer, script_success).toStdString());
+
+            qDebug() << "Resource to send: " << QString::fromStdString(value256.ToString());
         }
     }
     catch(...){
@@ -295,13 +284,13 @@ unsigned long long Resource::get_minimum_transaction_fee(){
     QString contract1, account1;
     unsigned long long transaction_fee = 0;
 
-    this->data->get_chain_info(this->type, &url1, &account1, &contract1, &transaction_fee);
+    this->data->get_chain_info(r.chain, &url1, &account1, &contract1, &transaction_fee);
 
-    unsigned long long total_gas = max_gas + 40000;
+    unsigned long long total_gas = r.max_gas + 40000;
 
     unsigned long long mfee = total_gas*transaction_fee;
     qDebug() << "minimum fee " << mfee;
-    qDebug() << "paid fee " << fee;
+    qDebug() << "paid fee " << r.fee;
 
     return mfee;
 }
@@ -324,7 +313,6 @@ void Resource::send_managerFinished(QNetworkReply *reply) {
     QString res = obj["result"].toString();
 
     this->hash = res;
-    //this->is_deployed();
     is_deployed_timer->start(10000);
 }
 
@@ -333,7 +321,7 @@ void Resource::is_deployed(){
     QString contract1, account1;
     unsigned long long transaction_fee = 0;
 
-    this->data->get_chain_info(this->type, &url1, &account1, &contract1, &transaction_fee);
+    this->data->get_chain_info(r.chain, &url1, &account1, &contract1, &transaction_fee);
 
     QJsonArray obj3;
     obj3.push_back(hash);

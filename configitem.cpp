@@ -53,8 +53,6 @@ void ConfigItem::fill(nlohmann::json _json){
         this->ui->lineEdit_resource_name->setText(QString::fromStdString(_json["rname"]));
     if(_json.contains("url_data"))
         this->ui->lineEdit_2_api_url_2->setText(QString::fromStdString(_json["url_data"]));
-    if(_json.contains("regex"))
-        this->ui->lineEdit_regex_text->setText(QString::fromStdString(_json["regex"]));
     if(_json.contains("parameter_type"))
         this->ui->lineEdit_2_parameter_type->setText(QString::fromStdString(_json["parameter_type"]));
     if(_json.contains("description"))
@@ -62,15 +60,22 @@ void ConfigItem::fill(nlohmann::json _json){
     if(_json.contains("example_value"))
         this->ui->label_response_parsed->setText(QString::fromStdString(_json["example_value"]));
 
-    if(_json.contains("regex"))
+    if(_json.contains("regex")){
         this->ui->comboBox->setCurrentIndex(1);
-    else
+        this->ui->lineEdit_regex_text->setText(QString::fromStdString(_json["regex"]));
+    }
+    else if(_json.contains("script_file")){
+        this->ui->comboBox->setCurrentIndex(2);
+        this->ui->lineEdit_script_file->setText(QString::fromStdString(_json["script_file"]));
+        this->ui->lineEdit_script_parameter->setText(QString::fromStdString(_json["script_parameter"]));
+    }
+    else if(_json.contains("json")){
         this->ui->comboBox->setCurrentIndex(0);
 
-    if(_json.contains("json"))
         for(uint i = 0;i<_json["json"].size();i++){
             t1[i]->setText(QString::fromStdString(_json["json"][i]));
         }
+    }
 }
 
 void ConfigItem::clear(){
@@ -84,6 +89,8 @@ void ConfigItem::clear(){
     this->ui->label_response_parsed->setText("");
     this->ui->label_example_request->setText("");
     this->ui->label_data_type_conversion->setText("");
+    this->ui->lineEdit_script_file->setText("");
+    this->ui->lineEdit_script_parameter->setText("");
 
     for(uint i = 0;i<this->t1.size();i++){
         t1[i]->setText("");
@@ -114,27 +121,7 @@ bool ConfigItem::check_input_valid(){
 
 void ConfigItem::on_buttonBox_1_accepted()
 {
-    nlohmann::json tmp;
-    tmp["url"] = this->ui->lineEdit_2_api_url->text().toStdString();
-    tmp["url_data"] = this->ui->lineEdit_2_api_url_2->text().toStdString();
-    tmp["parameter_type"] = this->ui->lineEdit_2_parameter_type->text().toStdString();
-    tmp["rname"] = this->ui->lineEdit_resource_name->text().toStdString();
-    tmp["description"] = this->ui->plainTextEdit_description->toPlainText().toStdString();
-    tmp["example_value"] = this->ui->label_response_parsed->text().toStdString();
-
-    if(this->ui->comboBox->currentIndex() == 0){
-        for(uint i = 0;i<this->t1.size();i++){
-            if(this->t1[i]->text().trimmed() != "")
-            tmp["json"][i] = this->t1[i]->text().toStdString();
-        }
-    }
-    else if(this->ui->comboBox->currentIndex() == 1){
-        tmp["regex"] = this->ui->lineEdit_regex_text->text().toStdString();
-    }
-
-
-    ijson = tmp;
-
+    save();
     this->clear();
 }
 
@@ -148,11 +135,6 @@ void ConfigItem::on_lineEdit_resource_name_textChanged(const QString &arg1)
     if(arg1.length()>8){
         static_cast<QLineEdit*>(sender())->setText(arg1.mid(0, 8));
     }
-}
-
-void ConfigItem::on_comboBox_currentTextChanged(const QString &arg1)
-{
-
 }
 
 void ConfigItem::on_comboBox_currentIndexChanged(int index)
@@ -255,6 +237,7 @@ void ConfigItem::on_pushButton_response_parse_clicked()
         }
     }
     else if(this->ui->comboBox->currentIndex() == 2){
+            /*
             QString script = Util::read_file(this->ui->lineEdit_script_file->text().toStdString());
             QString bn = Util::read_file("scripts/bignumber.min.js");
             QJSEngine engine;
@@ -262,8 +245,8 @@ void ConfigItem::on_pushButton_response_parse_clicked()
             QJSValueList args;
             args << answer << this->ui->lineEdit_script_parameter->text();
             QJSValue result = function_js.call(args);
-            qDebug() << "parse Script ";
-
+            qDebug() << "parse Script ";*/
+            /*
             if (result.isError()){
                 qDebug() << "error Script";
                 this->ui->label_response_parsed->setText(tr("Uncaught exception at line ") + result.property("lineNumber").toString() + ":" + result.toString());
@@ -271,22 +254,24 @@ void ConfigItem::on_pushButton_response_parse_clicked()
             }
             else{
                 QString tmp2;
-                if(result.isNumber()){
+                if(result.isNumber())
                     tmp2 = Util::double2uint256(result.toNumber());
-                    this->ui->label_response_parsed->setText("Value: " + result.toString()+"\nuint256: "+tmp2);
-                }
                 else if(result.isString()){
                     if (QRegExp("^0x[A-Fa-f0-9]+$").exactMatch(result.toString()))
                        tmp2 = result.toString();
                     else
                        tmp2 = Util::str2bytes32(result.toString());
-
-                    this->ui->label_response_parsed->setText("Value: " + result.toString()+"\nuint256: "+tmp2);
                 }
                 else if(result.isUndefined()){
                     this->ui->label_response_parsed->setText("Undefined Value");
+                    return;
                 }
+                this->ui->label_response_parsed->setText("Value: " + result.toString()+"\nuint256: "+tmp2);
             }
+            */
+            bool script_success = false;
+            QString result0 = Resource::parse_script(this->ui->lineEdit_script_file->text(), this->ui->lineEdit_script_parameter->text(), answer, script_success, this->ui->label_response_parsed);
+            qDebug() << result0;
     }
 }
 
@@ -318,7 +303,11 @@ void ConfigItem::on_pushButton_make_example_request_with_parameter_clicked()
 void ConfigItem::on_pushButton_save_and_continue_clicked()
 {
     save_as_copy = true;
+    save();
+    accept();
+}
 
+void ConfigItem::save(){
     nlohmann::json tmp;
     tmp["url"] = this->ui->lineEdit_2_api_url->text().toStdString();
     tmp["url_data"] = this->ui->lineEdit_2_api_url_2->text().toStdString();
@@ -336,11 +325,13 @@ void ConfigItem::on_pushButton_save_and_continue_clicked()
     else if(this->ui->comboBox->currentIndex() == 1){
         tmp["regex"] = this->ui->lineEdit_regex_text->text().toStdString();
     }
+    else if(this->ui->comboBox->currentIndex() == 2){
+        tmp["script_file"] = this->ui->lineEdit_script_file->text().toStdString();
+        tmp["script_parameter"] = this->ui->lineEdit_script_parameter->text().toStdString();
+    }
 
 
     ijson = tmp;
-
-    accept();
 }
 
 void ConfigItem::show_save_as_copy_button(bool visible){

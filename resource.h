@@ -5,11 +5,16 @@
 #include <QtNetwork/QNetworkAccessManager>
 #include <map>
 #include <QTimer>
+#include <QJSEngine>
+#include <QJSValue>
+#include <QJSValueList>
+#include <QLabel>
 
 #include "json.hpp"
 #include "uint256.h"
 #include "data.h"
 #include "noncemanager.h"
+#include "tasks.h"
 
 
 struct Source{
@@ -34,46 +39,31 @@ private:
     QString s_value;
     double d_value;
     uint256 value256;
-    QString url;
-    QString url_data;
-    QString parameter_type;
-    QString item;
     std::vector<QString> l_json;
     Data *data;
-
-    QString type;
-
-    std::vector<uint> sent_id;
-    std::vector<uint> unsent_id;
     uint* state;
 
-    uint id;
-    unsigned long long fee;
-    uint max_gas;
     QString hash;
-    QString request_data;
-    QString regex;
-
     unsigned nonce;
-
     NonceManager* nonce_manager;
-
     QTimer* is_deployed_timer;
+    nlohmann::json conf;
+    req r;
 
     unsigned long long get_minimum_transaction_fee();
 
 public:
     Resource();
-    Resource(QString url, std::vector<QString> _l_json, QString _regex, QString n, Data* _data, QString _type, uint _id, uint* state, uint _max_gas, unsigned long long _fee, QString _request_data, QString _url_data, QString _parameter_type, NonceManager* _nonce_manager);
+    Resource(nlohmann::json _conf, req _r, Data* _data, uint* state, NonceManager* _nonce_manager);
     ~Resource();
 
     QString error;
 
     void update_resource();
     void send_resource();
-    void add_unsent_id(uint i){unsent_id.push_back(i);}
     uint get_state(){return *state;}
     static QString convert_parameter(QString _parameter_type, QString _request_data);
+    static QString parse_script(QString file_name, QString script_parameter, QString api_answer, bool& success, QLabel* label = NULL);
 
 private slots:
     void managerFinished(QNetworkReply *reply);
