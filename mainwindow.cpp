@@ -15,23 +15,13 @@
 #include <QtCore>
 #include <QLineEdit>
 #include <cmath>
-#include <QJSEngine>
-#include <QJSValue>
-#include <QJSValueList>
 
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    qDebug() << "started";
-
-    QJSEngine engine;
-    QString str1 = "{\"base\":\"USD\",\"rates\":{\"JPY\":110.7015154095},\"date\":\"2021-04-01\"}";
-    QJSValue function_js = engine.evaluate("(function(api_response) { var json = JSON.parse(api_response); return json['rates']['JPY'];})");
-    QJSValueList args;
-    args << str1;
-    qDebug() << function_js.call(args).toString();
+    qDebug() << "Started";
 
     this->data = new Data();
 
@@ -42,7 +32,7 @@ MainWindow::MainWindow(QWidget *parent)
     if(!Util::fileExists("config.conf")){
     }
     else{
-        qDebug() << "reading config";
+        qDebug() << "Reading config";
         if(!this->config->parseConfig()){
             qDebug() << "Error config";
         }
@@ -64,11 +54,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->setupUi(this);
 
-    QtConcurrent::run(this, &MainWindow::get_status_geth);
-    QtConcurrent::run(this, &MainWindow::get_status_polkadot);
-    QtConcurrent::run(this, &MainWindow::get_status_acria);
-    QtConcurrent::run(this, &MainWindow::get_status_config);
-    QtConcurrent::run(this, &MainWindow::get_status_binance);
+    update_status();
 
     timer_update_requests = new QTimer(this);
     connect(timer_update_requests, SIGNAL(timeout()), this, SLOT(update_requests()));
@@ -257,19 +243,7 @@ void MainWindow::get_status_cardano(){
     this->ui->label_balance_cardano->setText(tr("Balance (") + QString::number(bal_d) +"):");
 }
 
-void MainWindow::get_status_acria(){
-}
-
-void MainWindow::get_status_config(){
-}
-
 void MainWindow::update_status(){
-    for (auto const& x : eth_based_chain)
-    {
-        if(this->data->chain_data[x.first].enabled != false)
-            x.second->node->update_user_balance();
-    }
-
     get_status_geth();
     get_status_binance();
     get_status_cardano();
@@ -317,15 +291,13 @@ void MainWindow::update_requests(){
 
     for (auto const& x : eth_based_chain)
     {
+        if(x.second->nonce_manager->is_ready() == false && this->data->chain_data[x.first].enabled != false && this->data->chain_data[x.first].private_key != "")
+            x.second->nonce_manager->reset();
+        if(this->data->chain_data[x.first].enabled != false && this->data->chain_data[x.first].account != "")
+            x.second->node->update_user_balance();
         if(this->node_ready(x.first) && this->data->chain_data[x.first].contract != "")
             x.second->tasks->update_requests();
     }
-    /*
-    if(this->node_ready("ethereum"))
-        this->eth_based_chain["ethereum"]->tasks->update_requests();
-    if(this->node_ready("binance"))
-        this->eth_based_chain["binance"]->tasks->update_requests();
-    */
 
     std::vector<req> r;
     for (auto const& x : eth_based_chain)
@@ -592,7 +564,7 @@ void MainWindow::on_pushButton_export_json_clicked()
         QString filename=dir + "/transactions.json";
         QFile file(filename);
 
-        qDebug() << filename;
+        qDebug() << "Export Json: " << filename;
 
         if(file.exists()){
             qDebug() << "File exists: "<<filename;
@@ -645,6 +617,8 @@ void MainWindow::on_pushButton_export_csv_clicked()
         QString filename=dir + "/transactions.csv";
         QFile file(filename);
 
+        qDebug() << "Export CSV: " << filename;
+
         if(file.exists()){
             qDebug() << "File exists: "<<filename;
         }else{
@@ -675,10 +649,7 @@ void MainWindow::on_pushButton_refresh_clicked()
         x.second->node->update_geth_status();
     }
 
-    QtConcurrent::run(this, &MainWindow::get_status_geth);
-    QtConcurrent::run(this, &MainWindow::get_status_polkadot);
-    QtConcurrent::run(this, &MainWindow::get_status_acria);
-    QtConcurrent::run(this, &MainWindow::get_status_config);
+    update_status();
 }
 
 void MainWindow::on_pushButton_eth_settings_clicked()

@@ -12,6 +12,7 @@
 #include <QJsonDocument>
 #include <QThread>
 
+
 DeployWindow::DeployWindow(QWidget *parent, Data *_data, QString _type, ProcessingWindow* _processing_window, QString _hash1, NonceManager* _nonce_manager) :
     QDialog(parent),
     ui(new Ui::DeployWindow)
@@ -47,29 +48,6 @@ DeployWindow::~DeployWindow()
     delete available_data_contracts;
 }
 
-/*
-void DeployWindow::deploy(){
-    if(this->state == 3){
-        this->state = 0;
-
-        QUrl url1;
-        QString contract1, account1;
-        unsigned long long transaction_fee = 0;
-
-        this->data->get_chain_info(this->type, &url1, &account1, &contract1, &transaction_fee);
-
-        QString d1 = "0x1cd23fd9";
-        QString d2 = Util::str2bytes32(this->ui->lineEdit_contract_name->text());
-        QString data1 = d1+d2;
-
-        request.setUrl(url1);
-        request.setRawHeader("Content-Type", "application/json");
-        manager->post(request, Util::generate_rpc_call("eth_sendTransaction", account1, this->ui->lineEdit_main_contract->text().trimmed(), data1, transaction_fee, 1601264, 25, this->nonce_manager->get_nonce()));
-
-        this->state=1;
-    }
-}
-*/
 void DeployWindow::deploy(){
     if(this->state == 3){
         this->state = 0;
@@ -103,16 +81,16 @@ void DeployWindow::deploy(){
         tx.chainId = chain_id;
         tx.v=SignTransaction::fixHexValue(RLP::intToHex(tx.chainId));//as per EIP 155
 
-        qDebug() << "Deploy Transaction: " << QString::fromStdString(tx.nonce) << " "
-        << QString::fromStdString(tx.gasPrice) << " "
-        << QString::fromStdString(tx.gasLimit) << " "
-        << QString::fromStdString(tx.to) << " "
-        << QString::fromStdString(tx.value) << " "
-        << QString::fromStdString(tx.data) << " "
+        qDebug() << "Deploy transaction: " << this->type << ": Nonce: " << QString::fromStdString(tx.nonce) << " Gas Price: "
+        << QString::fromStdString(tx.gasPrice) << " Gas Limit: "
+        << QString::fromStdString(tx.gasLimit) << " To: "
+        << QString::fromStdString(tx.to) << " Value: "
+        << QString::fromStdString(tx.value) << " Data: "
+        << QString::fromStdString(tx.data) << " v: "
         << QString::fromStdString(tx.v);
 
         QString transaction = QString::fromStdString(SignTransaction::sign_transaction(tx, privkey.toStdString()));
-        qDebug() << transaction;
+        qDebug() << "Deploy transaction: " << this->type << ": " << transaction;
 
         QJsonArray obj3;
         obj3.push_back("0x" + transaction);
@@ -155,7 +133,7 @@ void DeployWindow::handle_error(QString err){
 
 void DeployWindow::managerFinished(QNetworkReply *reply) {
     if (reply->error()) {
-        qDebug() << reply->errorString();
+        qDebug() << "Error (deploy contract): " << this->type << ": " << reply->errorString();
         this->handle_error(reply->errorString());
         return;
     }
@@ -163,15 +141,14 @@ void DeployWindow::managerFinished(QNetworkReply *reply) {
     QString answer = reply->readAll();
     QJsonObject obj = Util::ObjectFromString(answer);
     if(obj.contains("error")){
-        qDebug() << "error deploy";
-        qDebug() << answer;
+        qDebug() << "Error (deploy contract): " << this->type << ": " << answer;
         nlohmann::json tmp1 = nlohmann::json::parse(answer.toStdString());
         this->handle_error(QString::fromStdString(tmp1["error"]["message"].dump()));
         return;
     }
     QString res = obj["result"].toString();
 
-    qDebug() << answer;
+    qDebug() << "Deploy contract: " << this->type << ": " << answer;
 
     this->state=2;
 
@@ -181,16 +158,15 @@ void DeployWindow::managerFinished(QNetworkReply *reply) {
 
 void DeployWindow::deployed_managerFinished(QNetworkReply *reply) {
     if (reply->error()) {
-        qDebug() << reply->errorString();
+        qDebug() << "Error (check deployed contract): " << this->type << ": " << reply->errorString();
         return;
     }
 
     QString answer = reply->readAll();
     QJsonObject obj = Util::ObjectFromString(answer);
-    qDebug() << answer;
 
     if(obj.contains("error")){
-        qDebug() << "error deploy";
+        qDebug() << "Error (check deployed contract): " << this->type << ": " << answer;
         nlohmann::json tmp1 = nlohmann::json::parse(answer.toStdString());
         this->handle_error(QString::fromStdString(tmp1["error"]["message"].dump()));
         return;
@@ -198,15 +174,17 @@ void DeployWindow::deployed_managerFinished(QNetworkReply *reply) {
     QString res = obj["result"].toString();
 
     if(res == "0x"){
-        qDebug() << "error deploy 0x";
+        qDebug() << "Error deployed contract 0x: " << this->type;
         this->handle_error("Error: potentially wrong contract address");
         return;
     }
-    if(res != "0x0000000000000000000000000000000000000000000000000000000000000000"){
+    else if(res != "0x0000000000000000000000000000000000000000000000000000000000000000"){
+        qDebug() << "Checked deployed contract: " << this->type << ": " << answer;
         this->processing_window->completed("0x" + res.remove(0, 26));
         this->state=3;
     }
     else{
+        qDebug() << "Checked deployed contract(Not deployed yet): " << this->type << ": " << answer;
         this->is_deployed();
     }
 }

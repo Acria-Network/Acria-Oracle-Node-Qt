@@ -2,6 +2,7 @@
 #include "ui_availableaccounts.h"
 #include "util.h"
 
+
 AvailableAccounts::AvailableAccounts(QWidget *parent, Data *_data, QString _type) :
     QDialog(parent),
     ui(new Ui::AvailableAccounts)
@@ -37,7 +38,7 @@ void AvailableAccounts::update_accounts(){
 
 void AvailableAccounts::managerFinished(QNetworkReply *reply) {
     if (reply->error()) {
-        qDebug() << reply->errorString();
+        qDebug() << "Error (available accounts): " << this->type << ": " << reply->errorString();
         return;
     }
 
@@ -45,7 +46,7 @@ void AvailableAccounts::managerFinished(QNetworkReply *reply) {
     QJsonObject obj = Util::ObjectFromString(answer);
     QJsonArray res = obj["result"].toArray();
 
-    qDebug() << answer;
+    qDebug() << "Available accounts: " << this->type << ": " << answer;
 
     this->ui->tableWidget_accounts->clear();
     while (ui->tableWidget_accounts->rowCount() > 0)
@@ -61,8 +62,6 @@ void AvailableAccounts::managerFinished(QNetworkReply *reply) {
 
     if(res.size() > 0){
         for(int i = 0;i<res.size();i++){
-            qDebug() << "available account " << res[i].toString();
-
             this->ui->tableWidget_accounts->setItem( i, 0, new QTableWidgetItem(QString::number(i+1)));
             this->ui->tableWidget_accounts->setItem( i, 1, new QTableWidgetItem(res[i].toString()));
         }
@@ -81,8 +80,6 @@ void AvailableAccounts::on_buttonBox_accepted()
     QItemSelectionModel *select = this->ui->tableWidget_accounts->selectionModel();
 
     if(select->hasSelection()){
-        qDebug() << "selected account " << select->selectedRows().at(0).siblingAtColumn(1).data().toString();
-
         this->selected_account = select->selectedRows().at(0).siblingAtColumn(1).data().toString();
     }
 }

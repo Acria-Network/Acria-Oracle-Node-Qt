@@ -25,12 +25,12 @@ ReportActive::~ReportActive()
 
 void ReportActive::managerFinished(QNetworkReply *reply) {
     if (reply->error()) {
-        qDebug() << reply->errorString();
+        qDebug() << "Error reporting Node as active: " << reply->errorString();
         return;
     }
 
     QString answer = reply->readAll();
-    qDebug() << answer;
+    qDebug() << "Reported Node as active: " << answer;
 }
 
 void ReportActive::send(){

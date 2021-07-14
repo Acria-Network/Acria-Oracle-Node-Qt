@@ -41,7 +41,7 @@ void NonceManager::reset(){
 unsigned NonceManager::get_nonce(){
     QMutexLocker ml(&mutex);
 
-    qDebug() << "Nonce incremented: " << this->nonce;
+    qDebug() << this->type << " nonce incremented from: " << this->nonce << " to: " << this->nonce+1;
     this->nonce+=1;
     return this->nonce;
 }
@@ -72,7 +72,7 @@ void NonceManager::update_nonce(){
 
 void NonceManager::managerFinished(QNetworkReply *reply) {
     if (reply->error()) {
-        qDebug() << "error (nonce manager): " << reply->errorString();
+        qDebug() << "Error (nonce manager): " << this->type << ": " << reply->errorString();
         this->ready = false;
         return;
     }
@@ -80,7 +80,7 @@ void NonceManager::managerFinished(QNetworkReply *reply) {
     QString answer = reply->readAll();
     QJsonObject obj = Util::ObjectFromString(answer);
 
-    qDebug() << "Nonce: " << obj["result"].toString().toUInt(NULL, 16);
+    qDebug() << "New " << this->type << " nonce: " << obj["result"].toString().toUInt(NULL, 16);
 
     if(obj["result"].toString() != "" && obj["result"].toString() != nullptr)
         this->ready = true;

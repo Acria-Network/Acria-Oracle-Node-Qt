@@ -68,7 +68,6 @@ AccountManager::~AccountManager()
 void AccountManager::increment_progress(){
     QMutexLocker ml(&mutex);
 
-    qDebug() << "Progress incremented: " << this->progress;
     this->progress+=1;
     this->data->changed = true;
 

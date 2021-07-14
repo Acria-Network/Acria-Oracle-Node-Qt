@@ -59,13 +59,13 @@ void SignConfigWindow::on_pushButton_upload_tooracle_marketplace_clicked()
 
 void SignConfigWindow::managerFinished(QNetworkReply *reply) {
     if (reply->error()) {
-        qDebug() << reply->errorString();
+        qDebug() << "Error sending signed config to Oracle-Marketplace: " << reply->errorString();
         Util::show_msgBox(reply->errorString());
         return;
     }
 
     QString answer = reply->readAll();
-    qDebug() << answer;
+    qDebug() << "Sent signed config to Oracle-Marketplace: " << answer;
 
     Util::show_msgBox(tr("Successfully uploaded signed config!"));
 }

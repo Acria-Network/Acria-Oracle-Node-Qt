@@ -42,7 +42,7 @@ void Balances::update_withdrawable(){
 
 void Balances::managerFinished(QNetworkReply *reply) {
     if (reply->error()) {
-        qDebug() << reply->errorString();
+        qDebug() << "Error (balances): " << this->type << ": " << reply->errorString();
         return;
     }
 
@@ -50,7 +50,7 @@ void Balances::managerFinished(QNetworkReply *reply) {
     QJsonObject obj = Util::ObjectFromString(answer);
     QString res = obj["result"].toString().remove(0, 2);
 
-    qDebug() << answer;
+    qDebug() << "Balances: " << this->type << ": " << answer;
 
     if(res.length() > 2){
         this->withdrawable = res.toULongLong(NULL,16);

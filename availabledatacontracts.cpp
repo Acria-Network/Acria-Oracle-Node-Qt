@@ -53,7 +53,7 @@ void AvailableDataContracts::update_data_contracts(){
 
 void AvailableDataContracts::managerFinished(QNetworkReply *reply) {
     if (reply->error()) {
-        qDebug() << "error available contracts: " << reply->errorString();
+        qDebug() << "Error (available data contracts): " << this->type << ": " << reply->errorString();
         return;
     }
 
@@ -61,7 +61,7 @@ void AvailableDataContracts::managerFinished(QNetworkReply *reply) {
     QJsonObject obj = Util::ObjectFromString(answer);
     QString res = obj["result"].toString().remove(0, 2);
 
-    qDebug() << answer;
+    qDebug() << "Available data contracts: " << this->type << ": " << answer;
 
     if(res.length() > 2){
         std::vector<QString> inf;
@@ -98,8 +98,6 @@ void AvailableDataContracts::managerFinished(QNetworkReply *reply) {
 
                 r.name = tmp.trimmed();
                 r.address = "0x" + inf[i].remove(0, 24);
-
-                qDebug() << "contract " << r.name << " " << r.address;
 
                 this->contracts.push_back(r);
             }

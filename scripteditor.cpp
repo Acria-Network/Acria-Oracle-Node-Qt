@@ -13,10 +13,6 @@ ScriptEditor::ScriptEditor(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    //QWebChannel * channel = new QWebChannel(this->ui->webEngineView->page());
-    //this->ui->webEngineView->page()->setWebChannel(channel);
-    //this->ui->webEngineView->page()->webChannel()->registerObject(QStringLiteral("AccountManager"), this);
-
     this->ui->webEngineView->page()->setBackgroundColor(Qt::transparent);
     this->ui->webEngineView->setUrl(QUrl::fromLocalFile(QFileInfo("js/code_editor/lint.html").absoluteFilePath()));
     this->ui->webEngineView->setZoomFactor(0.5);
@@ -44,7 +40,6 @@ void ScriptEditor::load_script(QString script_file){
                     std::istreambuf_iterator<char>());
 
         script = QString::fromStdString(str).replace("\n","\\n").replace("'","\\'");
-        qDebug() << script;
     }
 
     this->ui->webEngineView->page()->runJavaScript("editor.setValue('" + script + "');");

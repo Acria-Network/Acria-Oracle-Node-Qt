@@ -34,7 +34,7 @@ void GasPrice::update_gas_price(){
 
 void GasPrice::managerFinished(QNetworkReply *reply) {
     if (reply->error()) {
-        qDebug() << "error (gas price " << this->type <<"): " << reply->errorString();
+        qDebug() << "Error (gas price): " << this->type <<": " << reply->errorString();
         return;
     }
 
@@ -42,10 +42,8 @@ void GasPrice::managerFinished(QNetworkReply *reply) {
     QJsonObject obj = Util::ObjectFromString(answer);
     QString res = obj["result"].toString().remove(0, 2);
 
-    qDebug() << answer;
-
     if(res.length() > 2){
-        qDebug() << "Gas Price: " << res.toULongLong(NULL,16);
+        qDebug() << "Gas Price: " << this->type <<": " << res.toULongLong(NULL,16);
         this->data->chain_data[this->type].transaction_fee = res.toULongLong(NULL,16)*1.1;
     }
 

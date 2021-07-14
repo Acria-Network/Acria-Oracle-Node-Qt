@@ -135,16 +135,6 @@ void Tasks::r_managerFinished(QNetworkReply *reply) {
                         r.data = QString(inf[i+6]);
                     }
 
-                    /*
-                    qDebug() << "requestid " << r.requestID;
-                    qDebug() << "fee " << r.fee;
-                    qDebug() << "expiration " << r.expiration;
-                    qDebug() << "callback " << r.callback;
-                    qDebug() << "chain " << r.chain;
-                    qDebug() << "id " << r.id;
-                    qDebug() << "max_gas " << QString(inf[i+4]) << " " << r.max_gas;
-                    */
-
                     this->requests.push_back(r);
                 }
             }

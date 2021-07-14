@@ -102,7 +102,6 @@ void ConfigItem::clear(){
 
 void ConfigItem::managerFinished(QNetworkReply *reply) {
     if (reply->error()) {
-        qDebug() << reply->errorString();
         return;
     }
 
@@ -237,41 +236,8 @@ void ConfigItem::on_pushButton_response_parse_clicked()
         }
     }
     else if(this->ui->comboBox->currentIndex() == 2){
-            /*
-            QString script = Util::read_file(this->ui->lineEdit_script_file->text().toStdString());
-            QString bn = Util::read_file("scripts/bignumber.min.js");
-            QJSEngine engine;
-            QJSValue function_js = engine.evaluate(bn+"(function(api_response, arg1) {" + script + "})");
-            QJSValueList args;
-            args << answer << this->ui->lineEdit_script_parameter->text();
-            QJSValue result = function_js.call(args);
-            qDebug() << "parse Script ";*/
-            /*
-            if (result.isError()){
-                qDebug() << "error Script";
-                this->ui->label_response_parsed->setText(tr("Uncaught exception at line ") + result.property("lineNumber").toString() + ":" + result.toString());
-                return;
-            }
-            else{
-                QString tmp2;
-                if(result.isNumber())
-                    tmp2 = Util::double2uint256(result.toNumber());
-                else if(result.isString()){
-                    if (QRegExp("^0x[A-Fa-f0-9]+$").exactMatch(result.toString()))
-                       tmp2 = result.toString();
-                    else
-                       tmp2 = Util::str2bytes32(result.toString());
-                }
-                else if(result.isUndefined()){
-                    this->ui->label_response_parsed->setText("Undefined Value");
-                    return;
-                }
-                this->ui->label_response_parsed->setText("Value: " + result.toString()+"\nuint256: "+tmp2);
-            }
-            */
             bool script_success = false;
             QString result0 = Resource::parse_script(this->ui->lineEdit_script_file->text(), this->ui->lineEdit_script_parameter->text(), answer, script_success, this->ui->label_response_parsed);
-            qDebug() << result0;
     }
 }
 

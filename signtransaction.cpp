@@ -43,18 +43,6 @@ std::string SignTransaction::fixHexValue(std::string hex) {
 }
 
 std::string SignTransaction::sign_transaction(Transaction tx, std::string privkey) {
-    /*
-    Transaction tx;
-    tx.nonce=fixHexValue("0x5");
-    tx.gasPrice=fixHexValue("0x210000");
-    tx.gasLimit=fixHexValue("0x100000");
-    tx.to=fixHexValue("0x0000000000000000000000000000000000000000");
-    tx.value=fixHexValue("0x10000000");
-    tx.data=fixHexValue("0x7f7465737432000000000000000000000000000000000000000000000000000000600057");
-    tx.chainId = 15;
-    tx.v=fixHexValue(RLP::intToHex(tx.chainId));//as per EIP 155
-*/
-    //std::string privkey = "440ec6f6dc87dda4d2918a07d115ae4d290e290bd92e70e851eeb23de59d955a";
     uint8_t *privkeyBytes;
     hexstrToByteArray(privkey.c_str(), 64, &privkeyBytes);
     char inp [] = {};

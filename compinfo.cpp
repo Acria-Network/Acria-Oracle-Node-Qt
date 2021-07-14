@@ -1,12 +1,11 @@
 #include "compinfo.h"
+#include "util.h"
+#include "json.hpp"
 
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QDebug>
 #include <QJsonArray>
-
-#include "util.h"
-#include "json.hpp"
 
 
 compinfo::compinfo(Data *_data, QString _type)
@@ -44,7 +43,6 @@ void compinfo::create_filter_events(){
     addr.push_back(contract);
 
     QJsonArray top;
-    //top.push_back("0x80159d42b8a6ee3e969f3e2c24f97a6835bebbb529a24ca1fbb217e4f7701240");
     top.push_back("0x910c973544a08bc7a636ea9436726896a35fb16763f6a536991139fa41a7f0e5");
 
     QJsonObject obj1;
@@ -96,7 +94,7 @@ void compinfo::update_events(){
 
 void compinfo::filter_managerFinished(QNetworkReply *reply) {
     if (reply->error()) {
-        qDebug() << reply->errorString();
+        qDebug() << "Error (filter completed requests): " << this->type << ": " << reply->errorString();
         return;
     }
 
@@ -109,7 +107,7 @@ void compinfo::filter_managerFinished(QNetworkReply *reply) {
 
 void compinfo::managerFinished(QNetworkReply *reply) {
     if (reply->error()) {
-        qDebug() << reply->errorString();
+        qDebug() << "Error (completed requests): " << this->type << ": " << reply->errorString();
         return;
     }
 

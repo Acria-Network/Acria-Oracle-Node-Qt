@@ -31,8 +31,6 @@ Node::Node(Data* _data, QString _type)
 
     this->status_geth = false;
 
-    //update_geth_status();
-
     QSslConfiguration conf = status_request.sslConfiguration();
     conf.setPeerVerifyMode(QSslSocket::VerifyNone);
     status_request.setSslConfiguration(conf);
@@ -74,7 +72,6 @@ void Node::update_geth_status(){
     QJsonObject obj;
     obj["jsonrpc"] = "2.0";
     obj["method"] = "web3_clientVersion";
-    //obj["params"] = "";
     obj["id"] = 67;
     QJsonDocument doc(obj);
     QByteArray data = doc.toJson();
@@ -86,7 +83,6 @@ void Node::update_geth_status(){
     QJsonObject obj2;
     obj2["jsonrpc"] = "2.0";
     obj2["method"] = "eth_chainId";
-    //obj2["params"] = "";
     obj2["id"] = 69;
     QJsonDocument doc2(obj2);
     QByteArray data2 = doc2.toJson();
@@ -119,14 +115,14 @@ Node::~Node()
 
 void Node::statusManagerFinished(QNetworkReply *reply) {
     if (reply->error()) {
-        qDebug() << "error (geth status): " << reply->errorString();
+        qDebug() << "Error (geth status): " << this->type << ": " << reply->errorString();
         status_geth = false;
         return;
     }
 
     QString answer = reply->readAll();
 
-    qDebug() << "answer " <<answer;
+    qDebug() << "Geth status: " << this->type << ": " << answer;
 
     QJsonObject obj = Util::ObjectFromString(answer);
 
@@ -140,14 +136,14 @@ void Node::statusManagerFinished(QNetworkReply *reply) {
 
 void Node::chain_idManagerFinished(QNetworkReply *reply) {
     if (reply->error()) {
-        qDebug() << "error (chain id):" << reply->errorString();
+        qDebug() << "Error (chain id): " << this->type << ": " << reply->errorString();
         status_geth_chain_id = false;
         return;
     }
 
     QString answer = reply->readAll();
 
-    qDebug() << "answer " <<answer;
+    qDebug() << "Chain Id: " << this->type << ": " << answer;
 
     QJsonObject obj = Util::ObjectFromString(answer);
 
@@ -162,14 +158,14 @@ void Node::chain_idManagerFinished(QNetworkReply *reply) {
 
 void Node::balanceManagerFinished(QNetworkReply *reply) {
     if (reply->error()) {
-        qDebug() << "error (balance account):" << reply->errorString();
+        qDebug() << "Error (balance account): " << this->type << ": " << reply->errorString();
         this->data->chain_data[this->type].balance = 0;
         return;
     }
 
     QString answer = reply->readAll();
 
-    qDebug() << "answer " <<answer;
+    qDebug() << "Balance account: " << this->type << ": " << answer;
 
     QJsonObject obj = Util::ObjectFromString(answer);
 

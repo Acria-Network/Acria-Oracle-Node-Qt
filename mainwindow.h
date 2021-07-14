@@ -20,7 +20,7 @@ QT_END_NAMESPACE
 
 const uint INTERVAL_RUN = 5000;
 const uint INTERVAL_RUN_CONNECTION = 4000;
-const uint INTERVAL_UPDATE_STATUS = 10000;
+const uint INTERVAL_UPDATE_STATUS = 3000;
 const uint INTERVAL_UPDATE_ACTIVE = 20000;
 
 class MainWindow : public QMainWindow
@@ -56,11 +56,7 @@ private slots:
 
     void get_status_polkadot();
 
-    void get_status_acria();
-
     void get_status_binance();
-
-    void get_status_config();
 
     void get_status_cardano();
 
