@@ -122,7 +122,22 @@ border-left:1px solid orange;
 QLineEdit{
 background-color:#333333;
 }
-</string>
+
+QPushButton:hover
+{
+background-color:rgb(255, 190, 111);
+}
+
+QPushButton
+{
+background-color:white;
+color:black;
+border: none;
+width:80px;
+padding-top:3px;
+padding-bottom:3px;
+background-color:orange;
+}</string>
       </property>
       <property name="tabPosition">
        <enum>QTabWidget::West</enum>
@@ -256,6 +271,33 @@ border-radius:5px;</string>
                 <layout class="QVBoxLayout" name="verticalLayout_10">
                  <item>
                   <widget class="QPushButton" name="pushButton_polkadot_settings">
+                   <property name="minimumSize">
+                    <size>
+                     <width>15</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>15</width>
+                     <height>15</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QPushButton:hover
+{
+
+}
+
+QPushButton
+{
+background-color:transparent;
+color:black;
+border: none;
+width:15px;
+padding:0;
+}</string>
+                   </property>
                    <property name="text">
                     <string/>
                    </property>
@@ -276,6 +318,27 @@ border-radius:5px;</string>
                  </item>
                  <item>
                   <widget class="QPushButton" name="pushButton_binance_info_2">
+                   <property name="maximumSize">
+                    <size>
+                     <width>15</width>
+                     <height>15</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QPushButton:hover
+{
+
+}
+
+QPushButton
+{
+background-color:transparent;
+color:black;
+border: none;
+width:15px;
+padding:0;
+}</string>
+                   </property>
                    <property name="text">
                     <string/>
                    </property>
@@ -589,9 +652,24 @@ padding-left:13px;
                   <widget class="QPushButton" name="pushButton_eth_settings">
                    <property name="maximumSize">
                     <size>
-                     <width>21</width>
-                     <height>20</height>
+                     <width>15</width>
+                     <height>15</height>
                     </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QPushButton:hover
+{
+
+}
+
+QPushButton
+{
+background-color:transparent;
+color:black;
+border: none;
+width:15px;
+padding:0;
+}</string>
                    </property>
                    <property name="text">
                     <string/>
@@ -615,9 +693,24 @@ padding-left:13px;
                   <widget class="QPushButton" name="pushButton_eth_info">
                    <property name="maximumSize">
                     <size>
-                     <width>21</width>
-                     <height>20</height>
+                     <width>15</width>
+                     <height>15</height>
                     </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QPushButton:hover
+{
+
+}
+
+QPushButton
+{
+background-color:transparent;
+color:black;
+border: none;
+width:15px;
+padding:0;
+}</string>
                    </property>
                    <property name="text">
                     <string/>
@@ -928,6 +1021,27 @@ padding:5px;
                 <layout class="QVBoxLayout" name="verticalLayout_12">
                  <item>
                   <widget class="QPushButton" name="pushButton_binance_settings">
+                   <property name="maximumSize">
+                    <size>
+                     <width>15</width>
+                     <height>15</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QPushButton:hover
+{
+
+}
+
+QPushButton
+{
+background-color:transparent;
+color:black;
+border: none;
+width:15px;
+padding:0;
+}</string>
+                   </property>
                    <property name="text">
                     <string/>
                    </property>
@@ -948,6 +1062,27 @@ padding:5px;
                  </item>
                  <item>
                   <widget class="QPushButton" name="pushButton_binance_info">
+                   <property name="maximumSize">
+                    <size>
+                     <width>15</width>
+                     <height>15</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QPushButton:hover
+{
+
+}
+
+QPushButton
+{
+background-color:transparent;
+color:black;
+border: none;
+width:15px;
+padding:0;
+}</string>
+                   </property>
                    <property name="text">
                     <string/>
                    </property>
@@ -1257,6 +1392,27 @@ padding:5px;
                 <layout class="QVBoxLayout" name="verticalLayout_13">
                  <item>
                   <widget class="QPushButton" name="pushButton_cardano_settings">
+                   <property name="maximumSize">
+                    <size>
+                     <width>15</width>
+                     <height>15</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QPushButton:hover
+{
+
+}
+
+QPushButton
+{
+background-color:transparent;
+color:black;
+border: none;
+width:15px;
+padding:0;
+}</string>
+                   </property>
                    <property name="text">
                     <string/>
                    </property>
@@ -1277,6 +1433,27 @@ padding:5px;
                  </item>
                  <item>
                   <widget class="QPushButton" name="pushButton_cardano_info">
+                   <property name="maximumSize">
+                    <size>
+                     <width>15</width>
+                     <height>15</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QPushButton:hover
+{
+
+}
+
+QPushButton
+{
+background-color:transparent;
+color:black;
+border: none;
+width:15px;
+padding:0;
+}</string>
+                   </property>
                    <property name="text">
                     <string/>
                    </property>
@@ -1616,16 +1793,6 @@ padding:5px;
               <height>17</height>
              </size>
             </property>
-            <property name="styleSheet">
-             <string notr="true">background-color:white;
-color:black;
-border: none;
-/*padding:30px;*/
-width:80px;
-padding-top:3px;
-padding-bottom:3px;
-background-color:orange;</string>
-            </property>
             <property name="text">
              <string>Config</string>
             </property>
@@ -1647,16 +1814,6 @@ background-color:orange;</string>
               <width>16777215</width>
               <height>17</height>
              </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color:white;
-color:black;
-border: none;
-/*padding:30px;*/
-width:80px;
-padding-top:3px;
-padding-bottom:3px;
-background-color:orange;</string>
             </property>
             <property name="text">
              <string>Refresh</string>
@@ -1948,16 +2105,6 @@ QTreeView#settingsTree {
               <height>17</height>
              </size>
             </property>
-            <property name="styleSheet">
-             <string notr="true">background-color:white;
-color:black;
-border: none;
-/*padding:30px;*/
-width:80px;
-padding-top:3px;
-padding-bottom:3px;
-background-color:orange;</string>
-            </property>
             <property name="text">
              <string>Export Json</string>
             </property>
@@ -1979,16 +2126,6 @@ background-color:orange;</string>
               <width>16777215</width>
               <height>17</height>
              </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color:white;
-color:black;
-border: none;
-/*padding:30px;*/
-width:80px;
-padding-top:3px;
-padding-bottom:3px;
-background-color:orange;</string>
             </property>
             <property name="text">
              <string>Export CSV</string>
@@ -2462,16 +2599,6 @@ QTreeView#settingsTree {
               <height>0</height>
              </size>
             </property>
-            <property name="styleSheet">
-             <string notr="true">background-color:white;
-color:black;
-border: none;
-/*padding:30px;*/
-width:80px;
-padding-top:3px;
-padding-bottom:3px;
-background-color:orange;</string>
-            </property>
             <property name="text">
              <string>Withdraw Cardano</string>
             </property>
@@ -2493,16 +2620,6 @@ background-color:orange;</string>
             </property>
             <property name="autoFillBackground">
              <bool>false</bool>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color:white;
-color:black;
-border: none;
-/*padding:30px;*/
-width:80px;
-padding-top:3px;
-padding-bottom:3px;
-background-color:orange;</string>
             </property>
             <property name="text">
              <string>Withdraw Binance</string>
@@ -2532,16 +2649,6 @@ background-color:orange;</string>
             <property name="autoFillBackground">
              <bool>false</bool>
             </property>
-            <property name="styleSheet">
-             <string notr="true">background-color:white;
-color:black;
-border: none;
-/*padding:30px;*/
-width:80px;
-padding-top:3px;
-padding-bottom:3px;
-background-color:orange;</string>
-            </property>
             <property name="text">
              <string>Withdraw Polkadot</string>
             </property>
@@ -2569,16 +2676,6 @@ background-color:orange;</string>
             </property>
             <property name="autoFillBackground">
              <bool>false</bool>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color:white;
-color:black;
-border: none;
-/*padding:30px;*/
-width:80px;
-padding-top:3px;
-padding-bottom:3px;
-background-color:orange;</string>
             </property>
             <property name="text">
              <string>Withdraw Ether</string>
@@ -2654,7 +2751,7 @@ border:none;
 }</string>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>3</number>
           </property>
           <property name="iconSize">
            <size>
@@ -2785,14 +2882,7 @@ border:none;
              </rect>
             </property>
             <property name="styleSheet">
-             <string notr="true">background-color:white;
-color:black;
-border: none;
-/*padding:30px;*/
-width:80px;
-padding-top:3px;
-padding-bottom:3px;
-background-color:orange;</string>
+             <string notr="true"/>
             </property>
             <property name="text">
              <string>Deploy Contract</string>
@@ -2811,14 +2901,7 @@ background-color:orange;</string>
              </rect>
             </property>
             <property name="styleSheet">
-             <string notr="true">background-color:white;
-color:black;
-border: none;
-/*padding:30px;*/
-width:80px;
-padding-top:3px;
-padding-bottom:3px;
-background-color:orange;</string>
+             <string notr="true"/>
             </property>
             <property name="text">
              <string>My Accounts</string>
@@ -3117,14 +3200,7 @@ background-color:orange;</string>
              </rect>
             </property>
             <property name="styleSheet">
-             <string notr="true">background-color:white;
-color:black;
-border: none;
-/*padding:30px;*/
-width:80px;
-padding-top:3px;
-padding-bottom:3px;
-background-color:orange;</string>
+             <string notr="true"/>
             </property>
             <property name="text">
              <string>Deploy Contract</string>
@@ -3143,14 +3219,7 @@ background-color:orange;</string>
              </rect>
             </property>
             <property name="styleSheet">
-             <string notr="true">background-color:white;
-color:black;
-border: none;
-/*padding:30px;*/
-width:80px;
-padding-top:3px;
-padding-bottom:3px;
-background-color:orange;</string>
+             <string notr="true"/>
             </property>
             <property name="text">
              <string>My Accounts</string>
@@ -3362,14 +3431,7 @@ background-color:orange;</string>
              </rect>
             </property>
             <property name="styleSheet">
-             <string notr="true">background-color:white;
-color:black;
-border: none;
-/*padding:30px;*/
-width:80px;
-padding-top:3px;
-padding-bottom:3px;
-background-color:orange;</string>
+             <string notr="true"/>
             </property>
             <property name="text">
              <string>Deploy Contract</string>
@@ -3415,14 +3477,7 @@ background-color:orange;</string>
              </rect>
             </property>
             <property name="styleSheet">
-             <string notr="true">background-color:white;
-color:black;
-border: none;
-/*padding:30px;*/
-width:80px;
-padding-top:3px;
-padding-bottom:3px;
-background-color:orange;</string>
+             <string notr="true"/>
             </property>
             <property name="text">
              <string>My Accounts</string>
@@ -3506,14 +3561,7 @@ background-color:orange;</string>
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color:white;
-color:black;
-border: none;
-/*padding:30px;*/
-width:80px;
-padding-top:3px;
-padding-bottom:3px;
-background-color:orange;</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>Discard</string>
@@ -3538,14 +3586,7 @@ background-color:orange;</string>
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color:white;
-color:black;
-border: none;
-/*padding:30px;*/
-width:80px;
-padding-top:3px;
-padding-bottom:3px;
-background-color:orange;</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>Save</string>

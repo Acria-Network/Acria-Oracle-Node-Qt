@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>593</width>
-    <height>439</height>
+    <width>724</width>
+    <height>559</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -24,8 +24,26 @@
     <normaloff>resources/acria_logo5_colored.svg</normaloff>resources/acria_logo5_colored.svg</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color:#232323;
-color:white;</string>
+   <string notr="true">QWidget{
+background-color:#232323;
+color:white;
+}
+
+QPushButton:hover
+{
+background-color:rgb(255, 190, 111);
+}
+
+QPushButton
+{
+background-color:white;
+color:black;
+border: none;
+width:80px;
+padding-top:3px;
+padding-bottom:3px;
+background-color:orange;
+}</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -66,8 +84,8 @@ color:white;</string>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>40</width>
-         <height>20</height>
+         <width>0</width>
+         <height>0</height>
         </size>
        </property>
       </spacer>
@@ -191,14 +209,7 @@ border-bottom: 1px solid white;</string>
        <item>
         <widget class="QPushButton" name="pushButton_make_example_request">
          <property name="styleSheet">
-          <string notr="true">background-color:white;
-color:black;
-border: none;
-/*padding:30px;*/
-width:80px;
-padding-top:3px;
-padding-bottom:3px;
-background-color:orange;</string>
+          <string notr="true"/>
          </property>
          <property name="text">
           <string>Make Example Request</string>
@@ -217,6 +228,9 @@ background-color:orange;</string>
        </item>
        <item>
         <widget class="QLineEdit" name="lineEdit_parameter_input">
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
          <property name="placeholderText">
           <string>Parameter to replace %data%</string>
          </property>
@@ -225,14 +239,7 @@ background-color:orange;</string>
        <item>
         <widget class="QPushButton" name="pushButton_make_example_request_with_parameter">
          <property name="styleSheet">
-          <string notr="true">background-color:white;
-color:black;
-border: none;
-/*padding:30px;*/
-width:80px;
-padding-top:3px;
-padding-bottom:3px;
-background-color:orange;</string>
+          <string notr="true"/>
          </property>
          <property name="text">
           <string>Make Example Request with Parameter</string>
@@ -250,6 +257,9 @@ background-color:orange;</string>
          <property name="wordWrap">
           <bool>true</bool>
          </property>
+         <property name="textInteractionFlags">
+          <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
+         </property>
         </widget>
        </item>
        <item>
@@ -262,6 +272,9 @@ background-color:orange;</string>
          </property>
          <property name="wordWrap">
           <bool>true</bool>
+         </property>
+         <property name="textInteractionFlags">
+          <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
          </property>
         </widget>
        </item>
@@ -490,14 +503,7 @@ border-bottom: 1px solid white;</string>
             <item>
              <widget class="QPushButton" name="pushButton_select_script_file">
               <property name="styleSheet">
-               <string notr="true">background-color:white;
-color:black;
-border: none;
-/*padding:30px;*/
-width:80px;
-padding-top:3px;
-padding-bottom:3px;
-background-color:orange;</string>
+               <string notr="true"/>
               </property>
               <property name="text">
                <string>Select File</string>
@@ -507,14 +513,7 @@ background-color:orange;</string>
             <item>
              <widget class="QPushButton" name="pushButton_create_script_file">
               <property name="styleSheet">
-               <string notr="true">background-color:white;
-color:black;
-border: none;
-/*padding:30px;*/
-width:80px;
-padding-top:3px;
-padding-bottom:3px;
-background-color:orange;</string>
+               <string notr="true"/>
               </property>
               <property name="text">
                <string>Create Script</string>
@@ -543,14 +542,7 @@ background-color:orange;</string>
        <item>
         <widget class="QPushButton" name="pushButton_response_parse">
          <property name="styleSheet">
-          <string notr="true">background-color:white;
-color:black;
-border: none;
-/*padding:30px;*/
-width:80px;
-padding-top:3px;
-padding-bottom:3px;
-background-color:orange;</string>
+          <string notr="true"/>
          </property>
          <property name="text">
           <string>Parse</string>
@@ -567,6 +559,19 @@ background-color:orange;</string>
          </property>
         </widget>
        </item>
+       <item>
+        <spacer name="verticalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
       </layout>
      </item>
     </layout>
@@ -580,10 +585,29 @@ background-color:orange;</string>
    </item>
    <item>
     <widget class="QPlainTextEdit" name="plainTextEdit_description">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>80</height>
+      </size>
+     </property>
      <property name="styleSheet">
       <string notr="true">background-color:#333333;</string>
      </property>
     </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+    </spacer>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
@@ -599,14 +623,7 @@ background-color:orange;</string>
         </size>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color:white;
-color:black;
-border: none;
-/*padding:30px;*/
-width:80px;
-padding-top:3px;
-padding-bottom:3px;
-background-color:orange;</string>
+        <string notr="true"/>
        </property>
        <property name="text">
         <string>Save as copy</string>
@@ -622,14 +639,7 @@ background-color:orange;</string>
         </size>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color:white;
-color:black;
-border: none;
-/*padding:30px;*/
-width:80px;
-padding-top:3px;
-padding-bottom:3px;
-background-color:orange;</string>
+        <string notr="true"/>
        </property>
        <property name="text">
         <string>Delete</string>
@@ -639,14 +649,7 @@ background-color:orange;</string>
      <item>
       <widget class="QDialogButtonBox" name="buttonBox_1">
        <property name="styleSheet">
-        <string notr="true">background-color:white;
-color:black;
-border: none;
-/*padding:30px;*/
-width:80px;
-padding-top:3px;
-padding-bottom:3px;
-background-color:orange;</string>
+        <string notr="true"/>
        </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -657,19 +660,6 @@ background-color:orange;</string>
       </widget>
      </item>
     </layout>
-   </item>
-   <item>
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>0</width>
-       <height>0</height>
-      </size>
-     </property>
-    </spacer>
    </item>
   </layout>
  </widget>

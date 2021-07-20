@@ -28,6 +28,9 @@ ConfigItem::ConfigItem(QWidget *parent) :
     this->ui->verticalWidget_response_json->show();
     this->ui->verticalWidget_script->hide();
 
+    QSize size = sizeHint();
+    this->resize(this->width(), size.height());
+
     manager = new QNetworkAccessManager();
 
     QObject::connect(manager, SIGNAL(finished(QNetworkReply*)),

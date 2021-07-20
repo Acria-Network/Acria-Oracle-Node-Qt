@@ -18,8 +18,26 @@
     <normaloff>resources/acria_logo5_colored.svg</normaloff>resources/acria_logo5_colored.svg</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color:#232323;
-color:white;</string>
+   <string notr="true">QWidget{
+background-color:#232323;
+color:white;
+}
+
+QPushButton:hover
+{
+background-color:rgb(255, 190, 111);
+}
+
+QPushButton
+{
+background-color:white;
+color:black;
+border: none;
+width:80px;
+padding-top:3px;
+padding-bottom:3px;
+background-color:orange;
+}</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -53,14 +71,7 @@ border:none;
    <item>
     <widget class="QPushButton" name="pushButton_data_contracts">
      <property name="styleSheet">
-      <string notr="true">background-color:white;
-color:black;
-border: none;
-/*padding:30px;*/
-width:80px;
-padding-top:3px;
-padding-bottom:3px;
-background-color:orange;</string>
+      <string notr="true"/>
      </property>
      <property name="text">
       <string>Show Available Data-Contracts</string>
@@ -134,14 +145,7 @@ border:none;
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="styleSheet">
-      <string notr="true">background-color:white;
-color:black;
-border: none;
-/*padding:30px;*/
-width:80px;
-padding-top:3px;
-padding-bottom:3px;
-background-color:orange;</string>
+      <string notr="true"/>
      </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>

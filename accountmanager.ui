@@ -18,8 +18,26 @@
     <normaloff>resources/acria_logo5_colored.svg</normaloff>resources/acria_logo5_colored.svg</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color:#232323;
-color:white;</string>
+   <string notr="true">QWidget{
+background-color:#232323;
+color:white;
+}
+
+QPushButton:hover
+{
+background-color:rgb(255, 190, 111);
+}
+
+QPushButton
+{
+background-color:white;
+color:black;
+border: none;
+width:80px;
+padding-top:3px;
+padding-bottom:3px;
+background-color:orange;
+}</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -62,14 +80,21 @@ color:white;</string>
         </size>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color:white;
+        <string notr="true">QPushButton:hover
+{
+background-color:rgb(174, 173, 170);
+}
+
+QPushButton
+{
+background-color:white;
 color:black;
 border: none;
-/*padding:30px;*/
 width:80px;
 padding-top:3px;
 padding-bottom:3px;
-background-color:orange;</string>
+background-color:rgb(154, 153, 150);
+}</string>
        </property>
        <property name="text">
         <string>Skip</string>
@@ -85,14 +110,7 @@ background-color:orange;</string>
         </size>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color:white;
-color:black;
-border: none;
-/*padding:30px;*/
-width:80px;
-padding-top:3px;
-padding-bottom:3px;
-background-color:orange;</string>
+        <string notr="true"/>
        </property>
        <property name="text">
         <string>Continue</string>
