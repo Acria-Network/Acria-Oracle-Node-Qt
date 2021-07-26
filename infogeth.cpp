@@ -21,23 +21,7 @@ InfoGeth::~InfoGeth()
 }
 
 void InfoGeth::update_info(){
-    QString version1 = "";
-    QString url1 = "";
-    std::vector<QString> items;
-
-    version1 = node->get_geth_version();
-    url1 = this->data->chain_data[this->type].url;
-    items = this->data->chain_data[this->type].items;
-
-    this->ui->label_version->setText(version1);
-    this->ui->label_url->setText(url1);
-
-    QString tmp;
-
-    for(uint i = 0; i<items.size();i++){
-        tmp+=items[i];
-        tmp+="\n";
-    }
-
-    this->ui->label_items->setText(tmp);
+    this->ui->label_version->setText(node->get_geth_version());
+    this->ui->label_url->setText(this->data->chain_data[this->type].url);
+    this->ui->label_chain_id->setText(QString::number(this->data->chain_data[this->type].chain_id));
 }

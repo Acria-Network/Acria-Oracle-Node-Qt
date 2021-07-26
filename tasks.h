@@ -23,9 +23,6 @@ class Tasks : public QObject
 Q_OBJECT
 
 private:
-    QNetworkAccessManager *manager;
-    QNetworkRequest request;
-
     QNetworkAccessManager *r_manager;
     QNetworkRequest r_request;
 
@@ -45,7 +42,6 @@ public:
     std::vector<req> get_requests(){return requests;};
 
 private slots:
-    void managerFinished(QNetworkReply *reply);
     void r_managerFinished(QNetworkReply *reply);
 
 };

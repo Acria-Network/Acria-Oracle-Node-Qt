@@ -17,7 +17,6 @@ struct ChainData{
     bool custom_chain_id_enabled;
     bool enabled;
     unsigned long long transaction_fee;
-    std::vector<QString> items;
     __uint128_t balance;
 };
 
@@ -29,20 +28,12 @@ public:
     std::map<QString, ChainData> chain_data;
     std::vector<QString> chains;
 
-    bool changed = false;
+    bool changed = true;
 
     void load_settings();
     void save_settings();
 
     void get_chain_info(QString chain, QUrl* url, QString* account, QString* contract, unsigned long long* transaction_fee, QString* privkey = NULL, unsigned* chain_id = NULL);
-
-    void items_clear(QString _type){
-        this->chain_data[_type].items.clear();
-    }
-
-    void item_push_back(QString _type, QString item){
-        this->chain_data[_type].items.push_back(item.trimmed());
-    }
 };
 
 #endif // DATA_H

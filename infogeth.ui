@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>278</width>
-    <height>196</height>
+    <height>149</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -89,12 +89,12 @@ background-color:orange;
    <item>
     <widget class="QLabel" name="label_3">
      <property name="text">
-      <string>Items:</string>
+      <string>Chain ID:</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="label_items">
+    <widget class="QLabel" name="label_chain_id">
      <property name="minimumSize">
       <size>
        <width>0</width>
