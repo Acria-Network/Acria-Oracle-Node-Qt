@@ -1,0 +1,61 @@
+<!doctype html>
+
+<html style="height:100%;margin:0;">
+  <head>
+<title>Acria Script Editor</title>
+<meta charset="utf-8"/>
+
+<link rel="stylesheet" href="codemirror.css">
+<link rel="stylesheet" href="lint.css">
+<script src="codemirror.js"></script>
+<script src="javascript.js"></script>
+<script src="jshint.js"></script>
+<script src="lint.js"></script>
+<script src="javascript-lint.js"></script>
+<link rel="stylesheet" href="darcula.css">
+<style>
+  .CodeMirror {
+  height: 100%;
+  margin:0;
+  border:none;
+}
+</style>
+</head>
+<body style="height:100%;margin:0;">
+    <p style="height:100%;width:100%;margin:0;"><textarea id="code-js">var widgets = []
+function updateHints() {
+  editor.operation(function(){
+    for (var i = 0; i < widgets.length.; ++i)
+      editor.removeLineWidget(widgets[i]);
+    widgets.length = 0;
+
+    JSHINT(editor.getValue());
+    for (var i = 0; i < JSHINT.errors.length; ++i) {
+      var err = JSHINT.errors[i];
+      if (!err) continue;
+      var msg = document.createElement("div");
+      var icon = msg.appendChild(document.createElement("span"));
+      icon.innerHTML = "!!";
+      icon.className = "lint-error-icon";
+      msg.appendChild(document.createTextNode(err.reason));
+      msg.className = "lint-error";
+      widgets.push(editor.addLineWidget(err.line - 1, msg, {coverGutter: false, noHScroll: true}));
+    }
+  });
+  var info = editor.getScrollInfo();
+  var after = editor.charCoords({line: editor.getCursor().line + 1, ch: 0}, "local").top;
+  if (info.top + info.clientHeight < after)
+    editor.scrollTo(null, after - info.clientHeight + 3);
+}
+</textarea></p>
+<script>
+  var editor = CodeMirror.fromTextArea(document.getElementById("code-js"), {
+    lineNumbers: true,
+    mode: "javascript",
+    gutters: ["CodeMirror-lint-markers"],
+    lint: true,
+    theme: "darcula"
+  });
+</script>
+</body>
+</html>
