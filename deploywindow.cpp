@@ -123,7 +123,7 @@ void DeployWindow::is_deployed(){
 
     deployed_request.setUrl(url1);
     deployed_request.setRawHeader("Content-Type", "application/json");
-    deployed_manager->post(deployed_request, Util::generate_rpc_call("eth_call", account1, this->ui->lineEdit_main_contract->text(), data1, transaction_fee, 0, 79, -1));
+    deployed_manager->post(deployed_request, Util::generate_rpc_call("eth_call", account1, this->ui->lineEdit_main_contract->text(), data1, 0, 0, 79, -1));
 }
 
 void DeployWindow::handle_error(QString err){
