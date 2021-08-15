@@ -45,6 +45,7 @@ private:
 
     QString hash;
     unsigned nonce;
+    bool nonce_set;
     NonceManager* nonce_manager;
     QTimer* is_deployed_timer;
     nlohmann::json conf;

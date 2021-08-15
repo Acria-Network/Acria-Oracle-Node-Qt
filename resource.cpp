@@ -48,6 +48,7 @@ Resource::Resource(nlohmann::json _conf, req _r, Data* _data, uint* state, Nonce
     this->data = _data;
     this->state = state;
     this->nonce_manager = _nonce_manager;
+    this->nonce_set = false;
     this->conf = _conf;
     this->r = _r;
 
@@ -114,7 +115,10 @@ void Resource::update_resource(){
 }
 
 void Resource::send_resource(){
-    this->nonce = this->nonce_manager->get_nonce();
+    if(this->nonce_set == false){
+        this->nonce = this->nonce_manager->get_nonce();
+        this->nonce_set = true;
+    }
 
     QUrl url1;
     QString contract1, account1, privkey;
@@ -300,6 +304,7 @@ void Resource::send_managerFinished(QNetworkReply *reply) {
         qDebug() << reply->errorString();
         this->error = reply->errorString();
         *this->state=9;
+        QTimer::singleShot(30000, this, &Resource::send_resource);
         return;
     }
 
