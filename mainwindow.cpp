@@ -15,6 +15,7 @@
 #include <QtCore>
 #include <QLineEdit>
 #include <cmath>
+#include <logwindow.h>
 
 
 MainWindow::MainWindow(QWidget *parent)

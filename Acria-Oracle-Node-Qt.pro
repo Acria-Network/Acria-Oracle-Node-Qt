@@ -34,6 +34,7 @@ SOURCES += \
     hmac_drbg.cpp \
     infogeth.cpp \
     keccak256.cpp \
+    logwindow.cpp \
     main.cpp \
     mainwindow.cpp \
     node.cpp \
@@ -76,6 +77,7 @@ HEADERS += \
     hmac_drbg.h \
     infogeth.h \
     keccak256.h \
+    logwindow.h \
     mainwindow.h \
     node.h \
     noncemanager.h \
@@ -106,6 +108,7 @@ FORMS += \
     deploywindow.ui \
     enterpassworddialog.ui \
     infogeth.ui \
+    logwindow.ui \
     mainwindow.ui \
     processingwindow.ui \
     scripteditor.ui \
