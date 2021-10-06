@@ -183,6 +183,9 @@ html {
                     background-color: #ffa500;
                     font-size:20px;
 }
+.button1:hover{
+  background-color:rgb(255, 190, 111);
+}
 .button2{
     margin-top:35px;
     width:45%;
@@ -496,8 +499,8 @@ html {
                         else if(type=="cardano"){
                             document.getElementById("carLocked").innerHTML = "Locked";
                             document.getElementById("carLocked").classList.remove('keystore_available');
-                            binPrivateKey = "";
-                            binAddress = "";
+                            carPrivateKey = "";
+                            carAddress = "";
                         }
                     }
                 });
