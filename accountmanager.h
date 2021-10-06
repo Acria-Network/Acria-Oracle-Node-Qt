@@ -3,6 +3,7 @@
 
 #include "data.h"
 #include "enterpassworddialog.h"
+#include "entersinglepassworddialog.h"
 
 #include <QDialog>
 #include <QDebug>
@@ -90,6 +91,7 @@ private:
 
     Data* data;
     EnterPasswordDialog* enter_password_dialog;
+    EnterSinglePasswordDialog* enter_single_password_dialog;
     void increment_progress();
     QMutex mutex;
     unsigned progress;
@@ -101,6 +103,7 @@ private slots:
     void on_buttonBox_accepted();
     void on_pushButton_continue_clicked();
     void on_pushButton_skip_clicked();
+    void on_pushButton_unlock_all_accounts_clicked();
 };
 
 #endif // ACCOUNTMANAGER_H

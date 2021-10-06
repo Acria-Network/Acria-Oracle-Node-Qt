@@ -52,7 +52,7 @@ void SignConfigWindow::on_pushButton_upload_tooracle_marketplace_clicked()
     QJsonDocument doc(obj);
     QByteArray data = doc.toJson();
 
-    request.setUrl(QUrl("http://127.0.0.1:8000/send_config"));
+    request.setUrl(QUrl(URL_MARKETPLACE + "/send_config"));
     request.setRawHeader("Content-Type", "application/json");
     manager->post(request, data);
 }

@@ -1,5 +1,6 @@
 #include "reportactive.h"
 #include "signtransaction.h"
+#include "util.h"
 
 #include <QDateTime>
 #include <QJsonArray>
@@ -49,7 +50,7 @@ void ReportActive::send(){
     QJsonDocument doc(obj);
     QByteArray data = doc.toJson();
 
-    request.setUrl(QUrl("http://127.0.0.1:8000/report_active"));
+    request.setUrl(QUrl(URL_MARKETPLACE + "/report_active"));
     request.setRawHeader("Content-Type", "application/json");
     manager->post(request, data);
 }

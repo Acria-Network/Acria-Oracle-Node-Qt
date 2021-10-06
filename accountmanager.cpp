@@ -20,6 +20,7 @@ AccountManager::AccountManager(QWidget *parent, Data* _data) :
     this->data = _data;
     this->progress = 0;
     this->enter_password_dialog = new EnterPasswordDialog();
+    this->enter_single_password_dialog = new EnterSinglePasswordDialog();
 
     QWebChannel * channel = new QWebChannel(this->ui->webEngineView->page());
     this->ui->webEngineView->page()->setWebChannel(channel);
@@ -63,6 +64,7 @@ AccountManager::~AccountManager()
 {
     delete ui;
     delete enter_password_dialog;
+    delete enter_single_password_dialog;
 }
 
 void AccountManager::increment_progress(){
@@ -120,4 +122,21 @@ void AccountManager::on_pushButton_continue_clicked()
 void AccountManager::on_pushButton_skip_clicked()
 {
     this->hide();
+}
+
+void AccountManager::on_pushButton_unlock_all_accounts_clicked()
+{
+    QString password;
+    this->enter_single_password_dialog->reset();
+    if(this->enter_single_password_dialog->exec() == QDialog::Accepted){
+        password = this->enter_single_password_dialog->password;
+
+        QString command;
+        command += "if(ethWalletPath != ''){ decrypt_eth_wallet('" + password + "', ethWalletPath,'ethereum');sleepFor(1000);}";
+        command += "if(binWalletPath != ''){ decrypt_eth_wallet('" + password + "', binWalletPath,'binance');sleepFor(1000);}";
+        command += "if(carWalletPath != ''){ decrypt_eth_wallet('" + password + "', carWalletPath,'cardano');sleepFor(1000);}";
+        command += "if(polWalletPath != ''){ decrypt_polkadot_wallet('" + password + "', polWalletPath);sleepFor(1000);}";
+
+        this->ui->webEngineView->page()->runJavaScript(command);
+    }
 }

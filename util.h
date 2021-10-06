@@ -13,6 +13,9 @@
 #include <QFile>
 #include <fstream>
 
+//const QString URL_MARKETPLACE = "http://127.0.0.1:8000";
+const QString URL_MARKETPLACE = "https://marketplace.acria.network";
+
 
 const std::string digits = "0123456789abcdef";
 

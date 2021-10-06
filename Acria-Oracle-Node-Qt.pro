@@ -28,6 +28,7 @@ SOURCES += \
     ecdsa.cpp \
     endian.cpp \
     enterpassworddialog.cpp \
+    entersinglepassworddialog.cpp \
     ethbasedchain.cpp \
     gasprice.cpp \
     hash.cpp \
@@ -71,6 +72,7 @@ HEADERS += \
     ecdsa.h \
     endian.h \
     enterpassworddialog.h \
+    entersinglepassworddialog.h \
     ethbasedchain.h \
     gasprice.h \
     hash.h \
@@ -107,6 +109,7 @@ FORMS += \
     configitem.ui \
     deploywindow.ui \
     enterpassworddialog.ui \
+    entersinglepassworddialog.ui \
     infogeth.ui \
     logwindow.ui \
     mainwindow.ui \
